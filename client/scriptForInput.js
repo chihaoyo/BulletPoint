@@ -16,6 +16,7 @@ var postToServer = function(tags) {
 			console.log('success');
 			console.log(result);
 			// feedback
+			// random comment 1
 			removeDialog();
 		}
 	};
