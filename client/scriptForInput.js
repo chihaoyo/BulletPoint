@@ -15,6 +15,7 @@ var postToServer = function(tags) {
 			var result = xhr.responseText;
 			console.log('success');
 			console.log(result);
+			// feedback
 			removeDialog();
 		}
 	};
