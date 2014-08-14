@@ -5,7 +5,7 @@
 		"48": "icon-128.png",
 		"128": "icon-128.png"
 	},
-	"homepage_url": "http://chihaoyo.me/bulletpoint",
+	"homepage_url": "http://chihaoyo.me/bulletpoint/server",
 	"version": "0.1",
 	"permissions": ["activeTab", "http://chihaoyo.me/"],
 	"background": {
