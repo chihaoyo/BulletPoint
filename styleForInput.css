@@ -1,0 +1,28 @@
+@import url('http://fonts.googleapis.com/css?family=Source+Code+Pro:700');
+
+#BulletPointWrapper {
+	position: fixed;
+	top: 0;
+	left: 50%;
+	width: 20em;
+	height: 5em;
+	margin-left: -10em;
+	background: blue;
+	font-size: 20px;
+	z-index: 999999999999;
+}
+#BulletPointWrapper .padding {
+	padding: 0.33333333em;
+}
+#BulletPointWrapper input {
+	-webkit-appearance: none;
+	border: none;
+	outline: none;
+	width: 100%;
+	background: none;
+	color: lime;
+/*	font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;*/
+	font-family: 'Source Code Pro', monospace;
+	font-weight: 700;
+	font-size: 20px;
+}

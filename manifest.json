@@ -1,0 +1,28 @@
+{
+	"name": "BulletPoints",
+	"description": "Organize pages on BulletPoints",
+	"icons": {
+		"48": "icon-128.png",
+		"128": "icon-128.png"
+	},
+	"homepage_url": "http://chihaoyo.me/bulletpoints",
+	"version": "0.1",
+	"permissions": ["activeTab", "http://chihaoyo.me/"],
+	"background": {
+		"scripts": ["background.js"],
+		"persistent": false
+	},
+	"browser_action": {
+		"default_title": "Add this page to BulletPoints",
+		"default_icon": "icon-128.png"
+	},
+	"manifest_version": 2,
+
+	"content_scripts": [
+		{
+			"matches": ["http://*/*"],
+			"css": ["styleForInput.css"],
+			"js": ["scriptForInput.js"]
+		}
+	]
+}
