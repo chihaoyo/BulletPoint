@@ -15,6 +15,7 @@ var postToServer = function(tags) {
 			var result = xhr.responseText;
 			console.log('success');
 			console.log(result);
+			removeDialog();
 		}
 	};
 
@@ -58,7 +59,6 @@ var activate = function() {
 		//post the page info to the server along with the tags
 		if(event.keyCode == 13) {
 			postToServer(inputBox.value);
-			removeDialog();
 		}
 	});
 
