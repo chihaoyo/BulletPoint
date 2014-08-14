@@ -1,11 +1,11 @@
 {
-	"name": "BulletPoints",
-	"description": "Organize pages on BulletPoints",
+	"name": "BulletPoint",
+	"description": "Mapping the web using BulletPoint",
 	"icons": {
 		"48": "icon-128.png",
 		"128": "icon-128.png"
 	},
-	"homepage_url": "http://chihaoyo.me/bulletpoints",
+	"homepage_url": "http://chihaoyo.me/bulletpoint",
 	"version": "0.1",
 	"permissions": ["activeTab", "http://chihaoyo.me/"],
 	"background": {
@@ -13,7 +13,7 @@
 		"persistent": false
 	},
 	"browser_action": {
-		"default_title": "Add this page to BulletPoints",
+		"default_title": "Add this page to BulletPoint",
 		"default_icon": "icon-128.png"
 	},
 	"manifest_version": 2,

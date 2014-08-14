@@ -6,7 +6,7 @@ var postToServer = function(tags) {
 
 	// create HTTP request and get it ready
 	var xhr = new XMLHttpRequest();
-	xhr.open("POST", "http://chihaoyo.me/bulletpoints/add.php", true);
+	xhr.open("POST", "http://chihaoyo.me/bulletpoint/add.php", true);
 	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	xhr.onreadystatechange = function() {
 		console.log(xhr.readyState);
