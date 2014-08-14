@@ -15,7 +15,7 @@ include_once('importer.php');
 </head>
 <body>
 	<h1>BulletPoints</h1>
-	<h2>Nodes</h2>
+	<h2>Nodessss</h2>
 <?php
 
 $db = connect_to_db();
