@@ -2,7 +2,7 @@ var user_id = 'master';
 var url = window.location.href;
 var title = document.title.trim();
 var xhr = new XMLHttpRequest();
-xhr.open("POST", "http://chihaoyo.me/bulletpoints/add.php", true);
+xhr.open("POST", "http://chihaoyo.me/bulletpoint/add.php", true);
 xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 xhr.onreadystatechange = function() {
 	if (xhr.readyState == 4) {
@@ -14,23 +14,23 @@ xhr.onreadystatechange = function() {
 		var body = document.getElementsByTagName('body')[0];
 
 		// clear old bubble
-		var bubble = document.getElementById('BulletPointsBubble');
+		var bubble = document.getElementById('BulletPointBubble');
 		if(bubble != null) {
 			bubble.parentNode.removeChild(bubble);
 		}
 
 		// make new bubble
 		bubble = document.createElement('div');
-		bubble.setAttribute('id', 'BulletPointsBubble');
+		bubble.setAttribute('id', 'BulletPointBubble');
 
 		// check response text and style bubble accordingly
 		if(result == 'duplicate') {
 			bubble.classList.add('red');
-			bubble.innerHTML = '<p class="small">Page exist</p><p class="propersition">in</p><p class="big">BulletPoints</p>';
+			bubble.innerHTML = '<p class="small">Page exist</p><p class="propersition">in</p><p class="big">BulletPoint</p>';
 		}
 		else if(!isNaN(result)) {
 			bubble.classList.add('blue');
-			bubble.innerHTML = '<p class="small">Page added</p><p class="propersition">to</p><p class="big">BulletPoints</p>';
+			bubble.innerHTML = '<p class="small">Page added</p><p class="propersition">to</p><p class="big">BulletPoint</p>';
 		}
 
 		// add bubble to document

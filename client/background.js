@@ -1,5 +1,5 @@
 chrome.browserAction.onClicked.addListener(function(tab) {
-/*	console.log('Add ' + tab.url + ' to BulletPoints.');	
+/*	console.log('Add ' + tab.url + ' to BulletPoint.');	
 	chrome.tabs.executeScript({
 		code: 'document.body.style.backgroundColor="red"'
 	});*/

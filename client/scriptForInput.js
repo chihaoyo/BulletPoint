@@ -57,9 +57,7 @@ var activate = function() {
 		//user press "enter/return"(13)
 		//post the page info to the server along with the tags
 		if(event.keyCode == 13) {
-			//console.log('postToServer');
 			postToServer(inputBox.value);
-			//inputBox.value = '#';
 			removeDialog();
 		}
 	});

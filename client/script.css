@@ -1,4 +1,4 @@
-#BulletPointsBubble {
+#BulletPointBubble {
 	position: fixed;
 	top: 0;
 	left: 50%;
@@ -18,22 +18,22 @@
 	-o-transition: opacity 500ms ease-out;
 	transition: opacity 500ms ease-out;
 }
-#BulletPointsBubble.red {
+#BulletPointBubble.red {
 	background: red;
 	box-shadow:
 		0 0 0 5px rgba(255, 0, 0, 0.50),
 		0 0 0 10px rgba(255, 0, 0, 0.25);
 }
-#BulletPointsBubble.blue {
+#BulletPointBubble.blue {
 	background: blue;
 	box-shadow:
 		0 0 0 5px rgba(0, 0, 255, 0.50),
 		0 0 0 10px rgba(0, 0, 255, 0.25);
 }
-#BulletPointsBubble.hide {
+#BulletPointBubble.hide {
 	opacity: 0;
 }
-#BulletPointsBubble p {
+#BulletPointBubble p {
 	position: relative;
 	margin: 0;
 	padding: 0;
@@ -43,16 +43,16 @@
 	color: white;
 	text-align: center;
 }
-#BulletPointsBubble p:first-of-type {
+#BulletPointBubble p:first-of-type {
 	margin-top: 35px;
 }
-#BulletPointsBubble p.small {
+#BulletPointBubble p.small {
 	font-size: 14px;
 }
-#BulletPointsBubble p.propersition {
+#BulletPointBubble p.propersition {
 	font-size: 12px;
 	font-style: italic;
 }
-#BulletPointsBubble p.big {
+#BulletPointBubble p.big {
 	font-size: 24px;
 } 
