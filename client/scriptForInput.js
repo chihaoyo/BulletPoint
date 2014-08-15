@@ -1,39 +1,42 @@
-var setCookie = function(key, val, exp) {
-	if(val == '') {
-		exp = -365; // last year
-	}
-	else if(exp === undefined) {
-		exp = 365*1000; // 1,000 years // not 'Fri, 31 Dec 9999 23:59:59 GMT'
-	}
+// make random string
+function makeRandomString(len) {
+    var str = '';
+    var charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-	var d = new Date();
-	d.setTime(d.getTime() + exp*24*60*60*1000);
+    for(var i = 0; i < len; i++)
+        str += charSet.charAt(Math.floor(Math.random() * charSet.length));
 
-	document.cookie = key + '=' + val + '; expires=' + d.toGMTString();
+    return str;
+}
+
+// chrome storage manipulation
+var setStorage = function(pairs, callback) {
+	chrome.storage.sync.set(pairs, callback);
 };
-var getCookie = function(key) {
-	key += '=';
-
-	var val = '';
-	var cookies = document.cookie.split(';');
-	for(var i = 0; i < cookies.length; i++) {
-		var pair = cookies[i].trim();
-		if(pair.indexOf(key) >= 0) {
-			val = pair.substring(key.length, pair.length);
-			break;
-		}
-	}
-	return val;
+var getStorage = function(key, callback) {
+	chrome.storage.sync.get(key, callback);
 };
-var BulletPointID = getCookie('BulletPointID');
-if(BulletPointID == '')
-	console.log('BulletPointID not available');
-else
-	console.log('BulletPointID: ' + BulletPointID);
+
+// user id
+var BulletPointID = '';
+var setID = function(id) {
+	setStorage({BulletPointID: id}, function() {
+		console.log('Storage updated');
+	});
+};
+
+getStorage('BulletPointID', function(result) {
+	if(result.BulletPointID === undefined) {
+		BulletPointID = makeRandomString(16);
+		setID(BulletPointID);
+	}
+	else
+		BulletPointID = result.BulletPointID;
+});
 
 var postToServer = function(tags) {
 	// get values ready
-	var user_id = 'master';
+	var user_id = BulletPointID;
 	var url = window.location.href;
 	var title = document.title.trim();
 
@@ -67,6 +70,12 @@ var removeDialog = function() {
 	}
 };
 var activate = function() {
+	if(BulletPointID == '') {
+		BulletPointID = makeRandomString(16);
+		setID(BulletPointID);
+	}
+	console.log('BulletPointID: ' + BulletPointID);
+
 	var body = document.getElementsByTagName('body')[0];
 
 	// remove old dialog

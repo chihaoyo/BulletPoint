@@ -7,7 +7,10 @@
 	},
 	"homepage_url": "http://chihaoyo.me/bulletpoint/server",
 	"version": "0.1",
-	"permissions": ["activeTab", "http://chihaoyo.me/"],
+	"permissions": [
+		"activeTab", 
+		"storage", 
+		"http://chihaoyo.me/"],
 	"background": {
 		"scripts": ["background.js"],
 		"persistent": false
