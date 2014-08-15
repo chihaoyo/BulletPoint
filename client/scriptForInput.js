@@ -25,6 +25,7 @@ var setID = function(id) {
 	});
 };
 
+// get id from storage
 getStorage('BulletPointID', function(result) {
 	if(result.BulletPointID === undefined) {
 		BulletPointID = makeRandomString(16);
@@ -80,7 +81,7 @@ var activate = function() {
 	// create new dialog
 	var dialog = document.createElement('div');
 	dialog.setAttribute('id', 'BulletPointWrapper');
-	dialog.innerHTML = '<div class="padding"><input type="text" id="BulletPointTags" placeholder="#" /></div>';
+	dialog.innerHTML = '<div class="padding"><input type="text" id="BulletPointTags" placeholder="#" /><p id="BulletPointID">@' + BulletPointID + '</p></div>';
 	dialog.addEventListener('keydown', function(event) {
 		//user press "escape"(27)
 		//escape the tagging input without posting anything
