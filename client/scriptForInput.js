@@ -45,12 +45,8 @@ var postToServer = function(tags) {
 	xhr.open("POST", "http://chihaoyo.me/bulletpoint/server/add.php", true);
 	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	xhr.onreadystatechange = function() {
-		console.log(xhr.readyState);
-
 		if(xhr.readyState == 4) {
 			var result = xhr.responseText;
-			console.log('success');
-			console.log(result);
 			// feedback
 			removeDialog();
 		}
