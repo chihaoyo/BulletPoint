@@ -1,3 +1,36 @@
+var setCookie = function(key, val, exp) {
+	if(val == '') {
+		exp = -365; // last year
+	}
+	else if(exp === undefined) {
+		exp = 365*1000; // 1,000 years // not 'Fri, 31 Dec 9999 23:59:59 GMT'
+	}
+
+	var d = new Date();
+	d.setTime(d.getTime() + exp*24*60*60*1000);
+
+	document.cookie = key + '=' + val + '; expires=' + d.toGMTString();
+};
+var getCookie = function(key) {
+	key += '=';
+
+	var val = '';
+	var cookies = document.cookie.split(';');
+	for(var i = 0; i < cookies.length; i++) {
+		var pair = cookies[i].trim();
+		if(pair.indexOf(key) >= 0) {
+			val = pair.substring(key.length, pair.length);
+			break;
+		}
+	}
+	return val;
+};
+var BulletPointID = getCookie('BulletPointID');
+if(BulletPointID == '')
+	console.log('BulletPointID not available');
+else
+	console.log('BulletPointID: ' + BulletPointID);
+
 var postToServer = function(tags) {
 	// get values ready
 	var user_id = 'master';
