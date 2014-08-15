@@ -49,7 +49,8 @@ var postToServer = function(tags) {
 		if(xhr.readyState == 4) {
 			var result = xhr.responseText;
 			// feedback
-			removeDialog();
+			setDialogStatus(result == 'duplicate' ? 'warning' : 'ok');
+			setTimeout(removeDialog, 1000);
 		}
 	};
 
@@ -64,6 +65,12 @@ var removeDialog = function() {
 	var dialog = document.getElementById('BulletPointWrapper');
 	if(dialog != null) {
 		dialog.parentNode.removeChild(dialog);
+	}
+};
+var setDialogStatus = function(status) {
+	var dialog = document.getElementById('BulletPointWrapper');
+	if(dialog != null) {
+		dialog.setAttribute('status', status);
 	}
 };
 var activate = function() {
@@ -81,7 +88,7 @@ var activate = function() {
 	// create new dialog
 	var dialog = document.createElement('div');
 	dialog.setAttribute('id', 'BulletPointWrapper');
-	dialog.innerHTML = '<div class="padding"><input type="text" id="BulletPointTags" placeholder="#" /><p id="BulletPointID">@' + BulletPointID + '</p></div>';
+	dialog.innerHTML = '<div class="padding"><input type="text" class="row" id="BulletPointTags" placeholder="#" /><p class="row"  id="BulletPointID">@' + BulletPointID + '</p></div>';
 	dialog.addEventListener('keydown', function(event) {
 		//user press "escape"(27)
 		//escape the tagging input without posting anything

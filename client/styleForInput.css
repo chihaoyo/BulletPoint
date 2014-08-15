@@ -10,16 +10,33 @@
 	font-size: 20px;
 	z-index: 999999999999;
 }
+#BulletPointWrapper[status='error'] {
+	background: red;
+}
+#BulletPointWrapper[status='warning'] {
+	background: yellow;
+}
+#BulletPointWrapper[status='ok'] {
+	background: green;
+}
 #BulletPointWrapper * {
+	outline: none;
+	margin: 0;
+	border: none;
+	padding: 0;
 	font-family: 'Source Code Pro', monospace;
+	color: lime;
+}
+#BulletPointWrapper .row {
+	margin: 2px 0;
 }
 #BulletPointWrapper .padding {
 	padding: 0.33333333em;
 }
 #BulletPointWrapper input {
 	-webkit-appearance: none;
-	border: none;
 	outline: none;
+	border: none;
 	width: 100%;
 	background: none;
 	color: lime;
@@ -28,6 +45,5 @@
 }
 #BulletPointWrapper #BulletPointID {
 	font-size: 0.5em;
-	color: lime;
 	text-align: right;
 }
