@@ -28,7 +28,7 @@ foreach($data as $row) {
 </body>
 </html>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-<script src="../common/lib-jquery-ext.js"></script>
+<script src="//chihaoyo.me/common/lib-jquery-ext.js"></script>
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script>
 
