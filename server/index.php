@@ -26,18 +26,18 @@ foreach($data as $row) {
 		array('node_id' => $row['serial'])
 	);
 	if(count($tags) > 0) {
-		$tags = ___($tags, true);
+		$tags = implode(' ', array_column($tags, 'tag'));
 	}
 	else {
 		$tags = '';
 	}
 
-	echo sprintf('<p><span>#%s</span> <a href="%s" target="_blank"><span class="">%s</span></a> added by <span class="bold">%s</span>%s%s</p>', 
+	echo sprintf('<p><span>#%s</span>, <a href="%s" target="_blank"><span class="">%s</span></a>, @<span class="bold">%s</span>%s%s</p>', 
 		$row['serial'], 
 		$row['url'], 
 		$row['title'], 
 		$row['user_id'], 
-		($row['comment'] != '' ? ' with comment <span class="italic">' . $row['comment'] . '</span>' : ''), 
+		($row['comment'] != '' ? ', “<span class="italic">' . $row['comment'] . '</span>”' : ''), 
 		$tags
 	);
 }
