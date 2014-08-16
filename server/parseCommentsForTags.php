@@ -8,7 +8,11 @@ $nodes = $db->fa('SELECT * FROM Nodes');
 foreach($nodes as $node) {
 	$node_id = $node['serial'];
 	$comment = $node['comment'];
+	if($comment == '')
+		continue;
+	
 	$words = explode(" ", $comment);
+	___($words);
 	//then scan through all words
 	foreach ($words as $word) {
 		//if there are any words start with '#', it is a tag.
