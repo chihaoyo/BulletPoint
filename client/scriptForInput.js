@@ -106,6 +106,7 @@ var activate = function() {
 		//post the page info to the server along with the comment
 		if(event.keyCode == 13) {
 			postToServer(commentBox.value);
+			event.preventDefault();
 		}
 	});
 
