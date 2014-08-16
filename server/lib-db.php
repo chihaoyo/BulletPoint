@@ -8,23 +8,24 @@
 
 class _DO extends PDO {
 	// basic functions for query
-	public function q($sql) {
+	public function q($sql) { // deprecated
 		return ($this->query($sql) !== false ? true : false);
 	}
 	public function qa($sql) { // deprecated
 		return $this->qfa();
 	}
-	public function qf($sql) {
+	public function qf($sql) { // deprecated
 		return $this->query($sql)->fetch(PDO::FETCH_ASSOC);
 	}
-	public function qfa($sql) {
+	public function qfa($sql) { // deprecated
 		return $this->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 	}
-	public function e($string) {
+	public function e($string) { // deprecated
 		return substr($this->quote($string), 1, -1);
 	}
 	
 	// prepare and execute
+	// use this set of query functions instead
 	public function f1($sql, $parameters = array()) {
 		$statement = $this->prepare($sql);
 		$statement->execute($parameters);
