@@ -15,7 +15,7 @@ include_once('importer.php');
 </head>
 <body>
 	<h1>BulletPoints</h1>
-	<h2>Nodes:</h2>
+	<h2>Nodes</h2>
 <?php
 
 $db = connect_to_db();
@@ -27,7 +27,7 @@ foreach($data as $row) {
 		array('node_id' => $row['serial'])
 	);
 	if(count($tags) > 0) {
-		$tags = implode(' ', array_column($tags, 'tag'));
+		$tags = implode(' ', select('tag', $tags));//array_column($tags, 'tag'));
 	}
 	else {
 		$tags = '';
