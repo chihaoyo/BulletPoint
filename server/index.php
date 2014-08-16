@@ -21,7 +21,16 @@ include_once('importer.php');
 $db = connect_to_db();
 $data = $db->fa('SELECT * FROM Nodes ORDER BY serial DESC');
 foreach($data as $row) {
-	echo '<p>#' . $row['serial'] . ' <span class="italic">' . ($row['title'] != '' ? $row['title'] : 'Untitled') . '</span> at <code>' . $row['url'] . '</code> added by <span class="bold">' . $row['user_id'] . '</span>' . ($row['comment'] != '' ? ' with comment <span class="bold italic">' . $row['comment'] : '</span>')  . '</p>';
+	$tags = $db->fa(
+		'SELECT * FROM Tags WHERE serial in (SELECT tag_id FROM NodeTagPairs WHERE node_id = :node_id)', 
+		array('node_id' => $row['serial'])
+	);
+	if(count($tags) > 0) {
+		$tags = ___($tags, true);
+	}
+	else
+		$tags = '';
+	echo '<p>#' . $row['serial'] . ' <a href="' + $row['url'] + '" target="_blank"><span class="">' . ($row['title'] != '' ? $row['title'] : 'Untitled') . '</span></a> added by <span class="bold">' . $row['user_id'] . '</span>' . ($row['comment'] != '' ? ' with comment <span class="italic">' . $row['comment'] : '</span>')  . $tags . '</p>';
 }
 
 ?>
