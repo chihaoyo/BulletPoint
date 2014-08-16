@@ -37,7 +37,7 @@ else {
 			$tags_r = $db->fa($tags_q, $tags_p);
 			if(count($tags_r) == 0) {
 				//if not, then add this tag to the tag list first
-				$tags_q = 'INSERT INTO Tags(tag) VALUES(:tag)';
+				$tags_q = 'INSERT INTO Tags(tag) VALUES (:tag)';
 				//$tags_p = array('tag' => $word);
 				$tags_r = $db->q1($tags_q, $tags_p);
 				$tag_id = $db->lastInsertId();
