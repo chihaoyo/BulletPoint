@@ -113,6 +113,7 @@ var activate = function() {
 	commentBox.focus();
 //	commentBox.value = '';
 //	commentBox.value = '#';
+	// put cursor to the end of default value
 };
 
 //Initiate the tagging dialog box
