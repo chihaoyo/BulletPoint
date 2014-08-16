@@ -10,9 +10,8 @@ foreach($nodes as $node) {
 	$comment = $node['comment'];
 	if($comment == '')
 		continue;
-	
+
 	$words = explode(" ", $comment);
-	___($words);
 	//then scan through all words
 	foreach ($words as $word) {
 		//if there are any words start with '#', it is a tag.
@@ -31,11 +30,9 @@ foreach($nodes as $node) {
 			}
 			else
 				$tag_id = $tags_r[0]['serial'];
-			//now we are sure this tag exists in the system
-			//since the current user-url pair doesn't exist in the database before the add.php is called this time,
-			//we are sure that this user-url-tag triple doesn't exist in the system for now
-			//so we can add it anyway.
-			$tags_q = 'INSERT INTO NodeTagPairs(node_id, tag_id) VALUES (:node_id, :tag_id)';
+			
+			// Use replace instead of INSERT to avoid duplicate entry
+			$tags_q = 'REPLACE INTO NodeTagPairs(node_id, tag_id) VALUES (:node_id, :tag_id)';
 			$tags_p = array('node_id' => $node_id, 'tag_id' => $tag_id);
 			$tags_r = $db->q1($tags_q, $tags_p);
 		}
