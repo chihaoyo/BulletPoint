@@ -5,7 +5,7 @@ include_once('importer.php');
 $user_id = $_POST['user_id'];
 $url = $_POST['url'];
 $title = $_POST['title'];
-$tags = $_POST['tags'];
+$comment = $_POST['comment'];
 $now = time();
 
 $db = connect_to_db();
@@ -17,8 +17,8 @@ if(count($r) > 0) {
 	$r = false;
 }
 else {
-	$q = 'INSERT INTO nodes(user_id, url, t_create, t_update, title, tags) VALUES(:user_id, :url, :now, :now, :title, :tags)';
-	$p = array('user_id' => $user_id, 'url' => $url, 'now' => $now, 'title' => $title, 'tags' => $tags);
+	$q = 'INSERT INTO nodes(user_id, url, t_create, t_update, title, comment) VALUES(:user_id, :url, :now, :now, :title, :comment)';
+	$p = array('user_id' => $user_id, 'url' => $url, 'now' => $now, 'title' => $title, 'comment' => $comment);
 
 	$r = $db->q1($q, $p);
 }
