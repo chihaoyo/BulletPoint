@@ -28,9 +28,11 @@ foreach($data as $row) {
 	if(count($tags) > 0) {
 		$tags = ___($tags, true);
 	}
-	else
+	else {
 		$tags = '';
-	echo '<p>#' . $row['serial'] . ' <a href="' + $row['url'] + '" target="_blank"><span class="">' . ($row['title'] != '' ? $row['title'] : 'Untitled') . '</span></a> added by <span class="bold">' . $row['user_id'] . '</span>' . ($row['comment'] != '' ? ' with comment <span class="italic">' . $row['comment'] : '</span>')  . $tags . '</p>';
+	}
+	
+	echo '<p><span>#' . $row['serial'] . '</span> <a href="' + $row['url'] + '" target="_blank"><span class="">' . ($row['title'] != '' ? $row['title'] : 'Untitled') . '</span></a> added by <span class="bold">' . $row['user_id'] . '</span>' . ($row['comment'] != '' ? ' with comment <span class="italic">' . $row['comment'] : '</span>')  . $tags . '</p>';
 }
 
 ?>
