@@ -35,7 +35,7 @@ getStorage('BulletPointID', function(result) {
 		BulletPointID = result.BulletPointID;
 });
 
-var postToServer = function(tags) {
+var postToServer = function(comment) {
 	// get values ready
 	var user_id = BulletPointID;
 	var url = window.location.href;
@@ -55,7 +55,7 @@ var postToServer = function(tags) {
 	};
 
 	// create parameter string
-	var parameters = 'user_id=' + user_id + '&url=' + url + '&title=' + title + '&tags=' + tags;
+	var parameters = 'user_id=' + user_id + '&url=' + url + '&title=' + title + '&comment=' + comment;
 	console.log("POST: '" + parameters + "'");
 
 	// send request
@@ -103,7 +103,7 @@ var activate = function() {
 	var commentBox = document.getElementById('BulletPointComment');
 	commentBox.addEventListener('keypress', function(event) {
 		//user press "enter/return"(13)
-		//post the page info to the server along with the tags
+		//post the page info to the server along with the comment
 		if(event.keyCode == 13) {
 			postToServer(commentBox.value);
 		}
