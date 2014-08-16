@@ -45,6 +45,10 @@
 	color: lime;
 	font-size: 1em;
 }
+#BulletPointWrapper input:focus, 
+#BulletPointWrapper textarea:focus {
+	outline: none;
+}
 #BulletPointWrapper textarea {
 	height: 7.5em;
 }
