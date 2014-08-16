@@ -25,6 +25,7 @@
 	margin: 0;
 	border: none;
 	padding: 0;
+	background: none;
 	font-family: 'Source Code Pro', monospace;
 	color: lime;
 	-webkit-font-smoothing: subpixel-antialiased;
@@ -47,7 +48,9 @@
 }
 #BulletPointWrapper input:focus, 
 #BulletPointWrapper textarea:focus {
+	-webkit-background-clip: none;
 	outline: none;
+	background: none;
 }
 #BulletPointWrapper textarea {
 	height: 7.5em;
