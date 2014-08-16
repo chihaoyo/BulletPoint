@@ -32,7 +32,14 @@ foreach($data as $row) {
 		$tags = '';
 	}
 
-	echo '<p><span>#' . $row['serial'] . '</span> <a href="' . $row['url'] . '" target="_blank"><span class="">' . ($row['title'] != '' ? $row['title'] : 'Untitled') . '</span></a> added by <span class="bold">' . $row['user_id'] . '</span>' . ($row['comment'] != '' ? ' with comment <span class="italic">' . $row['comment'] : '</span>')  . $tags . '</p>';
+	echo sprintf('<p><span>#%s</span> <a href="%s" target="_blank"><span class="">%s</span></a> added by <span class="bold">%s</span>%s%s</p>', 
+		$row['serial'], 
+		$row['url'], 
+		$row['title'], 
+		$row['user_id'], 
+		($row['comment'] != '' ? ' with comment <span class="italic">' . $row['comment'] . '</span>' : ''), 
+		$tags
+	);
 }
 
 ?>
