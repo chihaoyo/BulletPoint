@@ -19,7 +19,7 @@ include_once('importer.php');
 <?php
 
 $db = connect_to_db();
-$data = $db->fa('SELECT * FROM nodes ORDER BY serial DESC');
+$data = $db->fa('SELECT * FROM Nodes ORDER BY serial DESC');
 foreach($data as $row) {
 	echo '<p>#' . $row['serial'] . ' <span class="italic">' . ($row['title'] != '' ? $row['title'] : 'Untitled') . '</span> at <code>' . $row['url'] . '</code> added by <span class="bold">' . $row['user_id'] . '</span>' . ($row['comment'] != '' ? ' with comment <span class="bold italic">' . $row['comment'] : '</span>')  . '</p>';
 }
