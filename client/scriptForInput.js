@@ -88,7 +88,7 @@ var activate = function() {
 	// create new dialog
 	var dialog = document.createElement('div');
 	dialog.setAttribute('id', 'BulletPointWrapper');
-	dialog.innerHTML = '<div class="padding"><textarea celass="row" id="BulletPointComment" placeholder="Type in comment, RETURN to submit."></textarea><p class="row"  id="BulletPointID">@' + BulletPointID + '</p></div>';
+	dialog.innerHTML = '<div class="padding"><textarea class="row" id="BulletPointComment" placeholder="Type in comment, RETURN to submit."></textarea><p class="row"  id="BulletPointID">@' + BulletPointID + '</p></div>';
 	dialog.addEventListener('keydown', function(event) {
 		//user press "escape"(27)
 		//escape the tagging input without posting anything
