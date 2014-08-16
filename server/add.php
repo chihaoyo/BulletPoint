@@ -34,12 +34,12 @@ else {
 			$tag_id = -1;
 			$tags_q = 'SELECT * FROM Tags WHERE tag = :tag';
 			$tags_p = array('tag' => $word);
-			$tags_r = $db->fa($q, $p);
+			$tags_r = $db->fa($tags_q, $tags_p);
 			if(count($tags_r) == 0) {
 				//if not, then add this tag to the tag list first
 				$tags_q = 'INSERT INTO Tags(tag) VALUES(:tag)';
 				//$tags_p = array('tag' => $word);
-				$tags_r = $db->q1($q, $p);
+				$tags_r = $db->q1($tags_q, $tags_p);
 				$tag_id = $db->lastInsertId();
 			}
 			else
@@ -50,7 +50,7 @@ else {
 			//so we can add it anyway.
 			$tags_q = 'INSERT INTO NodeTagPairs(node_id, tag_id) VALUES (:node_id, :tag_id)';
 			$tags_p = array('node_id' => $node_id, 'tag_id' => $tag_id);
-			$tags_r = $db->q1($q, $p);
+			$tags_r = $db->q1($tags_q, $tags_p);
 		}
 	}
 }
