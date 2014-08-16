@@ -21,6 +21,7 @@
 	background: green;
 }
 #BulletPointWrapper * {
+	box-shadow: none;
 	outline: none;
 	margin: 0;
 	border: none;
@@ -31,6 +32,7 @@
 	-webkit-font-smoothing: subpixel-antialiased;
 }
 #BulletPointWrapper *:focus {
+	box-shadow: none;
 	outline: none;
 	border: none;
 	background: none;
@@ -44,8 +46,6 @@
 #BulletPointWrapper input, 
 #BulletPointWrapper textarea {
 	-webkit-appearance: none;
-	outline: none !important;
-	border: none !important;
 	width: 100%;
 	background: none;
 	color: lime;
