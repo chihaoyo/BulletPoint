@@ -88,7 +88,7 @@ var activate = function() {
 	// create new dialog
 	var dialog = document.createElement('div');
 	dialog.setAttribute('id', 'BulletPointWrapper');
-	dialog.innerHTML = '<div class="padding"><input type="text" class="row" id="BulletPointTags" placeholder="#" /><p class="row"  id="BulletPointID">@' + BulletPointID + '</p></div>';
+	dialog.innerHTML = '<div class="padding"><textarea celass="row" id="BulletPointComment" placeholder="Type in comment, RETURN to submit."></textarea><p class="row"  id="BulletPointID">@' + BulletPointID + '</p></div>';
 	dialog.addEventListener('keydown', function(event) {
 		//user press "escape"(27)
 		//escape the tagging input without posting anything
@@ -100,19 +100,19 @@ var activate = function() {
 	body.appendChild(dialog);
 
 	// initialize input box
-	var inputBox = document.getElementById('BulletPointTags');
-	inputBox.addEventListener('keypress', function(event) {
+	var commentBox = document.getElementById('BulletPointComment');
+	commentBox.addEventListener('keypress', function(event) {
 		//user press "enter/return"(13)
 		//post the page info to the server along with the tags
 		if(event.keyCode == 13) {
-			postToServer(inputBox.value);
+			postToServer(commentBox.value);
 		}
 	});
 
 	// focus input box
-	inputBox.focus();
-	inputBox.value = '';
-	inputBox.value = '#';
+	commentBox.focus();
+//	commentBox.value = '';
+//	commentBox.value = '#';
 };
 
 //Initiate the tagging dialog box
