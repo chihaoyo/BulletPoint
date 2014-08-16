@@ -21,6 +21,7 @@
 	background: green;
 }
 #BulletPointWrapper * {
+	-webkit-appearance: none;
 	box-shadow: none;
 	outline: none;
 	margin: 0;
@@ -28,6 +29,7 @@
 	padding: 0;
 	background: none;
 	font-family: 'Source Code Pro', monospace;
+	font-size: 1em;
 	color: lime;
 	-webkit-font-smoothing: subpixel-antialiased;
 }
@@ -38,18 +40,11 @@
 	background: none;
 }
 #BulletPointWrapper .row {
+	width: 100%;
 	margin: 2px 0;
 }
 #BulletPointWrapper .padding {
 	padding: 0.33333333em;
-}
-#BulletPointWrapper input, 
-#BulletPointWrapper textarea {
-	-webkit-appearance: none;
-	width: 100%;
-	background: none;
-	color: lime;
-	font-size: 1em;
 }
 #BulletPointWrapper textarea {
 	height: 7.5em;
