@@ -48,7 +48,8 @@ else {
 			//since the current user-url pair doesn't exist in the database before the add.php is called this time,
 			//we are sure that this user-url-tag triple doesn't exist in the system for now
 			//so we can add it anyway.
-			$tags_q = 'INSERT INTO NodeTagPairs(node_id, tag_id) VALUES (:node_id, :tag_id)';
+			// chihao: use REPLACE for just-in-case
+			$tags_q = 'REPLACE INTO NodeTagPairs(node_id, tag_id) VALUES (:node_id, :tag_id)';
 			$tags_p = array('node_id' => $node_id, 'tag_id' => $tag_id);
 			$tags_r = $db->q1($tags_q, $tags_p);
 		}
