@@ -10,7 +10,6 @@
 	"permissions": [
 		"activeTab", 
 		"storage", 
-		"http://chihaoyo.me/"],
 		"<all_urls>"],
 	"background": {
 		"scripts": ["background.js"],
@@ -24,7 +23,6 @@
 
 	"content_scripts": [
 		{
-			"matches": ["http://*/*"],
 			"matches": ["<all_urls>"],
 			"css": ["styleForInput.css"],
 			"js": ["scriptForInput.js"]
