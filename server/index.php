@@ -27,7 +27,7 @@ foreach($data as $row) {
 		array('node_id' => $row['serial'])
 	);
 	if(count($tags) > 0) {
-		$tags = implode(' ', select('tag', $tags));//array_column($tags, 'tag'));
+		$tags = implode(' ', array_select('tag', $tags));//array_column($tags, 'tag'));
 	}
 	else {
 		$tags = '';

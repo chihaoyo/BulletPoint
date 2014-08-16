@@ -80,7 +80,7 @@ function ___($obj, $return = false, $table = false, $caption = 'data table') {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function select($key, $array) {
+function array_select($key, $array) {
 	$result = array();
 	foreach($array as $item) {
 		$result[] = $item[$key];
@@ -88,7 +88,7 @@ function select($key, $array) {
 	return $result;
 }
 
-function promote($key, $array) {
+function array_promote($key, $array) {
 	$result = array();
 	foreach($array as $item) {
 		if(!isset($item[$key]))
