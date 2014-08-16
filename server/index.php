@@ -21,6 +21,7 @@ include_once('importer.php');
 $db = connect_to_db();
 $data = $db->fa('SELECT * FROM Nodes ORDER BY serial DESC');
 foreach($data as $row) {
+	$comment = $row['comment'];
 	$tags = $db->fa(
 		'SELECT * FROM Tags WHERE serial in (SELECT tag_id FROM NodeTagPairs WHERE node_id = :node_id)', 
 		array('node_id' => $row['serial'])
@@ -37,8 +38,8 @@ foreach($data as $row) {
 		$row['url'], 
 		$row['title'], 
 		$row['user_id'], 
-		($row['comment'] != '' ? ', “<span class="italic">' . $row['comment'] . '</span>”' : ''), 
-		$tags
+		($comment != '' ? ', “<span class="italic">' . $comment . '</span>”' : ''), 
+		($tags != '' ?  ', <span class="bold">' . $tags . '</span>' : '')
 	);
 }
 
