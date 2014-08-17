@@ -22,6 +22,7 @@ $app->get('/nodes/:id', function($id) use ($app) {
 $app->post('/nodes', function() use ($app) {
 	___('post to Nodes');
 	var_dump($app->request->post());
+	___('post finalizing');
 });
 $app->delete('/nodes/:id', function($id) use ($app){
 	if(is_numeric($id) && intval($id) > 0) {
