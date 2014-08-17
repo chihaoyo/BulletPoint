@@ -11,6 +11,7 @@ $db = connect_to_db();
 $app = new \Slim\Slim();
 $app->get('/:table/:id', function($table, $id) use ($app, $db) {
 	$table = ucfirst($table);
+	// Have to check $table for SQL injection here
 	
 	if($id == 'all') {
 		echo json_encode(get_all($db, $table));
