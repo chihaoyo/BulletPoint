@@ -6,7 +6,7 @@ include_once('importer.php');
 ?>
 <html>
 <head>
-	<title>BulletPoints</title>
+	<title>BulletPoint</title>
 	<meta charset="utf-8" />
 	<link rel="shortcut icon" href="favicon.ico" />
 	<link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -14,7 +14,7 @@ include_once('importer.php');
 	<link rel="stylesheet" href="main.css" />
 </head>
 <body>
-	<h1>BulletPoints</h1>
+	<h1>BulletPoint</h1>
 	<h2>Nodes</h2>
 <?php
 
