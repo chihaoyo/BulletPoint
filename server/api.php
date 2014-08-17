@@ -55,7 +55,7 @@ $app->delete('/:table/:id', function($table, $id) use ($app, $db){
 });
 
 $app->notFound(function() {
-	echo 'false';
+	echo 'n/a';
 });
 $app->run();
 
