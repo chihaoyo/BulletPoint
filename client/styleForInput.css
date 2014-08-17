@@ -36,6 +36,8 @@
 	font-family: 'Source Code Pro', monospace;
 	font-size: 1em;
 	color: lime;
+	line-height: 1.2em;
+	letter-spacing: 0;
 	-webkit-font-smoothing: subpixel-antialiased;
 }
 #BulletPointWrapper *:focus {
