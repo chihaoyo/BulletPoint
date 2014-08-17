@@ -1,5 +1,7 @@
 <?php
 
+include_once('importer.php');
+
 $db_structure = array(
 	'Nodes' => array('user_id', 'url', 't_create', 't_update', 'title', 'comment'), 
 	'Edges', => array(), 
@@ -35,5 +37,7 @@ function insert($db, $table, $data) {
 	if(!has_all_required_cols($table, $data))
 		return false;
 }
+
+has_all_required_cols('Nodes', array('user_id'=>0,'url'=>'abc'));
 
 ?>
