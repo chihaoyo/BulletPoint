@@ -13,7 +13,7 @@ $app->get('/:table/:id', function($table, $id) use ($app) {
 	}
 	else if(is_numeric($id) && intval($id) > 0) {
 		$id = intval($id);
-		___("get $table #$id";
+		___("get $table #$id");
 	}
 	else {
 		$app->notFound();
