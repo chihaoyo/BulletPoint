@@ -1,4 +1,4 @@
 RewriteEngine On
-RewriteRule ^$ http://chihaoyo.me/bulletpoint/server/index.php [NE,L]
+RewriteRule ^$ http://50.18.115.212/bulletpoint/server/index.php [NE,L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ api.php [QSA,L]

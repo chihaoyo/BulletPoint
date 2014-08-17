@@ -10,7 +10,7 @@ include_once('importer.php');
 	<meta charset="utf-8" />
 	<link rel="shortcut icon" href="favicon.ico" />
 	<link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="http://chihaoyo.me/fonts/helvetica-neue/stylesheet.css" />
+	<link rel="stylesheet" href="http://50.18.115.212/fonts/helvetica-neue/stylesheet.css" />
 	<link rel="stylesheet" href="main.css" />
 </head>
 <body>
@@ -47,7 +47,7 @@ foreach($data as $row) {
 </body>
 </html>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-<script src="//chihaoyo.me/common/lib-jquery-ext.js"></script>
+<script src="//50.18.115.212/common/lib-jquery-ext.js"></script>
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script>
 

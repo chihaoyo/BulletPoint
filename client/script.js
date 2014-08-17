@@ -2,7 +2,7 @@ var user_id = 'master';
 var url = window.location.href;
 var title = document.title.trim();
 var xhr = new XMLHttpRequest();
-xhr.open("POST", "http://chihaoyo.me/bulletpoint/server/add.php", true);
+xhr.open("POST", "http://50.18.115.212/bulletpoint/server/add.php", true);
 xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 xhr.onreadystatechange = function() {
 	if (xhr.readyState == 4) {
