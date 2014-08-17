@@ -21,9 +21,7 @@ $app->get('/nodes/:id', function($id) use ($app) {
 });
 $app->post('/nodes', function() use ($app) {
 	___('post to Nodes');
-	___('post variables');
-	var_dump($app->request->getBody());
-	var_dump($app->request->params());
+	var_dump($app->request->post());
 	___('post finalizing');
 });
 $app->delete('/nodes/:id', function($id) use ($app){
