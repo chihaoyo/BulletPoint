@@ -35,22 +35,24 @@ $app->post('/:table', function($table) use ($app, $db) {
 	if(!table_exists($table)) {
 		$app->notFound();
 	}
-
-	___("post to $table");
-	$parameters = $app->request->post();
-	___($parameters);
+	else {
+		___("post to $table");
+		$parameters = $app->request->post();
+		___($parameters);
+	}
 });
 $app->delete('/:table/:id', function($table, $id) use ($app, $db){
 	if(!table_exists($table)) {
 		$app->notFound();
 	}
-
-	if(is_numeric($id) && intval($id) > 0) {
-		$id = intval($id);
-		___("delete $table #$id");
-	}
 	else {
-		$app->notFound();
+		if(is_numeric($id) && intval($id) > 0) {
+			$id = intval($id);
+			___("delete $table #$id");
+		}
+		else {
+			$app->notFound();
+		}
 	}
 });
 $app->notFound(function() {
