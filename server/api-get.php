@@ -1,6 +1,6 @@
 <?php
 
-function get_all($table) {
+function get_all($db, $table) {
 	$q = 'SELECT * FROM :table WHERE 1';
 	$p = array('table' => $table);
 	return $db->fa($q, $p);

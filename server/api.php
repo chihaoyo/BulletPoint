@@ -1,7 +1,7 @@
 <?php
 
 include_once('importer.php');
-include_once('api-get.php');
+//include_once('api-get.php');
 
 require 'Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
