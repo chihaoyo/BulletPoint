@@ -52,7 +52,7 @@ $app->post('/:table', function($table) use ($app, $db) {
 			foreach($words as $word) {
 				if($word{0} != '#')
 					continue;
-				$tag_ids.push(write($db, 'Tags', array('tag' => $word)));
+				$tag_ids[] = write($db, 'Tags', array('tag' => $word));
 			}
 			if(count($tag_ids) > 0) {
 				// delete NodeTagPairs // add NodeTagPairs
@@ -62,7 +62,7 @@ $app->post('/:table', function($table) use ($app, $db) {
 			}
 		}
 
-		echo json_decode($r);
+		echo json_encode($r);
 	}
 });
 $app->delete('/:table/:id', function($table, $id) use ($app, $db){
@@ -72,7 +72,7 @@ $app->delete('/:table/:id', function($table, $id) use ($app, $db){
 	else {
 		if(is_numeric($id) && intval($id) > 0) {
 			$id = intval($id);
-			echo json_decode(delete($db, $table, $id));
+			echo json_encode(delete($db, $table, $id));
 		}
 		else {
 			$app->notFound();
@@ -82,7 +82,7 @@ $app->delete('/:table/:id', function($table, $id) use ($app, $db){
 $app->delete('/NodeTagPairs/Node/:node_id', function($table, $id) use ($app, $db){
 	if(is_numeric($node_id) && intval($node_id) > 0) {
 		$node_id = intval($node_id);
-		echo json_decode(delete_node_tag_pair_on_node($db, $node_id));
+		echo json_encode(delete_node_tag_pair_on_node($db, $node_id));
 	}
 	else {
 		$app->notFound();

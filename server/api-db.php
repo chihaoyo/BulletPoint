@@ -58,9 +58,8 @@ function has_unique_key_cols($table, $data) {
 	return count($unique_key_cols) > 0 && count($unique_key_cols) == count(array_intersect($unique_key_cols, $data_cols));
 }
 
-// $table cannot be in $p
 function select_all($db, $table) {
-	$q = "SELECT * FROM $table WHERE 1";
+	$q = "SELECT * FROM $table WHERE 1"; // $table cannot be in $p
 	return $db->fa($q);
 }
 function select($db, $table, $serial) {
@@ -73,12 +72,11 @@ function select_node($db, $user_id, $url_hash) {
 	$p = array('user_id' => $user_id, 'url_hash' => $url_hash);
 	return $db->f1($q, $p);
 }
+
 define('DB_UNDEFINED', false);
 define('DB_UPDATE', 'UPDATE');
 define('DB_INSERT', 'INSERT');
 function write($db, $table, $data) {
-//	___("write to $table");
-//	___($data);
 	global $db_structure;
 	
 	$cols_to_insert = $db_structure[$table]['cols'];
@@ -117,10 +115,6 @@ function write($db, $table, $data) {
 	
 	$q .= 'ON DUPLICATE KEY UPDATE serial = LAST_INSERT_ID(serial), ' . implode(', ', $pairs_to_update);
 	
-//	___($action);
-//	___($q);
-//	___($data);
-	
 	// do it
 	return ($db->q1($q, $data) !== false ? $db->lastInsertId() : false);
 }
@@ -134,16 +128,5 @@ function delete_node_tag_pairs_on_node($db, $node_id) {
 	$p = array('node_id' => $node_id);
 	return $db->q1($q, $p);
 }
-
-//include_once('importer.php');
-//$db = connect_to_db();
-//___(write($db, 'Nodes', array('user_id'=>'@0', 'url'=>'http://a.b.c/', 'title'=>'X', 'comment'=>'xxx')));
-//___(write($db, 'Nodes', array('serial'=>139, 'comment'=>'ggg')));
-//___(write($db, 'Nodes', array('user_id'=>'@0', 'url_hash'=>'8c3dd945ba85b616beb17a71d9305851', 'comment'=>'kkk')));
-//___(write($db, 'Nodes', array('user_id'=>'@0', 'url_hash'=>'8c3dd945ba85b616beb17a71d9305851', 'url'=>'http://a.b.c/', 'title'=>'Q', 'comment'=>'qqq')));
-//___(write($db, 'Tags', array('tag'=>'#aaa')));
-//___(write($db, 'Tags', array('serial'=>525, 'tag'=>'#bbb')));
-
-//___('done');
 
 ?>
