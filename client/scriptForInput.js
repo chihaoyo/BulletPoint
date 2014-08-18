@@ -59,7 +59,13 @@ var postToServer = function(comment) {
 			var result = xhr.responseText;
 			// feedback
 			var commentBox = document.getElementById('BulletPointComment');
-			showStatusMessage(result == 'duplicate' ? 'warning' : 'ok', commentBox.value);
+			var status = (result == 'duplicate' ? 'warning' : 'ok');
+			var statusMessage = 'Saved.';
+			if(status == 'warning')
+				statusMessage = 'Oops.';
+			else if(status == 'error')
+				statusMessage = 'Noooooo.';
+			showStatusMessage(status, statusMessage); //, commentBox.value);
 		}
 	};
 
@@ -103,21 +109,31 @@ var removeDialog = function() {
 	if(dialog != null) {
 		dialog.parentNode.removeChild(dialog);
 	}
-};
+};/*
 var setDialogStatus = function(status) {
 	var dialog = document.getElementById('BulletPointWrapper');
 	if(dialog != null) {
 		dialog.setAttribute('status', status);
 	}
-};
+};*/
 
 var showStatusMessage = function(status, statusMessage, timeOutLimit) {
-	setDialogStatus(status);
-	var commentBox = document.getElementById('BulletPointComment');
-	commentBox.value = statusMessage;
 	if(typeof timeOutLimit === 'undefined') {
 		timeOutLimit = 1000;
 	}
+	
+	var dialog = document.getElementById('BulletPointWrapper');
+	if(dialog != null) {
+		dialog.setAttribute('status', status);
+	}
+
+	var commentBox = document.getElementById('BulletPointComment');
+	commentBox.classList.add('blurry');
+
+	var statusMessageBox = document.getElementById('statusMessageBox');
+	statusMessageBox.innerHTML = '<p>' + statusMessage + '</p>';
+	statusMessageBox.style.display = 'block';
+
 	setTimeout(removeDialog, timeOutLimit);
 };
 
@@ -141,7 +157,7 @@ var activate = function() {
 						+ displayMessage 
 						+ '"></textarea><p class="row"  id="BulletPointID">' 
 						+ BulletPointID 
-						+ '</p></div>';
+						+ '</p><div id="statusMessageBox"></div></div>';
 	dialog.addEventListener('keydown', function(event) {
 		//user press "escape"(27)
 		//escape the tagging input without posting anything
@@ -164,7 +180,7 @@ var activate = function() {
 			if(commentBox.value != commentBoxOriginalMessage)
 				postToServer(commentBox.value);
 			else 
-				showStatusMessage('ok', 'Identical comment saved.');
+				showStatusMessage('ok', 'Same thing.');
 			event.preventDefault();
 		}
 	});

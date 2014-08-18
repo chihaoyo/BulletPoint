@@ -5,8 +5,8 @@
 #BulletPointWrapper :-moz-placeholder { color: #ccc; opacity: 1.0; } /* Firefox 18- */
 #BulletPointWrapper :-ms-input-placeholder { color: #ccc; opacity: 1.0; }
 
-#BulletPointWrapper ::selection { background: lime; color: blue; text-shadow: none; }
-#BulletPointWrapper ::-moz-selection { background: lime; color: blue; text-shadow: none; }
+#BulletPointWrapper ::selection { background: lime; color: black; text-shadow: none; }
+#BulletPointWrapper ::-moz-selection { background: lime; color: black; text-shadow: none; }
 
 #BulletPointWrapper {
 	position: fixed;
@@ -54,7 +54,7 @@
 	max-width: 100%;
 	min-width: 100%;
 	width: 100%;
-	margin: 2px 0;
+	margin: 0.13333333px 0;
 }
 #BulletPointWrapper .padding {
 	padding: 0.33333333em;
@@ -62,7 +62,22 @@
 #BulletPointWrapper textarea {
 	height: 7.5em;
 }
+#BulletPointWrapper textarea.blurry {
+   color: transparent;
+   text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+}
 #BulletPointWrapper #BulletPointID {
 	font-size: 0.75em;
 	text-align: right;
+}
+#BulletPointWrapper #statusMessageBox {
+	position: absolute;
+	display: none;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+#BulletPointWrapper #statusMessageBox p {
+	margin-top: 0.33333333em;
+	text-align: center;
 }
