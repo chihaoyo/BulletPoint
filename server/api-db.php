@@ -37,6 +37,7 @@ $db_structure = array(
 
 function db_structure_all_tables() { global $db_structure; return array_keys($db_structure); }
 
+// check
 function table_exists($table) {
 	return in_array($table, db_structure_all_tables());
 }
@@ -58,6 +59,7 @@ function has_unique_key_cols($table, $data) {
 	return count($unique_key_cols) > 0 && count($unique_key_cols) == count(array_intersect($unique_key_cols, $data_cols));
 }
 
+// select
 function select_all($db, $table) {
 	$q = "SELECT * FROM $table WHERE 1"; // $table cannot be in $p
 	return $db->fa($q);
@@ -73,6 +75,7 @@ function select_node($db, $user_id, $url_hash) {
 	return $db->f1($q, $p);
 }
 
+// insert OR update
 define('DB_UNDEFINED', false);
 define('DB_UPDATE', 'UPDATE');
 define('DB_INSERT', 'INSERT');
@@ -118,6 +121,8 @@ function write($db, $table, $data) {
 	// do it
 	return ($db->q1($q, $data) !== false ? $db->lastInsertId() : false);
 }
+
+// delete
 function delete($db, $table, $serial) {
 	$q = "DELETE FROM $table WHERE serial = :serial";
 	$p = array('serial' => $serial);
