@@ -26,12 +26,10 @@ foreach($data as $row) {
 		'SELECT * FROM Tags WHERE serial in (SELECT tag_id FROM NodeTagPairs WHERE node_id = :node_id)', 
 		array('node_id' => $row['serial'])
 	);
-	if(count($tags) > 0) {
+	if(count($tags) > 0)
 		$tags = implode(' ', array_select('tag', $tags));//array_column($tags, 'tag'));
-	}
-	else {
+	else
 		$tags = '';
-	}
 
 	echo sprintf('<p><span>#%s</span>, <a href="%s" target="_blank"><span class="">%s</span></a>, <span class="bold">%s</span>%s%s</p>', 
 		$row['serial'], 
