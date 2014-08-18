@@ -1,3 +1,5 @@
+var serverAddress = 'http://50.18.115.212/bulletpoint/server/';
+
 // make random string
 function makeRandomString(len) {
     var str = '';
@@ -47,7 +49,8 @@ var postToServer = function(comment) {
 
 	// create HTTP request and get it ready
 	var xhr = new XMLHttpRequest();
-	xhr.open('POST', 'http://50.18.115.212/bulletpoint/server/Nodes', true);
+	var postURL = serverAddress + 'Nodes';
+	xhr.open('POST', postURL, true);
 	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState == 4) {
@@ -65,6 +68,32 @@ var postToServer = function(comment) {
 	// send request
 	xhr.send(parameters);
 };
+
+var getFromServer = function() {
+	// get user information and the current url
+	var user_id = BulletPointID;
+	var url = window.location.href;
+
+	// create HTTP request and get the comment information from the server, if it exists
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+    	if (xhr.readyState == 4) {
+    		var dialog = document.getElementById('BulletPointWrapper');
+    		var jsonRecordInServer = JSON.parse(xhr.responseText);
+    		if (jsonRecordInServer) {
+    			if(typeof jsonRecordInServer["comment"] !== 'undefined') {
+    				var commentBox = document.getElementById('BulletPointComment');
+					commentBox.value = jsonRecordInServer["comment"];
+    			}
+    		}
+    	}
+    }
+    var getInfoURL = serverAddress + '/Nodes/' + user_id + '/' + md5(url);
+    xhr.open('GET', getInfoURL, true);
+	xhr.send(null);
+};
+
+
 var removeDialog = function() {
 	var dialog = document.getElementById('BulletPointWrapper');
 	if(dialog != null) {
@@ -77,6 +106,7 @@ var setDialogStatus = function(status) {
 		dialog.setAttribute('status', status);
 	}
 };
+
 var activate = function() {
 	if(BulletPointID == '') {
 		BulletPointID = '@' + makeRandomString(16);
@@ -92,13 +122,21 @@ var activate = function() {
 	// create new dialog
 	var dialog = document.createElement('div');
 	dialog.setAttribute('id', 'BulletPointWrapper');
-	dialog.innerHTML = '<div class="padding"><textarea class="row" id="BulletPointComment" placeholder="Type in comment, RETURN to submit."></textarea><p class="row"  id="BulletPointID">' + BulletPointID + '</p></div>';
+	var displayMessage = 'Type in comment, RETURN to submit.';
+	dialog.innerHTML = '<div class="padding"><textarea class="row" id="BulletPointComment" placeholder="' 
+						+ displayMessage 
+						+ '"></textarea><p class="row"  id="BulletPointID">' 
+						+ BulletPointID 
+						+ '</p></div>';
 	dialog.addEventListener('keydown', function(event) {
 		//user press "escape"(27)
 		//escape the tagging input without posting anything
 		if(event.keyCode == 27)
 			removeDialog();
 	});
+
+	// check if this page is already recorded in the server
+	getFromServer();
 
 	// append dialog to DOM
 	body.appendChild(dialog);
