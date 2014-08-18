@@ -28,7 +28,11 @@ var setID = function(id) {
 // get id from storage
 getStorage('BulletPointID', function(result) {
 	if(result.BulletPointID === undefined) {
-		BulletPointID = makeRandomString(16);
+		BulletPointID = '@' + makeRandomString(16);
+		setID(BulletPointID);
+	}
+	else if(result.BulletPointID.indexOf('@') == -1) {
+		BulletPointID = '@' + result.BulletPointID;
 		setID(BulletPointID);
 	}
 	else
@@ -75,7 +79,7 @@ var setDialogStatus = function(status) {
 };
 var activate = function() {
 	if(BulletPointID == '') {
-		BulletPointID = makeRandomString(16);
+		BulletPointID = '@' + makeRandomString(16);
 		setID(BulletPointID);
 	}
 	console.log('BulletPointID: ' + BulletPointID);
@@ -88,7 +92,7 @@ var activate = function() {
 	// create new dialog
 	var dialog = document.createElement('div');
 	dialog.setAttribute('id', 'BulletPointWrapper');
-	dialog.innerHTML = '<div class="padding"><textarea class="row" id="BulletPointComment" placeholder="Type in comment, RETURN to submit."></textarea><p class="row"  id="BulletPointID">@' + BulletPointID + '</p></div>';
+	dialog.innerHTML = '<div class="padding"><textarea class="row" id="BulletPointComment" placeholder="Type in comment, RETURN to submit."></textarea><p class="row"  id="BulletPointID">' + BulletPointID + '</p></div>';
 	dialog.addEventListener('keydown', function(event) {
 		//user press "escape"(27)
 		//escape the tagging input without posting anything
