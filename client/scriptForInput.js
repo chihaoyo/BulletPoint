@@ -118,7 +118,7 @@ var showStatusMessage = function(status, statusMessage, timeOutLimit) {
 	if(typeof timeOutLimit === 'undefined') {
 		timeOutLimit = 1000;
 	}
-	setTimeout(removeDialog, 1000);
+	setTimeout(removeDialog, timeOutLimit);
 };
 
 var activate = function() {
