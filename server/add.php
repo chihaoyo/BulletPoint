@@ -1,5 +1,8 @@
 <?php
 
+// deprecated
+// use REST API
+/*
 include_once('importer.php');
 //try commit something again
 $user_id = $_POST['user_id'];
@@ -61,6 +64,6 @@ if($r === true) {
 }
 else {
 	echo 'duplicate';
-}
+}*/
 
 ?>
