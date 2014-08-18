@@ -1,0 +1,25 @@
+body, p {
+	font-family: "Droid Serif", serif;
+	font-size: 13px;
+}
+h1, h2 {
+	font-family: "Helvetica Neue";
+	font-size: 3em;
+}
+h2 {
+	font-size: 2em;
+}
+
+a, a:hover, a:visited, a:active {
+	color: blue;
+	text-decoration: none;
+}
+a:hover {
+	color: red;
+}
+.italic {
+	font-style: italic;
+}
+.bold {
+	font-weight: bold;
+}
