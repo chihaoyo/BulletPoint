@@ -27,14 +27,21 @@ $app->get('/:table/:id', function($table, $id) use ($app, $db) {
 		}
 	}
 });
+$app->get('/Nodes/:user_id/:url_hash', function($user_id, $url_hash) use ($app, $db)  {
+	if(substr($user_id, 0, 1) == '@') {
+		echo json_encode(select_node($db, $user_id, $url_hash));
+	}
+	else {
+		$app->notFound();
+	}
+});
 $app->post('/:table', function($table) use ($app, $db) {
 	if(!table_exists($table)) {
 		$app->notFound();
 	}
 	else {
-		___("post to $table");
 		$parameters = $app->request->post();
-		insert($db, $table, $parameters);
+		echo json_encode(write($db, $table, $parameters));
 	}
 });
 $app->delete('/:table/:id', function($table, $id) use ($app, $db){

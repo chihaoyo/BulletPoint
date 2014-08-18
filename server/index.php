@@ -33,7 +33,7 @@ foreach($data as $row) {
 		$tags = '';
 	}
 
-	echo sprintf('<p><span>#%s</span>, <a href="%s" target="_blank"><span class="">%s</span></a>, @<span class="bold">%s</span>%s%s</p>', 
+	echo sprintf('<p><span>#%s</span>, <a href="%s" target="_blank"><span class="">%s</span></a>, <span class="bold">%s</span>%s%s</p>', 
 		$row['serial'], 
 		$row['url'], 
 		$row['title'], 
