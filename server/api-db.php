@@ -1,7 +1,5 @@
 <?php
 
-//include_once('importer.php');
-
 $db_structure = array(
 	'Nodes' => array(
 		'cols' => array(
@@ -95,12 +93,10 @@ function write($db, $table, $data) {
 		$action = DB_UPDATE;
 	
 	// modify cols according to action
-	if($action == DB_INSERT) {
+	if($action == DB_INSERT)
 		unset($cols_to_insert['serial']);
-	}
-	else if($action == DB_UPDATE) {
+	else if($action == DB_UPDATE)
 		$cols_to_insert = array_merge(array_intersect_key($cols_to_insert, $data), array_intersect_key($cols_to_insert, array('t_update' => true)));
-	}
 	else
 		return false;
 	
@@ -126,9 +122,20 @@ function write($db, $table, $data) {
 //	___($data);
 	
 	// do it
-	return ($db->q1($q, $data) === true ? $db->lastInsertId() : false);
+	return ($db->q1($q, $data) !== false ? $db->lastInsertId() : false);
+}
+function delete($db, $table, $serial) {
+	$q = "DELETE FROM $table WHERE serial = :serial";
+	$p = array('serial' => $serial);
+	return $db->q1($q, $p);
+}
+function delete_node_tag_pairs_on_node($db, $node_id) {
+	$q = "DELETE FROM NodeTagPairs WHERE node_id = :node_id";
+	$p = array('node_id' => $node_id);
+	return $db->q1($q, $p);
 }
 
+//include_once('importer.php');
 //$db = connect_to_db();
 //___(write($db, 'Nodes', array('user_id'=>'@0', 'url'=>'http://a.b.c/', 'title'=>'X', 'comment'=>'xxx')));
 //___(write($db, 'Nodes', array('serial'=>139, 'comment'=>'ggg')));
