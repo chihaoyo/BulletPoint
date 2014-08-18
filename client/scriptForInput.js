@@ -1,5 +1,7 @@
 var serverAddress = 'http://50.18.115.212/bulletpoint/server/';
 
+var commentBoxOriginalMessage = '';
+
 // make random string
 function makeRandomString(len) {
     var str = '';
@@ -56,8 +58,8 @@ var postToServer = function(comment) {
 		if(xhr.readyState == 4) {
 			var result = xhr.responseText;
 			// feedback
-			setDialogStatus(result == 'duplicate' ? 'warning' : 'ok');
-			setTimeout(removeDialog, 1000);
+			var commentBox = document.getElementById('BulletPointComment');
+			showStatusMessage(result == 'duplicate' ? 'warning' : 'ok', commentBox.value);
 		}
 	};
 
@@ -82,8 +84,10 @@ var getFromServer = function() {
     		var jsonRecordInServer = JSON.parse(xhr.responseText);
     		if (jsonRecordInServer) {
     			if(typeof jsonRecordInServer["comment"] !== 'undefined') {
+    				//if the comment exists, show it in the context box
     				var commentBox = document.getElementById('BulletPointComment');
-					commentBox.value = jsonRecordInServer["comment"];
+    				commentBoxOriginalMessage = jsonRecordInServer["comment"];
+					commentBox.value = commentBoxOriginalMessage;
     			}
     		}
     	}
@@ -105,6 +109,16 @@ var setDialogStatus = function(status) {
 	if(dialog != null) {
 		dialog.setAttribute('status', status);
 	}
+};
+
+var showStatusMessage = function(status, statusMessage, timeOutLimit) {
+	setDialogStatus(status);
+	var commentBox = document.getElementById('BulletPointComment');
+	commentBox.value = statusMessage;
+	if(typeof timeOutLimit === 'undefined') {
+		timeOutLimit = 1000;
+	}
+	setTimeout(removeDialog, 1000);
 };
 
 var activate = function() {
@@ -147,7 +161,10 @@ var activate = function() {
 		//user press "enter/return"(13)
 		//post the page info to the server along with the comment
 		if(event.keyCode == 13) {
-			postToServer(commentBox.value);
+			if(commentBox.value != commentBoxOriginalMessage)
+				postToServer(commentBox.value);
+			else 
+				showStatusMessage('ok', 'Identical comment saved.');
 			event.preventDefault();
 		}
 	});
