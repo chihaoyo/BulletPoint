@@ -43,7 +43,7 @@ var postToServer = function(comment) {
 
 	// create HTTP request and get it ready
 	var xhr = new XMLHttpRequest();
-	xhr.open('POST', 'http://50.18.115.212/bulletpoint/server/add.php', true);
+	xhr.open('POST', 'http://50.18.115.212/bulletpoint/server/Nodes', true);
 	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState == 4) {
