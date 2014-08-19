@@ -1,4 +1,4 @@
-@import url('http://fonts.googleapis.com/css?family=Source+Code+Pro:700');
+@import url('http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700');
 
 #BulletPointWrapper ::-webkit-input-placeholder { color: #ccc; opacity: 1.0; }
 #BulletPointWrapper ::-moz-placeholder { color: #ccc; opacity: 1.0; } /* Firefox 19+ */
@@ -14,6 +14,7 @@
 	margin-left: -12em;
 	background: blue;
 	z-index: 999999999999;
+	font-family: 'Source Code Pro', monospace;
 }
 #BulletPointWrapper ::selection { background: lime; text-shadow: none; }
 #BulletPointWrapper ::-moz-selection { background: lime; text-shadow: none; }
