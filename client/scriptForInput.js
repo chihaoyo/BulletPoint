@@ -53,18 +53,22 @@ var initUserID = function() {
 		var idStorage = result.BulletPointUserID;
 
 		if(idCookie != null && userIDIsValid(idCookie)) {
+			// userID is present in cookie and valid
 			userID = idCookie;
 			setStorageUserID(idCookie);
 		}
 		else {
+			// userID is not in cookie or userID is not valid
 			if(idStorage !== undefined && userIDIsValid(idStorage)) {
-				setCookie('BulletPointUserID', idStorage);
 				userID = idStorage;
 			}
 			else {
 				userID = makeUserID();
 				setStorageUserID(userID);
+			}
+			if(isHome()) {
 				setCookie('BulletPointUserID', userID);
+				document.getElementById('BulletPointUserIDFromCookie').value = userID;
 			}
 		}
 		console.log('BulletPoint: userID is ' + userID);
