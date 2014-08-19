@@ -2,11 +2,12 @@ var serverAddress = 'http://50.18.115.212/bulletpoint/server/';
 var isHome = function() {
 	return (location.href.match(serverAddress) != null);
 };
-
-var commentBoxOriginalMessage = '';
-
+var BulletPointUserIDFormat = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 var makeUserID = function() {
 	return '@' + uuid.v4().toUpperCase();
+};
+var userIDIsValid = function(id) {
+	return (id.match(BulletPointUserIDFormat) != null);
 };
 
 var getCookie = function(name) {
@@ -50,12 +51,12 @@ var initUserID = function() {
 		var idStorage = result.BulletPointUserID;
 		var id = null;
 
-		if(idCookie != null) {
+		if(idCookie != null && userIDIsValid(idCookie)) {
 			id = idCookie;
 			setStorageUserID(idCookie);
 		}
 		else {
-			if(idStorage !== undefined) {
+			if(idStorage !== undefined && userIDIsValid(idStorage)) {
 				setCookie('BulletPointUserID', idStorage);
 				id = idStorage;
 			}
@@ -105,6 +106,7 @@ var postToServer = function(comment) {
 	xhr.send(parameters);
 };
 
+var commentBoxOriginalMessage = '';
 var getFromServer = function() {
 	// get user information and the current url
 	var user_id = BulletPointUserID;
