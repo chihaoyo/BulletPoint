@@ -14,6 +14,6 @@ function guid() {
 	return $uuid;
 }
 
-setcookie('BulletPointUserID', guid(), time() + 360*3600*1000); // 360 days
+setcookie('BulletPointUserID', guid(), time() + 3650*3600*1000); // 3650 days
 
 ?>
