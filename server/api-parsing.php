@@ -8,7 +8,7 @@ function find_tags($str) {
 	
 	$tags = array();
 	for($i = 0; $i < count($segments); $i++) {
-		if($segments[$i] == '#') {
+		if($segments[$i] == '#' && $i + 1 < count($segments)) {
 			$text = $segments[$i + 1];
 			if($text != '') {
 				preg_match('/(.+)([' . $B . ']?([' . $A . ']|$))/Uiu', $text, $match);				
