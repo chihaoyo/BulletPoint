@@ -2,6 +2,8 @@ var serverAddress = 'http://50.18.115.212/bulletpoint/server/';
 var isHome = function() {
 	return (location.href.match(serverAddress) != null);
 };
+// userIDFormat is guid format + '@' at beginning
+// http://stackoverflow.com/questions/7905929/how-to-test-valid-uuid-guid
 var userIDFormat = /^@[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 var makeUserID = function() {
 	return '@' + uuid.v4().toUpperCase();
