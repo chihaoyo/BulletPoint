@@ -121,7 +121,7 @@ var showStatusMessage = function(status, statusMessage, timeOutLimit) {
 	if(typeof timeOutLimit === 'undefined') {
 		timeOutLimit = 1000;
 	}
-	
+
 	var dialog = document.getElementById('BulletPointWrapper');
 	if(dialog != null) {
 		dialog.setAttribute('status', status);
@@ -152,7 +152,7 @@ var activate = function() {
 	// create new dialog
 	var dialog = document.createElement('div');
 	dialog.setAttribute('id', 'BulletPointWrapper');
-	var displayMessage = 'Type in comment, RETURN to submit.';
+	var displayMessage = 'Type in comment, RETURN to save.';
 	dialog.innerHTML = '<div class="padding"><textarea class="row" id="BulletPointComment" placeholder="' 
 						+ displayMessage 
 						+ '"></textarea><p class="row"  id="BulletPointID">' 
