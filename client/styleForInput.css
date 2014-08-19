@@ -5,9 +5,6 @@
 #BulletPointWrapper :-moz-placeholder { color: #ccc; opacity: 1.0; } /* Firefox 18- */
 #BulletPointWrapper :-ms-input-placeholder { color: #ccc; opacity: 1.0; }
 
-#BulletPointWrapper ::selection { background: lime; color: black; text-shadow: none; }
-#BulletPointWrapper ::-moz-selection { background: lime; color: black; text-shadow: none; }
-
 #BulletPointWrapper {
 	position: fixed;
 	top: 0;
@@ -18,15 +15,25 @@
 	background: blue;
 	z-index: 999999999999;
 }
+#BulletPointWrapper ::selection { background: lime; text-shadow: none; }
+#BulletPointWrapper ::-moz-selection { background: lime; text-shadow: none; }
+#BulletPointWrapper[status='ready'] ::selection { color: blue; }
+#BulletPointWrapper[status='ready'] ::-moz-selection {  color: blue; }
 #BulletPointWrapper[status='error'] {
 	background: red;
 }
+#BulletPointWrapper[status='error'] ::selection { color: red; }
+#BulletPointWrapper[status='error'] ::moz-selection { color: red; }
 #BulletPointWrapper[status='warning'] {
 	background: yellow;
 }
+#BulletPointWrapper[status='warning'] ::selection { color: yellow; }
+#BulletPointWrapper[status='warning'] ::moz-selection { color: yellow; }
 #BulletPointWrapper[status='ok'] {
 	background: green;
 }
+#BulletPointWrapper[status='ok'] ::selection { color: green ; }
+#BulletPointWrapper[status='ok'] ::moz-selection { color: green ; }
 #BulletPointWrapper * {
 	-webkit-appearance: none;
 	position: relative;
@@ -50,10 +57,12 @@
 	background: none;
 }
 
-#BulletPointWrapper .row {
+#BulletPointWrapper .fullWidth {
 	max-width: 100%;
 	min-width: 100%;
 	width: 100%;
+}
+#BulletPointWrapper .row {
 	margin: 0.13333333px 0;
 }
 #BulletPointWrapper .padding {

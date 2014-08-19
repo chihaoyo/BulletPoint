@@ -131,10 +131,10 @@ var showStatusMessage = function(status, statusMessage, timeOutLimit) {
 	commentBox.classList.add('blurry');
 
 	var statusMessageBox = document.getElementById('statusMessageBox');
-	statusMessageBox.innerHTML = '<p>' + statusMessage + '</p>';
+	statusMessageBox.innerHTML = '<p class="fullWidth">' + statusMessage + '</p>';
 	statusMessageBox.style.display = 'block';
 
-	setTimeout(removeDialog, timeOutLimit);
+	//setTimeout(removeDialog, timeOutLimit);
 };
 
 var activate = function() {
@@ -152,10 +152,10 @@ var activate = function() {
 	// create new dialog
 	var dialog = document.createElement('div');
 	dialog.setAttribute('id', 'BulletPointWrapper');
-	var displayMessage = 'Type in comment, RETURN to save.';
-	dialog.innerHTML = '<div class="padding"><textarea class="row" id="BulletPointComment" placeholder="' 
+	var displayMessage = 'Type in your comment, # to tag, RETURN to save.';
+	dialog.innerHTML = '<div class="padding"><textarea class="fullWidth row" id="BulletPointComment" placeholder="' 
 						+ displayMessage 
-						+ '"></textarea><p class="row"  id="BulletPointID">' 
+						+ '"></textarea><p class="fullWidth row"  id="BulletPointID">' 
 						+ BulletPointID 
 						+ '</p><div id="statusMessageBox"></div></div>';
 	dialog.addEventListener('keydown', function(event) {
@@ -198,12 +198,15 @@ var keyFlags = {};
 var ready = false;
 document.addEventListener('keydown', function(event) {
 	keyFlags[event.keyCode] = true;
-	ready = keyFlags[70] && keyFlags[74];
+	ready = (keyFlags[70] && keyFlags[74]) || (keyFlags[71] && keyFlags[72]) || (keyFlags[68] && keyFlags[75]); // FJ OR GH OR DK
 }, false);
 document.addEventListener('keyup', function(event) {
 	keyFlags[event.keyCode] = false;
-	if(ready && !keyFlags[70] && !keyFlags[74])
+	if(ready && ((!keyFlags[70] && !keyFlags[74]) || (!keyFlags[71] && !keyFlags[72]) || (!keyFlags[68] && !keyFlags[75]))) {
+		event.stopImmediatePropagation();
+		event.preventDefault();
 		activate();
+	}
 }, false);
 
 console.log('BulletPoint initiated');
