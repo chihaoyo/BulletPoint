@@ -231,13 +231,5 @@ document.addEventListener('keyup', function(event) {
 		activate();
 	}
 });
-window.addEventListener('load', function(event) {
-	console.log('window loaded');
-	var link = document.createElement('link');
-	link.href = 'http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700';
-	link.rel = 'stylesheet';
-	document.getElementsByTagName('head')[0].appendChild(link);
-	console.log('CSS injected');
-});
 
 console.log('BulletPoint initiated');
