@@ -25,7 +25,7 @@ var getStorage = function(key, callback) {
 var BulletPointID = '';
 var setID = function(id) {
 	setStorage({BulletPointID: id}, function() {
-		console.log('Storage updated');
+		console.log('Chrome storage updated');
 	});
 };
 
@@ -200,7 +200,7 @@ var ready = false;
 document.addEventListener('keydown', function(event) {
 	keyFlags[event.keyCode] = true;
 	ready = (keyFlags[70] && keyFlags[74]) || (keyFlags[71] && keyFlags[72]) || (keyFlags[68] && keyFlags[75]); // FJ OR GH OR DK
-}, false);
+});
 document.addEventListener('keyup', function(event) {
 	keyFlags[event.keyCode] = false;
 	if(ready && ((!keyFlags[70] && !keyFlags[74]) || (!keyFlags[71] && !keyFlags[72]) || (!keyFlags[68] && !keyFlags[75]))) {
@@ -208,13 +208,14 @@ document.addEventListener('keyup', function(event) {
 		event.preventDefault();
 		activate();
 	}
-}, false);
+});
 window.addEventListener('load', function(event) {
+	console.log('window loaded');
 	var link = document.createElement('link');
 	link.href = 'http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700';
 	link.rel = 'stylesheet';
 	document.getElementsByTagName('head')[0].appendChild(link);
-	console.log('window loaded');
-}, false);
+	console.log('CSS injected');
+});
 
 console.log('BulletPoint initiated');
