@@ -38,7 +38,7 @@ var getStorage = function(key, callback) {
 	chrome.storage.sync.get(key, callback);
 };
 var setStorageUserID = function(id) {
-	console.log('Set UserID to ' + id + ' in storage')
+	console.log('Set BulletPointUserID to ' + id + ' in storage')
 	setStorage({BulletPointUserID: id}, function() {
 		console.log('Chrome storage updated');
 	});
