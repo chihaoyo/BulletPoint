@@ -66,10 +66,10 @@ var initUserID = function() {
 				userID = makeUserID();
 				setStorageUserID(userID);
 			}
-			if(isHome()) {
-				setCookie('BulletPointUserID', userID);
-				document.getElementById('BulletPointUserIDFromCookie').value = userID;
-			}
+		}
+		if(isHome()) {
+			setCookie('BulletPointUserID', userID);
+			document.getElementById('BulletPointUserIDFromCookie').value = userID;
 		}
 		console.log('BulletPoint: userID is ' + userID);
 	});
