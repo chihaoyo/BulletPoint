@@ -151,6 +151,7 @@ var activate = function() {
 
 	// create new dialog
 	var dialog = document.createElement('div');
+	dialog.setAttribute('status', 'ready');
 	dialog.setAttribute('id', 'BulletPointWrapper');
 	var displayMessage = 'Type in your comment, # to tag, RETURN to save.';
 	dialog.innerHTML = '<div class="padding"><textarea class="fullWidth row" id="BulletPointComment" placeholder="' 
