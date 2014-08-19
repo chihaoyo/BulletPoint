@@ -2,12 +2,12 @@ var serverAddress = 'http://50.18.115.212/bulletpoint/server/';
 var isHome = function() {
 	return (location.href.match(serverAddress) != null);
 };
-var BulletPointUserIDFormat = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+var userIDFormat = /^@[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 var makeUserID = function() {
 	return '@' + uuid.v4().toUpperCase();
 };
 var userIDIsValid = function(id) {
-	return (id.match(BulletPointUserIDFormat) != null);
+	return (id.match(userIDFormat) != null);
 };
 
 var getCookie = function(name) {
@@ -43,38 +43,36 @@ var setStorageUserID = function(id) {
 };
 
 // user id
-var BulletPointUserID = '';
+var userID = '';
 // init id
 var initUserID = function() {
 	getStorage('BulletPointUserID', function(result) { // get ID from storage
 		var idCookie = getCookie('BulletPointUserID');
 		var idStorage = result.BulletPointUserID;
-		var id = null;
 
 		if(idCookie != null && userIDIsValid(idCookie)) {
-			id = idCookie;
+			userID = idCookie;
 			setStorageUserID(idCookie);
 		}
 		else {
 			if(idStorage !== undefined && userIDIsValid(idStorage)) {
 				setCookie('BulletPointUserID', idStorage);
-				id = idStorage;
+				userID = idStorage;
 			}
 			else {
-				id = makeUserID();
-				setStorageUserID(id);
-				setCookie('BulletPointUserID', id);
+				userID = makeUserID();
+				setStorageUserID(userID);
+				setCookie('BulletPointUserID', userID);
 			}
 		}
-		BulletPointUserID = id;
-		console.log('BulletPointUserID is ' + BulletPointUserID);
+		console.log('BulletPoint: userID is ' + userID);
 	});
 };
 initUserID();
 
 var postToServer = function(comment) {
 	// get values ready
-	var user_id = BulletPointUserID;
+	var user_id = userID;
 	var url = window.location.href;
 	var title = document.title.trim();
 
@@ -109,7 +107,7 @@ var postToServer = function(comment) {
 var commentBoxOriginalMessage = '';
 var getFromServer = function() {
 	// get user information and the current url
-	var user_id = BulletPointUserID;
+	var user_id = userID;
 	var url = window.location.href;
 
 	// create HTTP request and get the comment information from the server, if it exists
@@ -175,7 +173,7 @@ var activate = function() {
 	dialog.innerHTML = '<div class="padding"><textarea class="fullWidth row" id="BulletPointComment" placeholder="' 
 						+ displayMessage 
 						+ '"></textarea><p class="fullWidth row"  id="BulletPointUserID">' 
-						+ BulletPointUserID 
+						+ userID 
 						+ '</p><div id="statusMessageBox"></div></div>';
 	dialog.addEventListener('keydown', function(event) {
 		//user press "escape"(27)
