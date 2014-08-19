@@ -1,6 +1,9 @@
 <?php
 
 // http://guid.us/
+// deprecated
+// all guid are generated at client side
+/*
 function guid() {
 	mt_srand((double)microtime()*10000);//optional for php 4.2.0 and up.
 	$charid = strtoupper(md5(uniqid(rand(), true)));
@@ -13,6 +16,7 @@ function guid() {
 	return $uuid;
 }
 
-setcookie('BulletPointUserID', '@' . guid(), time() + 3650*3600*1000); // 3650 days
+setcookie('BulletPointUserID', '@' . guid(), time() + 3650*24*3600); // 3650 days
+*/
 
 ?>

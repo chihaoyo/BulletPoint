@@ -3,6 +3,8 @@
 
 include_once('importer.php');
 
+$userIDFromCookie = (isset($_COOKIE['BulletPointUserID']) ? $_COOKIE['BulletPointUserID'] : '');
+
 ?>
 <html>
 <head>
@@ -15,6 +17,7 @@ include_once('importer.php');
 </head>
 <body>
 	<h1>BulletPoint</h1>
+	<input id="BulletPointUserIDFromCookie" type="text" value="<?php echo $userIDFromCookie; ?>" />
 	<h2>Nodes</h2>
 <?php
 

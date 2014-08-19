@@ -1,4 +1,4 @@
-body, p {
+body, p, input {
 	font-family: "Droid Serif", serif;
 	font-size: 13px;
 }
@@ -22,4 +22,8 @@ a:hover {
 }
 .bold {
 	font-weight: bold;
+}
+input {
+	-webkit-appearance: none;
+	outline: none;
 }
