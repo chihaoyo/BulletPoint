@@ -25,19 +25,30 @@ function try_http_request() {
 
 function try_find_tags($str) {
 	___($str);
-	$special_chars = ',.()[]{}\'"“”‘’?!<>:;/\\';
-	$ending_chars = '\s\0\x0B' . preg_quote($special_chars, '/') . '，。：；？！「」『』〈〉《》';
-//	$pattern = '/[' . $ending_chars . ']+/iu';
-//	___($pattern);
-//	___(preg_split($pattern, $str));
+	$segments = preg_split('/([#\s\0\xB]{1})/iu', $str, -1, PREG_SPLIT_DELIM_CAPTURE);
+//	___($segments);
 	
-	$pattern = '/#[^' . $ending_chars . ']+/iu'; // i: case-insensitive, u: support for UTF-8
-	___($pattern);
-	preg_match_all($pattern, $str, $matches);
-	___($matches[0]);
+	$A = preg_quote(',()[]{}\'"“”‘’?!;/\\|', '/') . '，。、：；？！「」『』〈〉《》／｜＼';
+	$B = preg_quote('.:<>', '/');
+	
+	$tags = array();
+	
+	for($i = 0; $i < count($segments); $i++) {
+		if($segments[$i] == '#') {
+			$text = $segments[$i + 1];
+			if($text != '') {
+				preg_match('/(.+)([' . $B . ']?([' . $A . ']|$))/Uiu', $text, $match);
+//				___($match);
+				
+				$tags[] = $match[1];
+			}
+		}
+	}
+	
+	___($tags);
 }
 
-try_find_tags('Type in your comment, #tag, RETURN to #save. 這句話用的是 #中文。');
-try_find_tags('没有#可口可乐(Coca-Cola)，也没有#麦当劳(McDonald’s)，但也没人忍饥#挨饿：「大企業#去死」');
+try_find_tags('#Type in your comment, #tag, # RETURN to #save#a#b #z>b#a:b=c. GUI of BulletPoint uses #d3.js to visualize data.');
+try_find_tags('没有#可口可乐(Coca-Cola)，也没有#麦当劳(McDonald’s)，但也没人忍饥#挨饿：「大企業#去死。」#z>b#利大於弊#a.b.c');
 
 ?>
