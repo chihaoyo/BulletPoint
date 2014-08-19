@@ -134,7 +134,7 @@ var showStatusMessage = function(status, statusMessage, timeOutLimit) {
 	statusMessageBox.innerHTML = '<p class="fullWidth">' + statusMessage + '</p>';
 	statusMessageBox.style.display = 'block';
 
-	//setTimeout(removeDialog, timeOutLimit);
+	setTimeout(removeDialog, timeOutLimit);
 };
 
 var activate = function() {
