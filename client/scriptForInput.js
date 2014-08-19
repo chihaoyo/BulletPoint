@@ -209,5 +209,12 @@ document.addEventListener('keyup', function(event) {
 		activate();
 	}
 }, false);
+window.addEventListener('load', function(event) {
+	var link = document.createElement('link');
+	link.href = 'http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700';
+	link.rel = 'stylesheet';
+	document.getElementsByTagName('head')[0].appendChild(link);
+	console.log('window loaded');
+}, false);
 
 console.log('BulletPoint initiated');
