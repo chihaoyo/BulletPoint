@@ -1,17 +1,31 @@
 var serverAddress = 'http://50.18.115.212/bulletpoint/server/';
+var isHome = function() {
+	return (location.href.match(serverAddress) != null);
+};
 
 var commentBoxOriginalMessage = '';
 
-// make random string
-function makeRandomString(len) {
-    var str = '';
-    var charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+var makeUserID = function() {
+	return '@' + uuid.v4().toUpperCase();
+};
 
-    for(var i = 0; i < len; i++)
-        str += charSet.charAt(Math.floor(Math.random() * charSet.length));
+var getCookie = function(name) {
+	var regex = new RegExp(name + '=([^;]+)');
+	var value = regex.exec(document.cookie);
+	return ((value != null) ? unescape(value[1]) : null);
+};
+var setCookie = function(name, val, daysToExpire) {
+	if(!isHome())
+		return;
 
-    return str;
-}
+	if(daysToExpire === undefined)
+		daysToExpire = 3650; // ten years
+	console.log('Set ' + name + ' to ' + val + ' in cookie');
+
+	var d = new Date();
+	d.setTime(d.getTime() + daysToExpire*24*3600*1000);
+	document.cookie = name + '=' + val + '; expires=' + d.toGMTString();
+};
 
 // chrome storage manipulation
 var setStorage = function(pairs, callback) {
@@ -20,32 +34,46 @@ var setStorage = function(pairs, callback) {
 var getStorage = function(key, callback) {
 	chrome.storage.sync.get(key, callback);
 };
-
-// user id
-var BulletPointID = '';
-var setID = function(id) {
-	setStorage({BulletPointID: id}, function() {
+var setStorageUserID = function(id) {
+	console.log('Set UserID to ' + id + ' in storage')
+	setStorage({BulletPointUserID: id}, function() {
 		console.log('Chrome storage updated');
 	});
 };
 
-// get id from storage
-getStorage('BulletPointID', function(result) {
-	if(result.BulletPointID === undefined) {
-		BulletPointID = '@' + makeRandomString(16);
-		setID(BulletPointID);
-	}
-	else if(result.BulletPointID.indexOf('@') == -1) {
-		BulletPointID = '@' + result.BulletPointID;
-		setID(BulletPointID);
-	}
-	else
-		BulletPointID = result.BulletPointID;
-});
+// user id
+var BulletPointUserID = '';
+// init id
+var initUserID = function() {
+	getStorage('BulletPointUserID', function(result) { // get ID from storage
+		var idCookie = getCookie('BulletPointUserID');
+		var idStorage = result.BulletPointUserID;
+		var id = null;
+
+		if(idCookie != null) {
+			id = idCookie;
+			setStorageUserID(idCookie);
+		}
+		else {
+			if(idStorage !== undefined) {
+				setCookie('BulletPointUserID', idStorage);
+				id = idStorage;
+			}
+			else {
+				id = makeUserID();
+				setStorageUserID(id);
+				setCookie('BulletPointUserID', id);
+			}
+		}
+		BulletPointUserID = id;
+		console.log('BulletPointUserID is ' + BulletPointUserID);
+	});
+};
+initUserID();
 
 var postToServer = function(comment) {
 	// get values ready
-	var user_id = BulletPointID;
+	var user_id = BulletPointUserID;
 	var url = window.location.href;
 	var title = document.title.trim();
 
@@ -79,7 +107,7 @@ var postToServer = function(comment) {
 
 var getFromServer = function() {
 	// get user information and the current url
-	var user_id = BulletPointID;
+	var user_id = BulletPointUserID;
 	var url = window.location.href;
 
 	// create HTTP request and get the comment information from the server, if it exists
@@ -109,16 +137,10 @@ var removeDialog = function() {
 	if(dialog != null) {
 		dialog.parentNode.removeChild(dialog);
 	}
-};/*
-var setDialogStatus = function(status) {
-	var dialog = document.getElementById('BulletPointWrapper');
-	if(dialog != null) {
-		dialog.setAttribute('status', status);
-	}
-};*/
+};
 
 var showStatusMessage = function(status, statusMessage, timeOutLimit) {
-	if(typeof timeOutLimit === 'undefined') {
+	if(timeOutLimit === undefined) {
 		timeOutLimit = 1000;
 	}
 
@@ -138,12 +160,6 @@ var showStatusMessage = function(status, statusMessage, timeOutLimit) {
 };
 
 var activate = function() {
-	if(BulletPointID == '') {
-		BulletPointID = '@' + makeRandomString(16);
-		setID(BulletPointID);
-	}
-	console.log('BulletPointID: ' + BulletPointID);
-
 	var body = document.getElementsByTagName('body')[0];
 
 	// remove old dialog
@@ -156,8 +172,8 @@ var activate = function() {
 	var displayMessage = 'Type in your comment, # to tag, RETURN to save.';
 	dialog.innerHTML = '<div class="padding"><textarea class="fullWidth row" id="BulletPointComment" placeholder="' 
 						+ displayMessage 
-						+ '"></textarea><p class="fullWidth row"  id="BulletPointID">' 
-						+ BulletPointID 
+						+ '"></textarea><p class="fullWidth row"  id="BulletPointUserID">' 
+						+ BulletPointUserID 
 						+ '</p><div id="statusMessageBox"></div></div>';
 	dialog.addEventListener('keydown', function(event) {
 		//user press "escape"(27)

@@ -76,7 +76,7 @@
    color: transparent;
    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
 }
-#BulletPointWrapper #BulletPointID {
+#BulletPointWrapper #BulletPointUserID {
 	font-size: 0.75em;
 	text-align: right;
 }

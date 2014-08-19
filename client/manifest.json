@@ -25,7 +25,7 @@
 		{
 			"matches": ["<all_urls>"],
 			"css": ["styleForInput.css"],
-			"js": ["scriptForInput.js", "md5.js"]
+			"js": ["md5.js", "uuid.js", "scriptForInput.js"]
 		}
 	]
 }
