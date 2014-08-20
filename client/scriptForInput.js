@@ -219,11 +219,11 @@ var keyFlags = {};
 var ready = false;
 document.addEventListener('keydown', function(event) {
 	keyFlags[event.keyCode] = true;
-	ready = (keyFlags[70] && keyFlags[74]) || (keyFlags[71] && keyFlags[72]) || (keyFlags[68] && keyFlags[75]); // FJ OR GH OR DK
+	ready = (keyFlags[70] && keyFlags[74]) || (keyFlags[68] && keyFlags[75]); // FJ OR GH OR DK
 });
 document.addEventListener('keyup', function(event) {
 	keyFlags[event.keyCode] = false;
-	if(ready && ((!keyFlags[70] && !keyFlags[74]) || (!keyFlags[71] && !keyFlags[72]) || (!keyFlags[68] && !keyFlags[75]))) {
+	if(ready && ((!keyFlags[70] && !keyFlags[74]) || (!keyFlags[68] && !keyFlags[75]))) {
 		event.stopImmediatePropagation();
 		event.preventDefault();
 		activate();
