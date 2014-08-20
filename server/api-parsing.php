@@ -12,7 +12,7 @@ function find_tags($str) {
 			$text = $segments[$i + 1];
 			if($text != '') {
 				preg_match('/(.+)([' . $B . ']?([' . $A . ']|$))/Uiu', $text, $match);				
-				$tags[] = $match[1];
+				$tags[] = '#' . $match[1];
 			}
 		}
 	}
