@@ -17,7 +17,7 @@ $userIDFromCookie = (isset($_COOKIE['BulletPointUserID']) ? $_COOKIE['BulletPoin
 </head>
 <body>
 	<h1>BulletPoint</h1>
-	<input id="BulletPointUserIDFromCookie" type="text" value="<?php echo $userIDFromCookie; ?>" style="width: 300px;" />
+	<p>You are <input id="BulletPointUserIDFromCookie" type="text" value="<?php echo $userIDFromCookie; ?>" style="width: 300px;" /></p>
 	<h2>Nodes</h2>
 <?php
 
