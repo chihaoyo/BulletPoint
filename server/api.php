@@ -17,6 +17,8 @@ $app->get('/:table/:id', function($table, $id) use ($app, $db) {
 		$app->notFound();
 	}
 	else {
+		header('Access-Control-Allow-Origin: *'); // enable CORS for GET
+		
 		if($id == 'all') {
 			echo json_encode(select_all($db, $table));
 		}
