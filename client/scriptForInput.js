@@ -233,7 +233,7 @@ document.addEventListener('keyup', function(event) {
 // load web font
 // <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 var link = document.createElement('link');
-link.href = 'http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700&subset=latin,latin-ext';
+link.href = ('https:' == document.location.protocol ? 'https:' : 'http:') + '//fonts.googleapis.com/css?family=Source+Code+Pro:400,700&subset=latin,latin-ext';
 link.rel = 'stylesheet';
 document.getElementsByTagName('head')[0].appendChild(link);
 
