@@ -144,7 +144,6 @@ var removeDialog = function() {
 		dialog.parentNode.removeChild(dialog);
 	}
 };
-
 var showStatusMessage = function(status, statusMessage, timeOutLimit) {
 	if(timeOutLimit === undefined) {
 		timeOutLimit = 1000;
@@ -164,7 +163,6 @@ var showStatusMessage = function(status, statusMessage, timeOutLimit) {
 
 	setTimeout(removeDialog, timeOutLimit);
 };
-
 var activate = function() {
 	var body = document.getElementsByTagName('body')[0];
 
@@ -232,4 +230,12 @@ document.addEventListener('keyup', function(event) {
 	}
 });
 
+// load web font
+// <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+var link = document.createElement('link');
+link.href = 'http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700&subset=latin,latin-ext';
+link.rel = 'stylesheet';
+document.getElementsByTagName('head')[0].appendChild(link);
+
+// done
 console.log('BulletPoint initiated');
