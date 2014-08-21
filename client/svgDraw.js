@@ -125,6 +125,38 @@ d3.force : node attributes
 									.domain([0,1])
 									.range([0.05,0.95]);
 
+
+		var nodeSelection = svgCanvas.selectAll("g")
+			.data(jsonRecordFromServer)
+			.enter()
+				.append("g")
+				.attr("transform", function() {
+						var shiftX = displayScale(Math.random()) * svgCanvas.attr("width");
+						var shiftY = displayScale(Math.random()) * svgCanvas.attr("height");
+						return ("translate(" + shiftX + "," + shiftY + ")");
+					});
+		
+		var markSelection = nodeSelection
+			.append("path")
+				.attr("d", d3.svg.symbol()
+							.size(20)
+							.type(d3.svg.symbolTypes[5]))
+				.attr("stroke-width", 1)
+				.attr("stroke", "blue")
+				.attr("fill", "darkturquoise");
+
+		var titleSelection = nodeSelection
+			.append("a")
+				.attr("xlink:href", function(d) {return d["url"];})
+				.append("text")
+					.attr("x", 10)
+					.attr("y", 5)
+					.text(function(d) {return d["title"];})
+					.attr("font-size", 12)
+					.attr("fill", "steelblue")
+					.attr("transform", "rotate(-30)");
+
+		/*
 		var pathSelection = svgCanvas.selectAll("path")
 			.data(jsonRecordFromServer)
 			.enter()
@@ -137,7 +169,7 @@ d3.force : node attributes
 					.attr("d", d3.svg.symbol()
 								.size(20)
 								.type(d3.svg.symbolTypes[5]))
-				/*.append("circle")
+				.append("circle")
 					.attr("cx", function(d) {
 									d["posX"] = ~~((Math.random() * 0.9 + 0.05) * svgCanvas.attr("width"));
 									return d["posX"];
@@ -146,13 +178,13 @@ d3.force : node attributes
 									d["posY"] = ~~((Math.random() * 0.9 + 0.05) * svgCanvas.attr("height"));
 									return d["posY"];
 								})
-					.attr("r", 5)*/
+					.attr("r", 5)
 					.attr("stroke-width", 1)
 					.attr("stroke", "blue")
 					.attr("fill", "darkturquoise");
 					//.call(force.drag);
 
-		/*
+		
 		var textSelection = svgCanvas.selectAll("text")
 			.data(jsonRecordFromServer)
 			.enter()
@@ -165,7 +197,7 @@ d3.force : node attributes
 					.attr("transform", function(d) {
 						console.log(this);
 						return "rotate(-30, " + d["posX"] + ", " + d["posY"] + ")";});
-		*/
+		
 
 		var urlSelection = svgCanvas.selectAll("a")
 			.data(jsonRecordFromServer)
