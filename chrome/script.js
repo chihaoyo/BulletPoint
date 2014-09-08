@@ -4,7 +4,7 @@ var isHome = function() {
 };
 // userIDFormat is guid format + '@' at beginning
 // http://stackoverflow.com/questions/7905929/how-to-test-valid-uuid-guid
-var userIDFormat = /^@[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+var userIDFormat = /^@[0-9A-F]{8}-[0-9A-F]{4}-[1-5][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/; // format is all caps and case-sensitive
 var makeUserID = function() {
 	return '@' + uuid.v4().toUpperCase();
 };
