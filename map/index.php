@@ -1,12 +1,12 @@
 <!DOCTYPE HTML>
 <svg id="main"></svg>
 <?php
-
+/*
 include_once('../common/importer.php');
 
 $userIDFromCookie = (isset($_COOKIE['BulletPointUserID']) ? $_COOKIE['BulletPointUserID'] : '');
 $userIDFormat = '/^@[0-9A-F]{8}-[0-9A-F]{4}-[1-5][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/';
-
+*/
 ?>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 <script src="//50.18.115.212/common/lib-jquery-ext.js"></script>
