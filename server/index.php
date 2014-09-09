@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <?php
 
-include_once('importer.php');
+include_once('../common/importer.php');
 
 $userIDFromCookie = (isset($_COOKIE['BulletPointUserID']) ? $_COOKIE['BulletPointUserID'] : '');
 
