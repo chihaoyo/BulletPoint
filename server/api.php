@@ -4,7 +4,6 @@ include_once('importer.php');
 include_once('api-db.php');
 include_once('api-parsing.php');
 
-
 require 'Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 
@@ -25,6 +24,10 @@ $app->get('/:table/:id', function($table, $id) use ($app, $db) {
 		else if(is_numeric($id) && intval($id) > 0) {
 			$id = intval($id);
 			echo json_encode(select($db, $table, $id));
+		}
+		else if($table == 'Nodes' && is_user_id($id)) {
+			// get all Nodes from that user
+			echo json_encode(select_node($db, $id));
 		}
 		else {
 			$app->notFound();

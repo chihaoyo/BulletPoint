@@ -69,10 +69,16 @@ function select($db, $table, $serial) {
 	$p = array('serial' => $serial);
 	return $db->f1($q, $p);
 }
-function select_node($db, $user_id, $url_hash) {
-	$q = "SELECT * FROM Nodes WHERE user_id = :user_id AND url_hash = :url_hash";
-	$p = array('user_id' => $user_id, 'url_hash' => $url_hash);
-	return $db->f1($q, $p);
+function select_node($db, $user_id, $url_hash = null) {
+	$q = "SELECT * FROM Nodes WHERE user_id = :user_id"; //" AND url_hash = :url_hash" : '');
+	$p = array('user_id' => $user_id); //, 'url_hash' => $url_hash);
+	
+	if($url_hash != null) {
+		$q .= " AND url_hash = :url_hash";
+		$p['url_hash'] = $url_hash;
+	}
+	
+	return $db->fa($q, $p);
 }
 
 // insert OR update
