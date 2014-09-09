@@ -1,6 +1,6 @@
 <?php
 
-include_once('importer.php');
+include_once('../common/importer.php');
 
 function try_http_request() {
 	$url = 'http://chihaoyo.me/bulletpoint/server/Nodes';

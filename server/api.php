@@ -1,6 +1,6 @@
 <?php
 
-include_once('importer.php');
+include_once('../common/importer.php');
 include_once('api-db.php');
 include_once('api-parsing.php');
 
