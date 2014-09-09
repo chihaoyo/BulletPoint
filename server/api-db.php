@@ -76,6 +76,7 @@ function select_node($db, $user_id, $url_hash = null) {
 	if($url_hash != null) {
 		$q .= " AND url_hash = :url_hash";
 		$p['url_hash'] = $url_hash;
+		return $db->f1($q, $p);
 	}
 	
 	return $db->fa($q, $p);
