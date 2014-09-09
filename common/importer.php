@@ -1,9 +1,10 @@
 <?php
 
 // providing information regarding file system
-$__root = '/var/www/html';
-set_include_path(get_include_path() . $__root . PATH_SEPARATOR . "$__root/common" . PATH_SEPARATOR);
-
+//echo '<pre>' . print_r($_SERVER, 1) . '</pre>';
+//$__root = $_SERVER['DOCUMENT_ROOT'];//'/var/www/html';
+//set_include_path(get_include_path() . PATH_SEPARATOR . $__root . PATH_SEPARATOR . "$__root/common" . PATH_SEPARATOR);
+//echo '<pre>' . get_include_path() . '</pre>';
 // options
 /*
 ini_set('auto_detect_line_endings', true);
