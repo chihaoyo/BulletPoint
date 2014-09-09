@@ -1,1 +1,1 @@
-<?php header('Location: http://chihaoyo.me/bulletpoint/server/'); ?>
+<?php header('Location: //' . $_SERVER['SERVER_NAME'] . '/bulletpoint/server/'); ?>

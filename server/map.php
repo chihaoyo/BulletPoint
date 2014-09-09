@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<svg></svg>
+<svg id="main"></svg>
 <?php
 
 include_once('importer.php');
@@ -14,12 +14,12 @@ $userIDFormat = '/^@[0-9A-F]{8}-[0-9A-F]{4}-[1-5][0-9A-F]{3}-[89AB][0-9A-F]{3}-[
 <script>
 
 var $window = $(window);
+var $canvas = $('svg#main');
 
 $.get('//50.18.115.212/bulletpoint/server/Nodes/@A2DCFDB5-C277-4AA1-AC53-0904120C4F69', {}, function(data) {
 	data = JSON.parse(data);
 	console.log(data);
 });
-
 
 $window.load = function() {
 };
