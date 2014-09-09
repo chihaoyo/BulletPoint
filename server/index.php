@@ -57,4 +57,4 @@ var $window = $(window);
 $window.load = function() {
 };
 
-/</script>
+</script>
