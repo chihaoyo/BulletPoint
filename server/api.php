@@ -51,13 +51,15 @@ $app->post('/:table', function($table) use ($app, $db) {
 		$r = write($db, $table, $parameters);
 
 		if($r !== false && $table == 'Nodes' && isset($parameters['comment']) && $parameters['comment'] != '') {
-			$node_id = $r;
+			$node_id = $r['serial'];
 
 			// parse comment // add Tags
 			$tags = find_tags($parameters['comment']);
 			$tag_ids = array();
 			foreach($tags as $tag) {
-				$tag_ids[] = write($db, 'Tags', array('tag' => $tag));
+				$tag_r = write($db, 'Tags', array('tag' => $tag));
+				if($tag_r !== false)
+					$tag_ids[] = $tag_r['serial'];
 			}
 			if(count($tag_ids) > 0) {
 				// delete NodeTagPairs // add NodeTagPairs

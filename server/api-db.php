@@ -32,6 +32,30 @@ $db_structure = array(
 		),
 		'required_cols' => array('node_id', 'tag_id'),
 		'unique_key_cols' => array('node_id', 'tag_id')
+	),
+	'MapNodes' => array(
+		'cols' => array(
+			'serial' => ':serial',
+			'type' => ':type',
+			'name' => ':name',
+			'owner' => ':owner',
+			'data' => ':data'
+		),
+		'required_cols' => array('type', 'name'),
+		'unique_key_cols' => array() //array('type', 'name', 'owner')
+	),
+	'MapEdges' => array(
+		'cols' => array(
+			'serial' => ':serial',
+			'type' => ':type',
+			'name' => ':name',
+			'fromNode' => ':fromNode',
+			'toNode' => ':toNode',
+			'owner' => ':owner',
+			'data' => ':data'
+		),
+		'required_cols' => array('fromNode', 'toNode'),
+		'unique_key_cols' => array() // array('type', 'name', 'fromNode', 'toNode', 'owner')
 	)
 );
 
@@ -126,14 +150,22 @@ function write($db, $table, $data) {
 	$q .= 'ON DUPLICATE KEY UPDATE serial = LAST_INSERT_ID(serial), ' . implode(', ', $pairs_to_update);
 	
 	// do it
-	return ($db->q1($q, $data) !== false ? $db->lastInsertId() : false);
+	$r = ($db->q1($q, $data) !== false ? $db->lastInsertId() : false);
+	if($r !== false) {
+		$r = $db->f1("SELECT * FROM $table WHERE serial = :serial", array('serial' => $r));
+	}
+	return $r;
 }
 
 // delete
 function delete($db, $table, $serial) {
-	$q = "DELETE FROM $table WHERE serial = :serial";
+	$q = "SELECT * FROM $table WHERE serial = :serial";
 	$p = array('serial' => $serial);
-	return $db->q1($q, $p);
+	$r = $db->f1($q, $p);
+	
+	$q = "DELETE FROM $table WHERE serial = :serial";
+//	$p = array('serial' => $serial);
+	return ($db->q1($q, $p) ? $r : false);
 }
 function delete_node_tag_pairs_on_node($db, $node_id) {
 	$q = "DELETE FROM NodeTagPairs WHERE node_id = :node_id";
