@@ -173,10 +173,9 @@ DS.prototype.drawAll = function() {
 	console.log(this.id + ' drawAll');
 	// use enter/exit in d3 to determine which ones to draw/remove and which ones to skip // is it possible?
 	
-	var entities = rootCanvas.selectAll('g.' + this.id).data($.map(this.local, function(o, i) { return [o]; }), function(o) { return JSON.stringify(o.val); });
+	var entities = rootCanvas.selectAll('g.' + this.id).data($.map(this.local, function(o, i) { return [o]; }), function(o) { return o.key + JSON.stringify(o.val); });
 	
 	var entitiesNew = entities.enter().append('g').attr('class', this.id).each(function(o, i) {
-		console.log(i);
-		console.log(o);
+		o.draw();
 	})
 }
