@@ -89,10 +89,11 @@ var postToServer = function(comment) {
 	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState == 4) {
-			var result = xhr.responseText;
+			var result = JSON.parse(xhr.responseText);
 			// feedback
 			var commentBox = document.getElementById('BulletPointComment');
-			var status = (result == 'duplicate' ? 'warning' : 'ok');
+			var status = (result == false ? 'error' : 'ok');
+//			var status = (result == 'duplicate' ? 'warning' : 'ok');
 			var statusMessage = 'Saved.';
 			if(status == 'warning')
 				statusMessage = 'Oops.';
@@ -104,7 +105,7 @@ var postToServer = function(comment) {
 
 	// create parameter string
 	var parameters = 'user_id=' + user_id + '&url=' + url + '&title=' + title + '&comment=' + comment;
-	console.log("POST: '" + parameters + "'");
+//	console.log("POST: '" + parameters + "'");
 
 	// send request
 	xhr.send(parameters);
