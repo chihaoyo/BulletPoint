@@ -36,25 +36,25 @@ $db_structure = array(
 	'MapNodes' => array(
 		'cols' => array(
 			'serial' => ':serial',
-			'type' => ':type',
+			'type' => ':type', // article, issue, ideology..., undefined
 			'name' => ':name',
 			'owner' => ':owner',
 			'data' => ':data'
 		),
-		'required_cols' => array('type', 'name'),
+		'required_cols' => array('name', 'owner'),
 		'unique_key_cols' => array() //array('type', 'name', 'owner')
 	),
 	'MapEdges' => array(
 		'cols' => array(
 			'serial' => ':serial',
-			'type' => ':type',
+			'type' => ':type', // forward, backward, bidir, nondir..., undefined
 			'name' => ':name',
 			'fromNode' => ':fromNode',
 			'toNode' => ':toNode',
 			'owner' => ':owner',
 			'data' => ':data'
 		),
-		'required_cols' => array('fromNode', 'toNode'),
+		'required_cols' => array('fromNode', 'toNode', 'owner'),
 		'unique_key_cols' => array() // array('type', 'name', 'fromNode', 'toNode', 'owner')
 	)
 );
@@ -93,6 +93,14 @@ function select($db, $table, $serial) {
 	$p = array('serial' => $serial);
 	return $db->f1($q, $p);
 }
+function select_on($db, $table, $keys, $vals) {
+	function key_string($k) { return "$k = :$k"; }
+	$keys = array_map('key_string', $keys);
+	
+	$q = "SELECT * FROM $table WHERE " . implode(' AND ', $keys);
+	$p = $vals;
+	return $db->fa($q, $p);
+}/*
 function select_node($db, $user_id, $url_hash = null) {
 	$q = "SELECT * FROM Nodes WHERE user_id = :user_id"; //" AND url_hash = :url_hash" : '');
 	$p = array('user_id' => $user_id); //, 'url_hash' => $url_hash);
@@ -104,7 +112,7 @@ function select_node($db, $user_id, $url_hash = null) {
 	}
 	
 	return $db->fa($q, $p);
-}
+}*/
 
 // insert OR update
 define('DB_UNDEFINED', false);

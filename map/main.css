@@ -44,46 +44,9 @@ div#canvas svg {
 	margin: 0 auto;
 }
 
-.node {
-	-webkit-user-select: none;
-	cursor: pointer;
-}
-.node .block { fill: blue; }
-.node.project .block { fill: lime; }
-.node.place .block { fill: fuchsia; }
-.node.issue .block { fill: red; }
-.node.concept .block { fill: white; }
-.node.cornerstone .block { fill: white; }
+.Node			circle.center { fill: white; }
+.Node.article	circle.center { fill: lime; }
+.Node.issue		circle.center { fill: red; }
+.Node text { fill: white; }
 
-.node text { fill: black; }
-.node.human text, .node.organism text, .node.organization text { fill: lime; }
-.node.project text { fill: blue; }
-.node.place text { fill: lime; }
-.node.concept text { fill: blue; }
-.node.cornerstone text { font-weight: bold; }
-
-.node.negated .block { fill: #181818; stroke-width: 3; stroke: #444; }
-.node.negated text { fill: #444; }
-
-.node .red { fill: red; stroke: #cc0000; stroke-weight: 1px; display: none; }
-.node.focus .red { display: block; }
-/*
-.node .note { fill: white; display: none; }
-.node.focus .note { display: block; }*/
-
-.foreign_object {
-	margin: 0;
-	background: none;
-}
-
-#input { width: 12em; background-color: blue;}
-#input[category='human'], #input[category='organism'], #input[category='organization'] { color: lime; }
-#input[category='project'] { background-color: lime; color: blue; }
-#input[category='place'] { background-color: fuchsia; color: lime; }
-#input[category='issue'] { background-color: red; }
-#input[category='concept'] { background-color: white; color: blue; }
-#input[category='cornerstone'] { background-color: white; font-weight: bold; }
-
-.frame.origin { fill: #777; }
-.frame.axis { fill: none; stroke: #777; stroke-width: 0.2em; }
-.frame.border { fill: none; stroke: #aaa; stroke-width: 0.8em; stroke-linejoin: round; stroke-linecap: square; }
+.Edge line { stroke: white; stroke-width: 0.5em; }

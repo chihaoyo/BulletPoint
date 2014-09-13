@@ -62,6 +62,7 @@ Static.prototype.push = function(dictionary) {
 		data: dictionary,
 		success: function(data) {
 //			console.log('Success: POST to ' + that.baseURL);
+			console.log(data);
 			data = JSON.parse(data);
 			var callback = that.___parent.on('child_added');
 			if(callback !== undefined && callback != null)
@@ -173,9 +174,13 @@ DS.prototype.drawAll = function() {
 	console.log(this.id + ' drawAll');
 	// use enter/exit in d3 to determine which ones to draw/remove and which ones to skip // is it possible?
 	
-	var entities = rootCanvas.selectAll('g.' + this.id).data($.map(this.local, function(o, i) { return [o]; }), function(o) { return o.key + JSON.stringify(o.val); });
+	var entities = rootCanvas.selectAll('g.' + DICT[this.id].singular).data($.map(this.local, function(o, i) { return [o]; }), function(o) { return o.key + JSON.stringify(o.val); });
 	
-	var entitiesNew = entities.enter().append('g').attr('class', this.id).each(function(o, i) {
-		o.draw();
-	})
+	// new entities
+	entities.enter().insert('g', ':first-child').attr('class', DICT[this.id].singular).each(function(o, i) {
+		o.draw(d3.select(this));
+	});
+	
+	// old entities
+	entities.exit().remove();
 }

@@ -24,19 +24,30 @@ $app->get('/:table/:id', function($table, $id) use ($app, $db) {
 		else if(is_numeric($id) && intval($id) > 0) {
 			$id = intval($id);
 			echo json_encode(select($db, $table, $id));
-		}
+		}/*
 		else if($table == 'Nodes' && is_user_id($id)) {
 			// get all Nodes from that user
 			echo json_encode(select_node($db, $id));
+		}*/
+		else if(is_user_id($id)) {
+			echo json_encode(select_on($db, $table, array('user_id'), array('user_id' => $id)));
 		}
 		else {
 			$app->notFound();
 		}
 	}
-});
+});/*
 $app->get('/Nodes/:user_id/:url_hash', function($user_id, $url_hash) use ($app, $db)  {
 	if(substr($user_id, 0, 1) == '@') {
 		echo json_encode(select_node($db, $user_id, $url_hash));
+	}
+	else {
+		$app->notFound();
+	}
+});*/
+$app->get('/:table/:primaryID/:secondaryID', function($table, $primaryID, $secondaryID) use ($app, $db) {
+	if($table == 'Nodes' && is_user_id($primaryID)) {
+		echo json_encode(select_on($db, $table, array('user_id', 'url_hash'), array('user_id' => $primaryID, 'url_hash' => $secondaryID)));
 	}
 	else {
 		$app->notFound();

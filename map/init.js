@@ -1,3 +1,10 @@
+var DICT = {
+	'MapNodes': {singular: 'Node', plural: 'Nodes'},
+	'MapEdges': {singular: 'Edge', plural: 'Edges'}	
+};
+
+var engine = new NodeEdgeEngine();
+
 // DS's
 var nodes = new DS('MapNodes', Node, true, true);
 var edges = new DS('MapEdges', Edge, true, true);
@@ -34,7 +41,7 @@ handlers.child_changed = function(snapshot) {
 	var key = snapshot.name();
 	var val = snapshot.val();
 	ds.local[key].val = val;
-	ds.local[key].redraw();
+	ds.local[key].redraw(rootCanvas.select('g#' + key));
 };
 handlers.child_removed = function(snapshot) {
 	console.log(this.___parent.id + ' ' + this.type + ' child_removed');
@@ -62,24 +69,32 @@ var init = function() {
 	ENVI.docH = $document.height();
 	
 	ENVI.fontSize = 13.0;
-	ENVI.letterW = +(ENVI.fontSize*0.62).toFixed(4);
-	ENVI.lineH = +(ENVI.fontSize*1.25).toFixed(4);
+	ENVI.letterW = Math.ceil(ENVI.fontSize*0.62);
+	ENVI.lineH = Math.ceil(ENVI.fontSize*1.25);
 	
-	ENVI.canvasW = +(ENVI.docW*0.99).toFixed();
-	ENVI.canvasH = +(ENVI.docH - 6*ENVI.fontSize)*0.95.toFixed(); // exclude top & bottom margin: 3em
+	ENVI.canvasW = Math.ceil(ENVI.docW*0.99);
+	ENVI.canvasH = Math.ceil((ENVI.docH - 6*ENVI.fontSize)*0.95); // exclude top & bottom margin: 3em
 	
 	// locate and set up root canvas
 	rootCanvas = d3.select('div#canvas svg');
 	rootCanvas.attr('width', ENVI.canvasW).attr('height', ENVI.canvasH);
+	rootCanvas.on('click', function() { engine.reset(); });
+	rootCanvas.on('dblclick', function() { engine.createNode(d3.event.x, d3.event.y); });
 	
 	// bind event handlers to DS's
-	nodes.once('value', handlers.value);//_.bind(handlers.value, nodes));
-	nodes.on('child_added', handlers.child_added);//_.bind(handlers.child_added, nodes));
+	nodes.once('value', handlers.value);
+	nodes.on('child_added', handlers.child_added);
 	nodes.on('child_changed', handlers.child_changed);
 	nodes.on('child_removed', handlers.child_removed);
 	
+	edges.once('value', handlers.value);
+	edges.on('child_added', handlers.child_added);
+	edges.on('child_changed', handlers.child_changed);
+	edges.on('child_removed', handlers.child_removed);
+	
 	// connect DS
 	nodes.connect();
+	edges.connect();
 //	nodes.sync.push({type: 'article', name: 'http://p.q/r', owner: 'slave', data: JSON.stringify({comment: 'こんにちは'})})
 //	nodes.stat.push({type: 'article', name: 'http://a.b/c', owner: 'master', data: JSON.stringify({comment: '中文'})});
 };
