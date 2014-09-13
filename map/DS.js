@@ -52,8 +52,7 @@ var Static = function(parent, baseURL) {
 	});
 }
 Static.prototype.push = function(dictionary) {
-	if(dictionary === undefined || dictionary == null || dictionary == {} || dictionary.length <= 0)
-		return false;
+	if(dictionary === undefined || dictionary == null || dictionary == {} || dictionary.length <= 0) return;
 		
 	var that = this;
 	$.ajax({
@@ -61,22 +60,21 @@ Static.prototype.push = function(dictionary) {
 		type: 'POST',
 		data: dictionary,
 		success: function(data) {
-//			console.log('Success: POST to ' + that.baseURL);
+			console.log('Success: POST to ' + that.baseURL);
 			console.log(data);
 			data = JSON.parse(data);
 			var callback = that.___parent.on('child_added');
 			if(callback !== undefined && callback != null)
 				callback.apply(that, [new Snapshot(data)]);
-		}/*,
+		},
 		error: function(data) {
-			console.log('Error: POST to ' + that.baseURL);
+			console.error('Error: POST to ' + that.baseURL);
 			console.log(data.responseText);
-		}*/
+		}
 	});
 }
 Static.prototype.update = function(id, dictionary) {
-	if(id === undefined || id == null || id == '')
-		return false;
+	if(id === undefined || id == null || id == '') return;
 		
 	if(dictionary.serial === undefined)
 		dictionary.serial = id;
@@ -95,8 +93,7 @@ Static.prototype.update = function(id, dictionary) {
 	});
 }
 Static.prototype.remove = function(id) {
-	if(id === undefined || id == null || id == '')
-		return false;
+	if(id === undefined || id == null || id == '') return;
 		
 	var that = this;
 	$.ajax({
@@ -141,18 +138,57 @@ var DS = function(id, factoryFunc, hasStatic, hasSynced) {
 	this.stat = null;
 	this.sync = null;
 	this.local = {};
+	this.localArray = [];
+	
+	this.___entities = null;
 	
 	this.___onceCallbacks = {};
 	this.___onCallbacks = {};
 	
 	this.flags = {initialized: false, ready: {sync: false, stat: false}};
+};
+// get or set ready status
+DS.prototype.isInitialized = function(val) {
+	if(val === undefined)
+		return this.flags.initialized;
+	else {
+		this.flags.initialized = val;
+		return val;
+	}
 }
-DS.prototype.isConnected = function() {
-	var syncedDataReady = (this.sync == null ? true : this.flags.ready.sync);
-	var staticDataReady = (this.stat == null ? true : this.flags.ready.stat);
-	return syncedDataReady && staticDataReady;
+DS.prototype.isReady = function(whichOne, val) {
+	if(whichOne === undefined && val === undefined) { // aggregator
+		var syncedDataReady = (this.sync == null ? true : this.flags.ready.sync);
+		var staticDataReady = (this.stat == null ? true : this.flags.ready.stat);
+		return syncedDataReady && staticDataReady;
+	}
+	else if(val === undefined) { // getter
+		return this.flag.ready[whichOne];
+	}
+	else { // setter
+		this.flags.ready[whichOne] = val;
+		
+		if(this.isReady())
+			ForceField.isReady(DICT[this.id].plural.toLowerCase(), true)
+		
+		return val;
+	}
+};
+DS.prototype.localArrayMakeover = function() {
+	this.localArray = [];
+	for(x in this.local) {
+		this.localArray.push(this.local[x].simplify());
+	}
 }
-// bind or return callback on certain event
+DS.prototype.localArrayIndexOf = function(id) {
+	for(var i = 0; i < this.localArray.length; i++) {
+		if(this.localArray[i].key.toString() == id.toString()) {
+			return +i;
+		}
+			
+	}
+	return false;
+};
 DS.prototype.once = function(event, callback) { // value
 	if(callback === undefined)
 		return this.___onceCallbacks[event];
@@ -174,13 +210,15 @@ DS.prototype.drawAll = function() {
 	console.log(this.id + ' drawAll');
 	// use enter/exit in d3 to determine which ones to draw/remove and which ones to skip // is it possible?
 	
-	var entities = rootCanvas.selectAll('g.' + DICT[this.id].singular).data($.map(this.local, function(o, i) { return [o]; }), function(o) { return o.key + JSON.stringify(o.val); });
+	var that = this;
+	var className = DICT[that.id].singular;
+	that.___entities = rootCanvas.selectAll('g.' + className).data(that.localArray, function(o) { return o.key + JSON.stringify(o.val); });
 	
 	// new entities
-	entities.enter().insert('g', ':first-child').attr('class', DICT[this.id].singular).each(function(o, i) {
-		o.draw(d3.select(this));
+	that.___entities.enter().insert('g', ':first-child').attr('class', className).each(function(o, i) {
+		that.local[o.key].draw(d3.select(this));
 	});
 	
 	// old entities
-	entities.exit().remove();
+	that.___entities.exit().remove();
 }

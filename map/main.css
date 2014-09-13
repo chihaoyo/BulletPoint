@@ -49,4 +49,4 @@ div#canvas svg {
 .Node.issue		circle.center { fill: red; }
 .Node text { fill: white; }
 
-.Edge line { stroke: white; stroke-width: 0.5em; }
+.Edge line { stroke: white; stroke-width: 0.5em; opacity: 0.25; }

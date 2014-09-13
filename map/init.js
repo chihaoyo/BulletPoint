@@ -1,9 +1,13 @@
+var PARA = {
+	userID: '@A2DCFDB5-C277-4AA1-AC53-0904120C4F69',
+	staticDSBaseURL: '//50.18.115.212/bulletpoint/server/',
+	syncedDSBaseURL: '//resplendent-fire-8362.firebaseio.com/bulletpoint/'
+};
+
 var DICT = {
 	'MapNodes': {singular: 'Node', plural: 'Nodes'},
 	'MapEdges': {singular: 'Edge', plural: 'Edges'}	
 };
-
-var engine = new NodeEdgeEngine();
 
 // DS's
 var nodes = new DS('MapNodes', Node, true, true);
@@ -15,11 +19,12 @@ handlers.value = function() {
 	console.log(this.___parent.id + ' ' + this.type + ' value');
 	var ds = this.___parent;
 	var type = this.type;
-	ds.flags.ready[type] = true;
+	ds.isReady(type, true);
 	
-	if(ds.isConnected() && ds.flags.initialized == false) {
-		ds.drawAll();
-		ds.flags.initialized = true;
+	if(ds.isReady() && !ds.isInitialized()) {
+		ds.localArrayMakeover();
+		ForceField.drawAll();
+		ds.isInitialized(true);
 	}
 };
 handlers.child_added = function(snapshot) {
@@ -29,9 +34,13 @@ handlers.child_added = function(snapshot) {
 	
 	var key = snapshot.name();
 	var val = snapshot.val();
-	ds.local[key] = new ds.LocalDataEntity(type, key, val);
-	if(ds.flags.initialized)
-		ds.drawAll();
+	var entity = new ds.LocalDataEntity(type, key, val);
+	ds.local[key] = entity;
+	
+	if(ds.isInitialized()) {
+		ds.localArray.push(entity.simplify())
+		ForceField.drawAll();
+	}
 };
 handlers.child_changed = function(snapshot) {
 	console.log(this.___parent.id + ' ' + this.type + ' child_changed');
@@ -41,6 +50,7 @@ handlers.child_changed = function(snapshot) {
 	var key = snapshot.name();
 	var val = snapshot.val();
 	ds.local[key].val = val;
+	ds.localArray[ds.localArrayIndexOf(key)] = ds.local[key].simplify();
 	ds.local[key].redraw(rootCanvas.select('g#' + key));
 };
 handlers.child_removed = function(snapshot) {
@@ -52,8 +62,10 @@ handlers.child_removed = function(snapshot) {
 	var val = snapshot.val();
 	delete ds.local[key];
 	
-	if(ds.flags.initialized)
-		ds.drawAll();
+	if(ds.isInitialized()) {
+		ds.localArray.splice(ds.localArrayIndexOf(key), 1);
+		ForceField.drawAll();
+	}
 };
 
 var ENVI = {};
@@ -78,8 +90,8 @@ var init = function() {
 	// locate and set up root canvas
 	rootCanvas = d3.select('div#canvas svg');
 	rootCanvas.attr('width', ENVI.canvasW).attr('height', ENVI.canvasH);
-	rootCanvas.on('click', function() { engine.reset(); });
-	rootCanvas.on('dblclick', function() { engine.createNode(d3.event.x, d3.event.y); });
+	rootCanvas.on('click', function() { NodeEdgeEngine.reset(); });
+	rootCanvas.on('dblclick', function() { NodeEdgeEngine.createNode(d3.event.x, d3.event.y); });
 	
 	// bind event handlers to DS's
 	nodes.once('value', handlers.value);

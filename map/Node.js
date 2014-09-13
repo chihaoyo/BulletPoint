@@ -25,13 +25,16 @@ Node.prototype.getHeight = function() { return ENVI.lineH; };
 // event handler for d3
 // this would be SVG element that fired the event
 Node.prototype.clicked = function(o, i) {
+	// http://stackoverflow.com/questions/19075381/d3-mouse-events-click-dragend
+	if (d3.event.defaultPrevented) return;
+	
 	var that = o;
 	var rootElement = rootCanvas.select('g#' + that.type + '_' + that.key);
 //	rootElement.classed('selected', true);
-	engine.registerNode(that.key);
+	NodeEdgeEngine.registerNode(that.key);
 	d3.event.stopPropagation();
 }
-
+/*
 Node.prototype.draw = function(rootElement) {
 	console.log('draw Node ' + this.type + ' ' + this.key + ' ' + JSON.stringify(this.val));
 	
@@ -43,7 +46,17 @@ Node.prototype.draw = function(rootElement) {
 	rootElement.append('text').attr('x', ENVI.letterW).attr('y', ENVI.lineH/4).text(this.toString());
 	
 	this.XY = XY;
-};
+};*/
+Node.prototype.simplify = function() {
+	return {key: this.key, fixed: false};
+}
+Node.prototype.draw = function(rootElement) {
+//	console.log('draw Node ' + this.type + ' ' + this.key + ' ' + JSON.stringify(this.val));
+	
+	rootElement.classed(this.type + ' ' + this.val.type, true).attr('id', this.type + '_' + this.key);
+	rootElement.append('circle').attr('class', 'center').attr('r', ENVI.letterW*0.75).on('click', this.clicked);
+	rootElement.append('text').attr('x', ENVI.letterW).attr('y', ENVI.lineH/4).text(this.toString());
+}
 Node.prototype.redraw = function(rootElement) {
 	console.log('redraw Node ' + this.type + ' ' + this.key + ' ' + JSON.stringify(this.val));
 	
