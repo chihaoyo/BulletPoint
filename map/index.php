@@ -4,7 +4,7 @@
 	<title>bulletpoint/map</title>
 	<meta charset="utf-8" />
 	<link rel="shortcut icon" href="favicon.ico" />
-	<link href='http://fonts.googleapis.com/css?family=Roboto:500,300&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Roboto:300italic,500,500italic,300&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="main.css" />
 </head>
 <body>

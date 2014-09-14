@@ -11,8 +11,7 @@ $userIDFromCookie = (isset($_COOKIE['BulletPointUserID']) ? $_COOKIE['BulletPoin
 	<title>BulletPoint</title>
 	<meta charset="utf-8" />
 	<link rel="shortcut icon" href="favicon.ico" />
-	<link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="http://50.18.115.212/fonts/helvetica-neue/stylesheet.css" />
+	<link href='http://fonts.googleapis.com/css?family=Roboto:300italic,500,500italic,300&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="index.css" />
 </head>
 <body>
