@@ -1,8 +1,8 @@
 <?php
 
 include_once('../common/importer.php');
-include_once('api-db.php');
-include_once('api-parsing.php');
+include_once('db.php');
+include_once('parsing.php');
 
 require 'Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
@@ -53,6 +53,9 @@ $app->get('/:table/:primaryID/:secondaryID', function($table, $primaryID, $secon
 		$app->notFound();
 	}
 });
+// Work in progress:
+// POST to create
+// PUT to update
 $app->post('/:table', function($table) use ($app, $db) {
 	if(!table_exists($table)) {
 		$app->notFound();
@@ -81,6 +84,14 @@ $app->post('/:table', function($table) use ($app, $db) {
 		}
 
 		echo json_encode($r);
+	}
+});
+$app->put('/:table/:id', function($table, $id) use ($app, $db) {
+	if(!table_exists($table)) {
+		$app->notFound();
+	}
+	else {
+		;
 	}
 });
 $app->delete('/:table/:id', function($table, $id) use ($app, $db){

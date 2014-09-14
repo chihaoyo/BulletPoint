@@ -4,10 +4,21 @@
 	<title>bulletpoint/map</title>
 	<meta charset="utf-8" />
 	<link rel="shortcut icon" href="favicon.ico" />
-	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" />
+	<link href='http://fonts.googleapis.com/css?family=Roboto:500,300&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="main.css" />
 </head>
 <body>
+	<form>
+		<p><span>add a(n) </span><select name="type">
+			<option>human</option>
+			<option>event</option>
+			<option>place</option>
+			<option>book</option>
+			<option>ideology</option>
+			<option>argument</option>
+			<option>issue</option>
+		</select> node named <input type="text" name="name" placeholder="name" /> with data <input type="text" name="data" placeholder="Javascript Object" /> and keep it <select name="storage"><option>public</option><option>private</option></select><input type="button" value="add" /></p><p>add an <span class="emphasize">article</span> node by using the Chrome plugin</p><p>add an edge by clicking on two nodes consecutively</p>
+	</form>
 	<div id="canvas"><svg></svg></div>
 </body>
 <?php

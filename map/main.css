@@ -1,5 +1,6 @@
 html, body, p, li, input, select, option, textarea, text {
-	font-family: "Source Code Pro", monospace;
+	font-family: "Roboto", monospace;
+	font-weight: 300;
 	font-size: 13px;
 }
 div, form, svg {
@@ -37,6 +38,12 @@ form {
 	left: 0;
 	margin: 0.5em 1em;
 }
+p {
+	margin: 0.5em 0;
+}
+.emphasize {
+	font-weight: 500;
+}
 
 div#canvas { height: 100%; margin: 0; margin: 3em 0; }
 div#canvas svg {
@@ -44,14 +51,15 @@ div#canvas svg {
 	margin: 0 auto;
 }
 
-.Node			circle.center { fill: white; }
+.Node			circle.center { fill: white; cursor: pointer; }
 .Node.article	circle.center { fill: white; }
-.Node.human		circle.center { fill: blue; }
-.Node.event		circle.center { fill: lime; }
+.Node.human		circle.center { fill: lime; }
+.Node.event		circle.center { fill: yellow; }
 .Node.place		circle.center { fill: magenta; }
-.Node.ideology	circle.center { fill: red; }
-.Node.arguement	circle.center { fill: red; }
+.Node.book		circle.center { fill: blue; }
+.Node.ideology	circle.center { fill: blue; }
+.Node.arguement	circle.center { fill: blue; }
 .Node.issue		circle.center { fill: red; }
 .Node text { fill: white; }
 
-.Edge line { stroke: #555 ; stroke-width: 0.5em; }
+.Edge line { stroke: #333 ; stroke-width: 0.5em; }

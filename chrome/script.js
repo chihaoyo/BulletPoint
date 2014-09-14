@@ -1,4 +1,4 @@
-var serverAddress = 'http://50.18.115.212/bulletpoint/server/';
+var serverAddress = 'http://50.18.115.212/bulletpoint/api/';
 var isHome = function() {
 	return (location.href.match(serverAddress) != null);
 };
@@ -133,7 +133,7 @@ var getFromServer = function() {
     		}
     	}
     }
-    var getInfoURL = serverAddress + '/Nodes/' + user_id + '/' + md5(url);
+    var getInfoURL = serverAddress + 'Nodes/' + user_id + '/' + md5(url);
     xhr.open('GET', getInfoURL, true);
 	xhr.send(null);
 };

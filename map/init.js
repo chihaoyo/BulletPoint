@@ -40,7 +40,7 @@ var CD = function(el) { // only fire events that is targeted at el (toElement) w
 
 var PARA = {
 	userID: '@A2DCFDB5-C277-4AA1-AC53-0904120C4F69',
-	staticDSBaseURL: '//50.18.115.212/bulletpoint/server/',
+	staticDSBaseURL: '//50.18.115.212/bulletpoint/api/',
 	syncedDSBaseURL: '//resplendent-fire-8362.firebaseio.com/bulletpoint/'
 };
 
@@ -53,22 +53,24 @@ var DICT = {
 var nodes = new DS('MapNodes', Node, true, true);
 var edges = new DS('MapEdges', Edge, true, true);
 
-// handlers for DS's - both nodes and edges
+// handlers for data events
+// 'this' is either a Static or a Sync
+// 'this.___parent' is a DS
 var handlers = {};
 handlers.value = function() {
-	console.log(this.___parent.id + ' ' + this.type + ' value');
+	console.log(this.___parent.id + ' ' + this.storageType + ' value');
 	var ds = this.___parent;
-	var type = this.type;
-	ds.isReady(type, true);
+	var storageType = this.storageType;
+	ds.isReady(storageType, true);
 };
 handlers.child_added = function(snapshot) {
-	console.log(this.___parent.id + ' ' + this.type + ' child_added');
+	console.log(this.___parent.id + ' ' + this.storageType + ' child_added');
 	var ds = this.___parent;
-	var type = this.type;
+	var storageType = this.storageType;
 	
 	var key = snapshot.name();
 	var val = snapshot.val();
-	var entity = new ds.LocalDataEntity(type, key, val);
+	var entity = new ds.LocalDataEntity(storageType, key, val);
 	ds.local[key] = entity;
 	
 	if(ds.isReady()) {
@@ -77,20 +79,20 @@ handlers.child_added = function(snapshot) {
 	}
 };
 handlers.child_changed = function(snapshot) {
-	console.log(this.___parent.id + ' ' + this.type + ' child_changed');
+	console.log(this.___parent.id + ' ' + this.storageType + ' child_changed');
 	var ds = this.___parent;
-	var type = this.type;
+	var storageType = this.storageType;
 	
 	var key = snapshot.name();
 	var val = snapshot.val();
 	ds.local[key].val = val;
 	ds.localArray[ds.localArrayIndexOf(key)] = ds.local[key].simplify();
-	ds.local[key].redraw(rootCanvas.select('g#' + type + '_' + key), DICT[this.___parent.id].singular);
+	ds.local[key].redraw(rootCanvas.select('g#' + storageType + '_' + key), DICT[this.___parent.id].singular);
 };
 handlers.child_removed = function(snapshot) {
-	console.log(this.___parent.id + ' ' + this.type + ' child_removed');
+	console.log(this.___parent.id + ' ' + this.storageType + ' child_removed');
 	var ds = this.___parent;
-//	var type = this.type;
+//	var storageType = this.storageType;
 	
 	var key = snapshot.name();
 	var val = snapshot.val();

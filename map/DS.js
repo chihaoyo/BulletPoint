@@ -32,7 +32,7 @@ Snapshot.prototype.val = function() { return this.data; }
 // Wrapper for a REST data store
 var Static = function(parent, baseURL) {
 	this.___parent = parent;
-	this.type = 'stat';
+	this.storageType = 'stat';
 	this.baseURL = baseURL;
 	
 	var that = this;
@@ -112,7 +112,7 @@ Static.prototype.remove = function(id) {
 // Wrapper for Firebase
 var Synced = function(parent, baseURL) {
 	this.___parent = parent;
-	this.type = 'sync';
+	this.storageType = 'sync';
 	this.baseURL = baseURL;
 	this.___firebase = new Firebase(this.baseURL);
 	
@@ -131,6 +131,7 @@ Synced.prototype.remove = function(id) { return this.___firebase.child(id).remov
 // Consolidating two datasources
 var DS = function(id, factoryFunc, hasStatic, hasSynced) {
 	this.id = id;
+	this.db
 	this.LocalDataEntity = factoryFunc;
 	this.staticURL = hasStatic ? PARA.staticDSBaseURL + id : null;
 	this.syncedURL = hasSynced ? PARA.syncedDSBaseURL + id : null;
@@ -211,16 +212,19 @@ DS.prototype.drawAll = function() {
 	// old entities
 	that.___entities.exit().remove();
 };
+// interfacing Static.update and Synced.update
+DS.prototype.update = function(id, dictionary) {
+	return this[this.local[id].storageType].update(id, dictionary);
+};
+// interfacing Static.remove and Synced.remove
+DS.prototype.remove = function(id) {
+	return this[this.local[id].storageType].remove(id);
+};
+// dev
 DS.prototype.allIDs = function() {
 	return Object.keys(this.local);
 };
 DS.prototype.randomEntryID = function() {
 	var i = Math.floor(Math.random()*this.localArray.length);
 	return this.localArray[i].key;
-};
-DS.prototype.update = function(id, dictionary) {
-	return this[this.local[id].type].update(id, dictionary);
-};
-DS.prototype.remove = function(id) {
-	return this[this.local[id].type].remove(id);
 };

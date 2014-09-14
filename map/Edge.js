@@ -1,17 +1,8 @@
-var Edge = function(type, key, val) {
-	this.type = type;
+var Edge = function(storageType, key, val) {
+	this.storageType = storageType;
 	this.key = key;
 	this.val = val;
 };
-/*
-Edge.prototype.draw = function(rootElement) {
-	console.log('draw Edge ' + this.type + ' ' + this.key + ' ' + JSON.stringify(this.val));
-	
-	var XY1 = nodes.local[this.val.fromNode].XY;
-	var XY2 = nodes.local[this.val.toNode].XY;
-	rootElement.classed(this.type, true);
-	rootElement.append('line').attr('x1', XY1.x).attr('y1', XY1.y).attr('x2', XY2.x).attr('y2', XY2.y);
-};*/
 Edge.prototype.simplify = function() {
 	var p = nodes.localArrayIndexOf(this.val.fromNode);
 	var q = nodes.localArrayIndexOf(this.val.toNode);
@@ -26,11 +17,11 @@ Edge.prototype.simplify = function() {
 	return e;
 }
 Edge.prototype.draw = function(rootElement, className) {
-//	console.log('draw Edge ' + this.type + ' ' + this.key + ' ' + JSON.stringify(this.val));
+//	console.log('draw Edge ' + this.storageType + ' ' + this.key + ' ' + JSON.stringify(this.val));
 	
 	rootElement.append('line');
 	this.redraw(rootElement, className);
 };
 Edge.prototype.redraw = function(rootElement, className) {
-	rootElement.attr('class', className + ' ' + this.type)
+	rootElement.attr('class', className + ' ' + this.storageType)
 };

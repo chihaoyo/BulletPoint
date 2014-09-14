@@ -92,21 +92,21 @@ NodeEdgeEngine.createNode = function(x, y) {
 	// if last is non-null then create new edge (last->new node)
 };
 NodeEdgeEngine.registerNode = function(id) { // node (id) is clicked
-	console.log('NodeEdgeEngine: registerNode');
+	console.log('NodeEdgeEngine: registerNode ' + id);
 	if(this.last == null)
 		this.last = id;
 	else {
 		if(this.last != id) {
 			// create new edge (this.last->id)
 			// new edge is static if any of the two nodes are static
-			var type = 'sync';
+			var storageType = 'sync';
 			var dictionary = {type: 'nondir', name: 'unnamed', fromNode: this.last, toNode: id, data: '{}'};
-			if(nodes.local[this.last].type == 'stat' || nodes.local[id].type == 'stat') {
-				type = 'stat'
+			if(nodes.local[this.last].storageType == 'stat' || nodes.local[id].storageType == 'stat') {
+				storageType = 'stat'
 				dictionary.owner = PARA.userID;
 			}
 			// push!
-			edges[type].push(dictionary);
+			edges[storageType].push(dictionary);
 			this.last = null;
 		}
 	}
