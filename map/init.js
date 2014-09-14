@@ -53,7 +53,7 @@ var DICT = {
 var nodes = new DS('MapNodes', Node, true, true);
 var edges = new DS('MapEdges', Edge, true, true);
 
-// handlers for both nodes and edges
+// handlers for DS's - both nodes and edges
 var handlers = {};
 handlers.value = function() {
 	console.log(this.___parent.id + ' ' + this.type + ' value');
@@ -79,13 +79,13 @@ handlers.child_added = function(snapshot) {
 handlers.child_changed = function(snapshot) {
 	console.log(this.___parent.id + ' ' + this.type + ' child_changed');
 	var ds = this.___parent;
-//	var type = this.type;
+	var type = this.type;
 	
 	var key = snapshot.name();
 	var val = snapshot.val();
 	ds.local[key].val = val;
 	ds.localArray[ds.localArrayIndexOf(key)] = ds.local[key].simplify();
-	ds.local[key].redraw(rootCanvas.select('g#' + key));
+	ds.local[key].redraw(rootCanvas.select('g#' + type + '_' + key), DICT[this.___parent.id].singular);
 };
 handlers.child_removed = function(snapshot) {
 	console.log(this.___parent.id + ' ' + this.type + ' child_removed');

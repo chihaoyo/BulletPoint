@@ -25,10 +25,12 @@ Edge.prototype.simplify = function() {
 	};
 	return e;
 }
-Edge.prototype.draw = function(rootElement) {
+Edge.prototype.draw = function(rootElement, className) {
 //	console.log('draw Edge ' + this.type + ' ' + this.key + ' ' + JSON.stringify(this.val));
 	
-	rootElement.classed(this.type, true).append('line');
+	rootElement.append('line');
+	this.redraw(rootElement, className);
 };
-Edge.prototype.redraw = function(rootElement) {
+Edge.prototype.redraw = function(rootElement, className) {
+	rootElement.attr('class', className + ' ' + this.type)
 };

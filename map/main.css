@@ -45,7 +45,12 @@ div#canvas svg {
 }
 
 .Node			circle.center { fill: white; }
-.Node.article	circle.center { fill: lime; }
+.Node.article	circle.center { fill: white; }
+.Node.human		circle.center { fill: blue; }
+.Node.event		circle.center { fill: lime; }
+.Node.place		circle.center { fill: magenta; }
+.Node.ideology	circle.center { fill: red; }
+.Node.arguement	circle.center { fill: red; }
 .Node.issue		circle.center { fill: red; }
 .Node text { fill: white; }
 

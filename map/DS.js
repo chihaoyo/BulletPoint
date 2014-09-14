@@ -183,18 +183,18 @@ DS.prototype.once = function(event, callback) { // value
 		return this.___onceCallbacks[event];
 	else
 		this.___onceCallbacks[event] = callback;
-}
+};
 DS.prototype.on = function(event, callback) { // child_added, child_changed, child_removed
 	if(callback === undefined)
 		return this.___onCallbacks[event];
 	else
 		this.___onCallbacks[event] = callback;
-}
+};
 // init connection with remote data store
 DS.prototype.connect = function() {
 	this.stat = this.staticURL != null ? new Static(this, this.staticURL) : null
 	this.sync = this.syncedURL != null ? new Synced(this, this.syncedURL) : null
-}
+};
 DS.prototype.drawAll = function() {
 	console.log(this.id + ' drawAll');
 	// use enter/exit in d3 to determine which ones to draw/remove and which ones to skip // is it possible?
@@ -204,10 +204,23 @@ DS.prototype.drawAll = function() {
 	that.___entities = rootCanvas.selectAll('g.' + className).data(that.localArray, function(o) { return o.key + JSON.stringify(o.val); });
 	
 	// new entities
-	that.___entities.enter().insert('g', ':first-child').attr('class', className).each(function(o, i) {
-		that.local[o.key].draw(d3.select(this));
+	that.___entities.enter().insert('g', ':first-child').each(function(o, i) {
+		that.local[o.key].draw(d3.select(this), className);
 	});
 	
 	// old entities
 	that.___entities.exit().remove();
-}
+};
+DS.prototype.allIDs = function() {
+	return Object.keys(this.local);
+};
+DS.prototype.randomEntryID = function() {
+	var i = Math.floor(Math.random()*this.localArray.length);
+	return this.localArray[i].key;
+};
+DS.prototype.update = function(id, dictionary) {
+	return this[this.local[id].type].update(id, dictionary);
+};
+DS.prototype.remove = function(id) {
+	return this[this.local[id].type].remove(id);
+};

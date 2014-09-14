@@ -1,18 +1,3 @@
-// Toolkit for drawing UI
-var TK = {};
-TK.rand = function() {
-	return Math.random()*2-1;//((Math.random()*2-1) + (Math.random()*2-1) + (Math.random()*2-1))/3.0;
-};
-TK.map = function(v, p, q, s, t) {
-	return  (v - p)/(q - p)*(t - s) + s;
-};
-TK.coorXY = function(p, q) {
-	return {x: Math.ceil((p*ENVI.canvasW + ENVI.canvasW)/2.0), y: Math.ceil((q*ENVI.canvasH + ENVI.canvasH)/2.0)};
-};
-TK.coorPQ = function(x, y) {
-	return {p: (x - ENVI.canvasW/2.0)/ENVI.canvasW*2.0, q: (y - ENVI.canvasH/2.0)/ENVI.canvasH*2.0};
-};
-
 var Node = function(type, key, val) {
 	this.type = type;
 	this.key = key;
@@ -49,16 +34,21 @@ Node.prototype.draw = function(rootElement) {
 };*/
 Node.prototype.simplify = function() {
 	return {key: this.key, fixed: false};
-}
-Node.prototype.draw = function(rootElement) {
+};
+Node.prototype.draw = function(rootElement, className) {
 //	console.log('draw Node ' + this.type + ' ' + this.key + ' ' + JSON.stringify(this.val));
 	
-	rootElement.classed(this.type + ' ' + this.val.type, true).attr('id', this.type + '_' + this.key);
 	rootElement.append('circle').attr('class', 'center').attr('r', ENVI.letterW*0.75).on('click', this.clicked);
-	rootElement.append('text').attr('x', ENVI.letterW).attr('y', ENVI.lineH/4).text(this.toString());
-}
-Node.prototype.redraw = function(rootElement) {
-	console.log('redraw Node ' + this.type + ' ' + this.key + ' ' + JSON.stringify(this.val));
+	rootElement.append('text').attr('x', ENVI.letterW).attr('y', ENVI.lineH/4);
+	this.redraw(rootElement, className);
+	/*
+	rootElement.attr('class', className + ' ' + this.type + ' ' + this.val.type).attr('id', this.type + '_' + this.key);
+	rootElement.append('circle').attr('class', 'center').attr('r', ENVI.letterW*0.75).on('click', this.clicked);
+	rootElement.append('text').attr('x', ENVI.letterW).attr('y', ENVI.lineH/4).text(this.toString());*/
+};
+Node.prototype.redraw = function(rootElement, className) {
+//	console.log('redraw Node ' + this.type + ' ' + this.key + ' ' + JSON.stringify(this.val));
 	
+	rootElement.attr('class', className + ' ' + this.type + ' ' + this.val.type).attr('id', this.type + '_' + this.key);
 	rootElement.select('text').text(this.toString());
 };
