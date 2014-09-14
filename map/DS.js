@@ -145,17 +145,8 @@ var DS = function(id, factoryFunc, hasStatic, hasSynced) {
 	this.___onceCallbacks = {};
 	this.___onCallbacks = {};
 	
-	this.flags = {initialized: false, ready: {sync: false, stat: false}};
+	this.flags = {ready: {sync: false, stat: false}};
 };
-// get or set ready status
-DS.prototype.isInitialized = function(val) {
-	if(val === undefined)
-		return this.flags.initialized;
-	else {
-		this.flags.initialized = val;
-		return val;
-	}
-}
 DS.prototype.isReady = function(whichOne, val) {
 	if(whichOne === undefined && val === undefined) { // aggregator
 		var syncedDataReady = (this.sync == null ? true : this.flags.ready.sync);
@@ -167,14 +158,13 @@ DS.prototype.isReady = function(whichOne, val) {
 	}
 	else { // setter
 		this.flags.ready[whichOne] = val;
-		
 		if(this.isReady())
 			ForceField.isReady(DICT[this.id].plural.toLowerCase(), true)
 		
 		return val;
 	}
 };
-DS.prototype.localArrayMakeover = function() {
+DS.prototype.localArrayInit = function() {
 	this.localArray = [];
 	for(x in this.local) {
 		this.localArray.push(this.local[x].simplify());
@@ -185,7 +175,6 @@ DS.prototype.localArrayIndexOf = function(id) {
 		if(this.localArray[i].key.toString() == id.toString()) {
 			return +i;
 		}
-			
 	}
 	return false;
 };

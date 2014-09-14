@@ -1,3 +1,43 @@
+// ClickDispatcher
+// http://bl.ocks.org/tmcw/4067674
+var CD = function(el) { // only fire events that is targeted at el (toElement) when el is provided
+	var event = d3.dispatch('click', 'dblclick');
+	var dispatcher = function(selection) {
+		var down,
+			tolerance = 5,
+			last,
+			wait = null;
+		// euclidean distance
+		var dist = function(a, b) { return Math.sqrt(Math.pow(a[0] - b[0], 2), Math.pow(a[1] - b[1], 2)); };
+		selection.on('mousedown', function() {
+			down = d3.mouse(document.body);
+			last = +new Date();
+		});
+		selection.on('mouseup', function() {
+			if(dist(down, d3.mouse(document.body)) > tolerance) {
+				return;
+			} else {
+				if(wait) {
+					window.clearTimeout(wait);
+					wait = null;
+					if(el === undefined || el == d3.event.toElement)
+						event.dblclick(d3.event);
+				}
+				else {
+					wait = window.setTimeout((function(e) {
+						return function() {
+							if(el === undefined || el == e.toElement)
+								event.click(e);
+							wait = null;
+						};
+					})(d3.event), 250);
+				}
+			}
+		});
+	};
+	return d3.rebind(dispatcher, event, 'on'); // copy event.on onto dispatcher (and more)
+};
+
 var PARA = {
 	userID: '@A2DCFDB5-C277-4AA1-AC53-0904120C4F69',
 	staticDSBaseURL: '//50.18.115.212/bulletpoint/server/',
@@ -20,12 +60,6 @@ handlers.value = function() {
 	var ds = this.___parent;
 	var type = this.type;
 	ds.isReady(type, true);
-	
-	if(ds.isReady() && !ds.isInitialized()) {
-		ds.localArrayMakeover();
-		ForceField.drawAll();
-		ds.isInitialized(true);
-	}
 };
 handlers.child_added = function(snapshot) {
 	console.log(this.___parent.id + ' ' + this.type + ' child_added');
@@ -37,7 +71,7 @@ handlers.child_added = function(snapshot) {
 	var entity = new ds.LocalDataEntity(type, key, val);
 	ds.local[key] = entity;
 	
-	if(ds.isInitialized()) {
+	if(ds.isReady()) {
 		ds.localArray.push(entity.simplify())
 		ForceField.drawAll();
 	}
@@ -62,7 +96,7 @@ handlers.child_removed = function(snapshot) {
 	var val = snapshot.val();
 	delete ds.local[key];
 	
-	if(ds.isInitialized()) {
+	if(ds.isReady()) {
 		ds.localArray.splice(ds.localArrayIndexOf(key), 1);
 		ForceField.drawAll();
 	}
@@ -90,8 +124,14 @@ var init = function() {
 	// locate and set up root canvas
 	rootCanvas = d3.select('div#canvas svg');
 	rootCanvas.attr('width', ENVI.canvasW).attr('height', ENVI.canvasH);
-	rootCanvas.on('click', function() { NodeEdgeEngine.reset(); });
-	rootCanvas.on('dblclick', function() { NodeEdgeEngine.createNode(d3.event.x, d3.event.y); });
+	
+	var rootCanvasCD = CD($('div#canvas svg')[0]);
+		rootCanvasCD.on('click', function(event) { NodeEdgeEngine.reset(); });
+		rootCanvasCD.on('dblclick', function(event) { NodeEdgeEngine.createNode(d3.event.x, d3.event.y); });
+	rootCanvas.call(rootCanvasCD);
+
+//	rootCanvas.on('click', function() { NodeEdgeEngine.reset(); });
+//	rootCanvas.on('dblclick', function() { NodeEdgeEngine.createNode(d3.event.x, d3.event.y); });
 	
 	// bind event handlers to DS's
 	nodes.once('value', handlers.value);

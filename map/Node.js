@@ -26,14 +26,14 @@ Node.prototype.getHeight = function() { return ENVI.lineH; };
 // this would be SVG element that fired the event
 Node.prototype.clicked = function(o, i) {
 	// http://stackoverflow.com/questions/19075381/d3-mouse-events-click-dragend
-	if (d3.event.defaultPrevented) return;
+	if (d3.event.defaultPrevented) return; // distinguish drag and click
 	
 	var that = o;
 	var rootElement = rootCanvas.select('g#' + that.type + '_' + that.key);
 //	rootElement.classed('selected', true);
 	NodeEdgeEngine.registerNode(that.key);
 	d3.event.stopPropagation();
-}
+};
 /*
 Node.prototype.draw = function(rootElement) {
 	console.log('draw Node ' + this.type + ' ' + this.key + ' ' + JSON.stringify(this.val));
