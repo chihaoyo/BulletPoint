@@ -111,10 +111,6 @@ var $document = $(document);
 
 var rootCanvas = null;
 
-var removeNodeAndConnectingEdges = function(nodeID) {
-	
-}
-
 var init = function() {
 	// scope environment
 	ENVI.docW = $document.width();

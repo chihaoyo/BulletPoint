@@ -76,6 +76,8 @@ div#canvas svg {
 	margin: 0 auto;
 }
 
+.Node rect.box { opacity: 0.0; }
+
 .Node			circle.center { fill: white; cursor: pointer; }
 .Node.article	circle.center { fill: white; }
 .Node.human		circle.center { fill: lime; }
@@ -90,5 +92,8 @@ div#canvas svg {
 .Node text.type		{ fill: #555; display: none; }
 .Node:hover text.type { display: block; }
 
+.Node .removeIcon { opacity: 0.0; cursor: pointer; }
+.Node .removeIcon line { stroke: #aaa; }
+.Node:hover .removeIcon  { opacity: 1.0; }
 
 .Edge line { stroke: #333 ; stroke-width: 0.5em; }
