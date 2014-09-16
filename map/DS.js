@@ -131,7 +131,7 @@ Synced.prototype.remove = function(id) { return this.___firebase.child(id).remov
 // Consolidating two datasources
 var DS = function(id, factoryFunc, hasStatic, hasSynced) {
 	this.id = id;
-	this.db
+	this.alias = DICT[id].plural.toLowerCase();
 	this.LocalDataEntity = factoryFunc;
 	this.staticURL = hasStatic ? PARA.staticDSBaseURL + id : null;
 	this.syncedURL = hasSynced ? PARA.syncedDSBaseURL + id : null;
@@ -160,7 +160,7 @@ DS.prototype.isReady = function(whichOne, val) {
 	else { // setter
 		this.flags.ready[whichOne] = val;
 		if(this.isReady())
-			ForceField.isReady(DICT[this.id].plural.toLowerCase(), true)
+			ForceField.isReady(this.alias, true)
 		
 		return val;
 	}

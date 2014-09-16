@@ -1,3 +1,14 @@
+var Stepper = function(start, stepSize) {
+	this.start = start;
+	this.now = start;
+	this.stepSize = stepSize;
+};
+Stepper.prototype.step = function() {
+	var ___now = this.now;
+	this.now += this.stepSize;
+	return ___now;
+};
+
 var Node = function(storageType, key, val) {
 	this.storageType = storageType;
 	this.key = key;
@@ -27,7 +38,10 @@ Node.prototype.draw = function(rootElement, className) {
 //	console.log('draw Node ' + this.storageType + ' ' + this.key + ' ' + JSON.stringify(this.val));
 	
 	rootElement.append('circle').attr('class', 'center').attr('r', ENVI.letterW*0.75).on('click', this.clicked);
-	rootElement.append('text').attr('class', 'name').attr('x', ENVI.letterW).attr('y', ENVI.lineH/4); // baseline is at around 1/4 of lineH
+	
+	var textYStepper = new Stepper(ENVI.lineH/4, ENVI.lineH); // baseline is at around 1/4 of lineH
+	rootElement.append('text').attr('class', 'name').attr('x', ENVI.letterW).attr('y', textYStepper.step());
+	rootElement.append('text').attr('class', 'type').attr('x', ENVI.letterW).attr('y', textYStepper.step());
 	this.redraw(rootElement, className);
 };
 Node.prototype.redraw = function(rootElement, className) {
@@ -35,4 +49,5 @@ Node.prototype.redraw = function(rootElement, className) {
 	
 	rootElement.attr('class', className + ' ' + this.storageType + ' ' + this.val.type).attr('id', this.storageType + '_' + this.key);
 	rootElement.select('text.name').text(this.val.name);
+	rootElement.select('text.type').text(this.val.type);
 };

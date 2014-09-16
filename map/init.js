@@ -111,6 +111,10 @@ var $document = $(document);
 
 var rootCanvas = null;
 
+var removeNodeAndConnectingEdges = function(nodeID) {
+	
+}
+
 var init = function() {
 	// scope environment
 	ENVI.docW = $document.width();
@@ -131,7 +135,6 @@ var init = function() {
 		rootCanvasCD.on('click', function(event) { NodeEdgeEngine.reset(); });
 		rootCanvasCD.on('dblclick', function(event) { NodeEdgeEngine.createNode(d3.event.x, d3.event.y); });
 	rootCanvas.call(rootCanvasCD);
-
 //	rootCanvas.on('click', function() { NodeEdgeEngine.reset(); });
 //	rootCanvas.on('dblclick', function() { NodeEdgeEngine.createNode(d3.event.x, d3.event.y); });
 	
@@ -151,6 +154,24 @@ var init = function() {
 	edges.connect();
 //	nodes.sync.push({type: 'article', name: 'http://p.q/r', owner: 'slave', data: JSON.stringify({comment: 'こんにちは'})})
 //	nodes.stat.push({type: 'article', name: 'http://a.b/c', owner: 'master', data: JSON.stringify({comment: '中文'})});
+
+	// make addForm functionable
+	// Weird thing: $.find does NOT work when finding within a <form>?
+	var $addForm = $('#addForm');
+	var $addFormNodeType = $addForm.find('[name="nodeType"]');
+	$addFormNodeType.change(function(event) {
+		var that = $(this);
+		that.siblings('.sampleNode').attr('class', 'sampleNode ' + that.val());
+	}).change();
+	var $addFormSubmit = $addForm.find('[name="submit"]');
+	$addFormSubmit.click(function(event) {
+		var nodeType = $addFormNodeType.val();
+		var nodeName = $addForm.find('[name="nodeName"]').val();
+		var nodeData = $addForm.find('[name="nodeData"]').val();
+		var nodeStorageType = $addForm.find('select[name="nodeStorageType"]').val();
+		console.log(nodeType + ' ' + nodeName + ' ' + nodeData + ' ' + nodeStorageType);
+		event.preventDefault();
+	});
 };
 
 $window.load(init);

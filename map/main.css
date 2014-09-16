@@ -32,7 +32,7 @@ select {
 body {
 	margin: 0;
 }
-form {
+.form {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -43,6 +43,30 @@ p {
 }
 .emphasize {
 	font-weight: 500;
+}
+
+.sampleNode {
+	display: inline-block;
+	vertical-align: middle;
+	width: 1em;
+	height: 1em;
+	border-radius: 0.5em;
+	background: white;
+}
+.sampleNode.human	{ background: lime; }
+.sampleNode.event	{ background: yellow; }
+.sampleNode.place	{ background: magenta; }
+.sampleNode.book	{ background: blue; }
+.sampleNode.ideology	{ background: blue; }
+.sampleNode.argument	{ background: blue; }
+.sampleNode.issue	{ background: red; }
+
+.sampleEdge {
+	display: inline-block;
+	vertical-align: middle;
+	width: 2em;
+	height: 0.5em;
+	background: #555;
 }
 
 div#canvas { height: 100%; margin: 0; margin: 3em 0; }
@@ -60,6 +84,10 @@ div#canvas svg {
 .Node.ideology	circle.center { fill: blue; }
 .Node.arguement	circle.center { fill: blue; }
 .Node.issue		circle.center { fill: red; }
-.Node text { fill: white; }
+
+.Node text			{ fill: white; }
+.Node text.type		{ fill: #555; display: none; }
+.Node:hover text.type { display: block; }
+
 
 .Edge line { stroke: #333 ; stroke-width: 0.5em; }

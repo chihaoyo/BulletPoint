@@ -8,8 +8,8 @@
 	<link rel="stylesheet" href="main.css" />
 </head>
 <body>
-	<form>
-		<p><span>add a(n) </span><select name="type">
+	<div class="form" id="addForm">
+		<p><span>add a(n) </span><select name="nodeType">
 			<option>human</option>
 			<option>event</option>
 			<option>place</option>
@@ -17,8 +17,10 @@
 			<option>ideology</option>
 			<option>argument</option>
 			<option>issue</option>
-		</select> node named <input type="text" name="name" placeholder="name" /> with data <input type="text" name="data" placeholder="Javascript Object" /> and keep it <select name="storage"><option>public</option><option>private</option></select><input type="button" value="add" /></p><p>add an <span class="emphasize">article</span> node by using the Chrome plugin</p><p>add an edge by clicking on two nodes consecutively</p>
-	</form>
+		</select> node <span class="sampleNode"></span> named <input type="text" name="nodeName" placeholder="name" /> with data <input type="text" name="nodeData" placeholder="Javascript Object" /> and make it <select name="nodeStorageType"><option>public</option><option>private</option></select><input type="button" name="submit" value="go" /></p>
+		<p>add an <span class="emphasize">article</span> node <span class="sampleNode"></span> by using the Chrome plugin</p>
+		<p>add an edge <span class="sampleEdge"></span> by clicking on two nodes consecutively</p>
+	</div>
 	<div id="canvas"><svg></svg></div>
 </body>
 <?php
@@ -29,7 +31,7 @@ $userIDFromCookie = (isset($_COOKIE['BulletPointUserID']) ? $_COOKIE['BulletPoin
 $userIDFormat = '/^@[0-9A-F]{8}-[0-9A-F]{4}-[1-5][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/';
 */
 ?>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="//50.18.115.212/common/lib-jquery-ext.js"></script>
 <script src="//underscorejs.org/underscore-min.js"></script>
 <script src="//cdn.firebase.com/js/client/1.0.18/firebase.js"></script>
