@@ -2,6 +2,7 @@ html, body, p, li, input, select, option, textarea, text {
 	font-family: "Roboto", monospace;
 	font-weight: 300;
 	font-size: 13px;
+	-webkit-font-smoothing: subpixel-antialiased;
 }
 div, form, svg {
 	position: relative;
