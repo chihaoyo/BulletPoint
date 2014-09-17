@@ -36,6 +36,26 @@ ForceField.isReady = function(whichOne, val) {
 		return val;
 	}
 };
+ForceField.diagnosis = function() {
+	console.log('diagnosis start');
+
+	var edgesToRemove = [];
+	for(x in edges.local) {
+		var edge = edges.local[x];
+		var terminals = [edge.val.fromNode, edge.val.toNode];
+		for(var i = 0; i < terminals.length; i++) {
+			var nodeID = terminals[i];
+			if(nodes.local[nodeID] === undefined) {
+				console.log('Node ' + nodeID + ' not found');
+				edgesToRemove.push(x);
+			}
+		}
+	}
+	for(var i = 0; i < edgesToRemove.length; i++)
+		edges.remove(edgesToRemove[i]);
+
+	console.log('diagnosis complete');
+};
 // http://bl.ocks.org/mbostock/4062045
 // http://bl.ocks.org/mbostock/1095795
 // http://bl.ocks.org/mbostock/3750558
@@ -69,6 +89,8 @@ ForceField.init = function() {
 };
 ForceField.drawAll = function() {
 	console.log('ForceField drawAll');
+	this.diagnosis();
+
 	nodes.drawAll();
 	edges.drawAll();
 	

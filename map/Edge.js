@@ -11,7 +11,7 @@ Edge.prototype.graphDimensions = function() {
 Edge.prototype.remove = function(o, i) {
 	var key = o.key;
 	console.log('remove Edge ' + key);
-	
+
 	edges.remove(key);
 	d3.event.stopPropagation();
 }
@@ -28,7 +28,7 @@ Edge.prototype.simplify = function() {
 	};
 	return e;
 };
-Edge.prototype.draw = function(rootElement, className) {	
+Edge.prototype.draw = function(rootElement, className) {
 	rootElement.append('line');
 
 	var label = rootElement.append('g').attr('class', 'label');
