@@ -28,7 +28,7 @@ Node.prototype.getHeight = function() { return ENVI.lineH; };*/
 // event handler for d3
 // 'this' is SVG element that fired the event
 // 'that' (o) is this Node
-Node.prototype.clicked = function(o, i) {
+Node.prototype.select = function(o, i) {
 	// http://stackoverflow.com/questions/19075381/d3-mouse-events-click-dragend
 	if (d3.event.defaultPrevented) return; // distinguish drag and click
 	
@@ -38,33 +38,51 @@ Node.prototype.clicked = function(o, i) {
 	NodeEdgeEngine.registerNode(that.key);
 	d3.event.stopPropagation();
 };
+Node.prototype.edit = function(o, i) {
+	NodeEdgeEngine.reset();
+
+	var key = o.key;
+	console.log('edit node ' + key);
+	d3.event.stopPropagation();
+}
 Node.prototype.remove = function(o, i) { // remove this node and all edges
 	var key = o.key;
-	console.log('remove node ' + key + ' and all connected edges');
+	console.log('remove Node ' + key + ' and all connected edges');
+
+	var edgesToRemove = [];
+	for(var x in edges.local) {
+		var edge = edges.local[x];
+		if(edge.val.fromNode == key || edge.val.toNode == key) {
+			edgesToRemove.push(x);
+		}
+	}
+	for(var i = 0; i < edgesToRemove.length; i++) {
+		edges.remove(edgesToRemove[i]);
+	}
+	nodes.remove(key);
 };
 Node.prototype.simplify = function() {
 	return {key: this.key, fixed: false};
 };
 Node.prototype.draw = function(rootElement, className) {
-//	console.log('draw Node ' + this.storageType + ' ' + this.key + ' ' + JSON.stringify(this.val));
+	rootElement.on('click', function() { d3.event.stopPropagation(); });
 	rootElement.append('rect').attr('class', 'box');
 
-	var removeIcon = rootElement.append('g').attr('class', 'removeIcon');
+	var removeIcon = rootElement.append('g').attr('class', 'removeIcon clickable');
 	removeIcon.append('rect').attr('class', 'box').attr('width', this.d_.removeIconSize).attr('height', this.d_.removeIconSize);
 	removeIcon.append('line').attr('x1', 0).attr('y1', 0).attr('x2', this.d_.removeIconSize).attr('y2', this.d_.removeIconSize);
 	removeIcon.append('line').attr('x1', this.d_.removeIconSize).attr('y1', 0).attr('x2', 0).attr('y2', this.d_.removeIconSize);
 	removeIcon.on('click', this.remove);
-	
-	rootElement.append('circle').attr('class', 'center').attr('r', this.d_.circleSize).on('click', this.clicked);
+
+	var circle = rootElement.append('circle').attr('class', 'center clickable').attr('r', this.d_.circleSize).on('click', this.select);
 	
 	var textYStepper = new Stepper(ENVI.lineH/4, ENVI.lineH); // baseline is at around 1/4 of lineH
-	rootElement.append('text').attr('class', 'name').attr('x', ENVI.letterW).attr('y', textYStepper.step());
-	rootElement.append('text').attr('class', 'type').attr('x', ENVI.letterW).attr('y', textYStepper.step());
+	var nameTag = rootElement.append('text').attr('class', 'name').attr('x', ENVI.letterW).attr('y', textYStepper.step()).on('dblclick', this.edit);
+	var typeTag = rootElement.append('text').attr('class', 'type').attr('x', ENVI.letterW).attr('y', textYStepper.step());
+
 	this.redraw(rootElement, className);
 };
-Node.prototype.redraw = function(rootElement, className) {
-//	console.log('redraw Node ' + this.storageType + ' ' + this.key + ' ' + JSON.stringify(this.val));
-	
+Node.prototype.redraw = function(rootElement, className) {	
 	rootElement.attr('class', className + ' ' + this.storageType + ' ' + this.val.type).attr('id', this.storageType + '_' + this.key);
 	var nameTag = rootElement.select('text.name').text(this.val.name);
 	var typeTag = rootElement.select('text.type').text(this.val.type);

@@ -76,9 +76,10 @@ div#canvas svg {
 	margin: 0 auto;
 }
 
-.Node rect.box { opacity: 0.0; }
+.box { opacity: 0.0; }
+.clickable { cursor: pointer; }
 
-.Node			circle.center { fill: white; cursor: pointer; }
+.Node			circle.center { fill: white; }
 .Node.article	circle.center { fill: white; }
 .Node.human		circle.center { fill: lime; }
 .Node.event		circle.center { fill: yellow; }
@@ -88,12 +89,18 @@ div#canvas svg {
 .Node.arguement	circle.center { fill: blue; }
 .Node.issue		circle.center { fill: red; }
 
+.Node.selected	circle.center { stroke: white; stroke-width: 0.25em; }
+
 .Node text			{ fill: white; }
 .Node text.type		{ fill: #555; display: none; }
 .Node:hover text.type { display: block; }
 
-.Node .removeIcon { opacity: 0.0; cursor: pointer; }
-.Node .removeIcon line { stroke: #aaa; }
+.Node .removeIcon { opacity: 0.0; }
+.Node .removeIcon line { stroke: #aaa; stroke-width: 1px; }
 .Node:hover .removeIcon  { opacity: 1.0; }
 
 .Edge line { stroke: #333 ; stroke-width: 0.5em; }
+
+.Edge .removeIcon { opacity: 0.0; }
+.Edge .removeIcon line { stroke: #aaa; stroke-width: 1px; }
+.Edge:hover .removeIcon { opacity: 1.0; }

@@ -1,3 +1,15 @@
+var compareElement = function(source, target) {
+	if(source === undefined || source == null) {
+		return true;
+	}
+	else if(source instanceof Element) {
+		return source == target;
+	}
+	else if((typeof source).toLowerCase() == 'string') {
+		return $(target).filter(source).length > 0;
+	}
+};
+/*
 // ClickDispatcher
 // http://bl.ocks.org/tmcw/4067674
 var CD = function(el) { // only fire events that is targeted at el (toElement) when el is provided
@@ -20,13 +32,15 @@ var CD = function(el) { // only fire events that is targeted at el (toElement) w
 				if(wait) {
 					window.clearTimeout(wait);
 					wait = null;
-					if(el === undefined || el == d3.event.toElement)
+					//if(el === undefined || el == d3.event.toElement)
+					if(compareElement(el, d3.event.toElement))
 						event.dblclick(d3.event);
 				}
 				else {
 					wait = window.setTimeout((function(e) {
 						return function() {
-							if(el === undefined || el == e.toElement)
+							//if(el === undefined || el == e.toElement)
+							if(compareElement(el, e.toElement))
 								event.click(e);
 							wait = null;
 						};
@@ -36,7 +50,7 @@ var CD = function(el) { // only fire events that is targeted at el (toElement) w
 		});
 	};
 	return d3.rebind(dispatcher, event, 'on'); // copy event.on onto dispatcher (and more)
-};
+};*/
 
 var PARA = {
 	userID: '@A2DCFDB5-C277-4AA1-AC53-0904120C4F69',
@@ -126,11 +140,13 @@ var init = function() {
 	// locate and set up root canvas
 	rootCanvas = d3.select('div#canvas svg');
 	rootCanvas.attr('width', ENVI.canvasW).attr('height', ENVI.canvasH);
-	
-	var rootCanvasCD = CD($('div#canvas svg')[0]);
+
+	rootCanvas.on('click', function() { NodeEdgeEngine.reset(); });
+	/*
+	var rootCanvasCD = CD('svg'); //$('div#canvas svg')[0]);
 		rootCanvasCD.on('click', function(event) { NodeEdgeEngine.reset(); });
 		rootCanvasCD.on('dblclick', function(event) { NodeEdgeEngine.createNode(d3.event.x, d3.event.y); });
-	rootCanvas.call(rootCanvasCD);
+	rootCanvas.call(rootCanvasCD);*/
 //	rootCanvas.on('click', function() { NodeEdgeEngine.reset(); });
 //	rootCanvas.on('dblclick', function() { NodeEdgeEngine.createNode(d3.event.x, d3.event.y); });
 	

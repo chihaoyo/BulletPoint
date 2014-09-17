@@ -53,6 +53,7 @@ ForceField.init = function() {
 				.attr('y1', function(o) { return o.source.y; })
 				.attr('x2', function(o) { return o.target.x; })
 				.attr('y2', function(o) { return o.target.y; });
+			edges.___entities.select('g.label').attr('transform', function(o) { return 'translate(' + [(o.source.x + o.target.x - this.getBBox().width)/2.0, (o.source.y + o.target.y - this.getBBox().height)/2.0].join(',') + ')'; });
 		});
 	
 	this.drag = this.field.drag()
@@ -81,33 +82,40 @@ ForceField.drawAll = function() {
 
 // NodeEdgeEngine handles creating Nodes and Edges in UI
 // singleton!
-var NodeEdgeEngine = {last: null};
+var NodeEdgeEngine = {A: null, B: null};
 NodeEdgeEngine.reset = function() {
 	console.log('NodeEdgeEngine: reset');
-	this.last = null;
+	if(this.A != null)
+		rootCanvas.select('g.Node#' + nodes.local[this.A].storageType + '_' + this.A).classed('selected', false);
+	if(this.B != null)
+		rootCanvas.select('g.Node#' + nodes.local[this.B].storageType + '_' + this.B).classed('selected', false);
+	this.A = null;
 };
 NodeEdgeEngine.createNode = function(x, y) {
 	console.log('NodeEdgeEngine: createNode');
 	// create new node at (x, y)
-	// if last is non-null then create new edge (last->new node)
+	// if A is non-null then create new edge (A->new node)
 };
 NodeEdgeEngine.registerNode = function(id) { // node (id) is clicked
 	console.log('NodeEdgeEngine: registerNode ' + id);
-	if(this.last == null)
-		this.last = id;
+	if(this.A == null) {
+		this.A = id;
+		rootCanvas.select('g.Node#' + nodes.local[this.A].storageType + '_' + this.A).classed('selected', true);
+	}
 	else {
-		if(this.last != id) {
-			// create new edge (this.last->id)
+		if(this.A != id) {
+			this.B = id;
+			// create new edge (this.A->this.B)
 			// new edge is static if any of the two nodes are static
 			var storageType = 'sync';
-			var dictionary = {type: 'nondir', name: 'unnamed', fromNode: this.last, toNode: id, data: '{}'};
-			if(nodes.local[this.last].storageType == 'stat' || nodes.local[id].storageType == 'stat') {
+			var dictionary = {type: 'nondir', name: 'unnamed', fromNode: this.A, toNode: this.B, data: '{}'};
+			if(nodes.local[this.A].storageType == 'stat' || nodes.local[this.B].storageType == 'stat') {
 				storageType = 'stat'
 				dictionary.owner = PARA.userID;
 			}
 			// push!
 			edges[storageType].push(dictionary);
-			this.last = null;
+			this.reset();
 		}
 	}
 };
