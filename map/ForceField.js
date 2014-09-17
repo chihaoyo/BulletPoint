@@ -46,7 +46,7 @@ ForceField.init = function() {
 		.charge(-1000)
 		.linkDistance(function(edge) { return 100; }) // linkDistance can depend on each edge
 		.size([ENVI.canvasW, ENVI.canvasH])
-		.on('tick', function() {
+		.on('tick', function(event) {
 			nodes.___entities.attr('transform', function(o) { return 'translate(' + [o.x, o.y].join(',') + ')'; });
 			edges.___entities.select('line')
 				.attr('x1', function(o) { return o.source.x; })
@@ -57,10 +57,10 @@ ForceField.init = function() {
 		});
 	
 	this.drag = this.field.drag()
+		.origin(function(o) { return o; })
 		.on('dragstart', function(o) {
-			//d3.select(this).classed('fixed', o.fixed = true);
 			o.dragged = true;
-			o.fixed = true;
+//			o.fixed = true;
 		})
 		.on('dragend', function(o) {
 			o.dragged = false;
@@ -86,9 +86,9 @@ var NodeEdgeEngine = {A: null, B: null};
 NodeEdgeEngine.reset = function() {
 	console.log('NodeEdgeEngine: reset');
 	if(this.A != null)
-		rootCanvas.select('g.Node#' + nodes.local[this.A].storageType + '_' + this.A).classed('selected', false);
+		rootCanvas.select('g.Node#' + nodes.local[this.A].cssID).classed('selected', false);
 	if(this.B != null)
-		rootCanvas.select('g.Node#' + nodes.local[this.B].storageType + '_' + this.B).classed('selected', false);
+		rootCanvas.select('g.Node#' + nodes.local[this.B].cssID).classed('selected', false);
 	this.A = null;
 };
 NodeEdgeEngine.createNode = function(x, y) {
@@ -100,7 +100,7 @@ NodeEdgeEngine.registerNode = function(id) { // node (id) is clicked
 	console.log('NodeEdgeEngine: registerNode ' + id);
 	if(this.A == null) {
 		this.A = id;
-		rootCanvas.select('g.Node#' + nodes.local[this.A].storageType + '_' + this.A).classed('selected', true);
+		rootCanvas.select('g.Node#' + nodes.local[this.A].cssID).classed('selected', true);
 	}
 	else {
 		if(this.A != id) {

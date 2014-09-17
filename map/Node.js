@@ -13,6 +13,8 @@ var Node = function(storageType, key, val) {
 	this.storageType = storageType;
 	this.key = key;
 	this.val = val;
+
+	this.cssID = this.storageType + '_' + this.key;
 	this.graphDimensions();
 };
 Node.prototype.graphDimensions = function() {
@@ -33,7 +35,7 @@ Node.prototype.select = function(o, i) {
 	if (d3.event.defaultPrevented) return; // distinguish drag and click
 	
 	var that = o;
-	var rootElement = rootCanvas.select('g#' + that.storageType + '_' + that.key);
+	var rootElement = rootCanvas.select('g#' + that.cssID);
 //	rootElement.classed('selected', true);
 	NodeEdgeEngine.registerNode(that.key);
 	d3.event.stopPropagation();
@@ -43,6 +45,32 @@ Node.prototype.edit = function(o, i) {
 
 	var key = o.key;
 	console.log('edit node ' + key);
+
+	var node = nodes.local[key];
+	var editWindow = rootCanvas.classed('editing', true).append('foreignObject')
+		.attr('class', 'editWindow')
+		.attr('x', o.x)
+		.attr('y', o.y)
+		.attr('width', 320)
+		.attr('height', 640)
+		.on('click', function() { d3.event.stopPropagation(); });
+
+	var typeBox = editWindow.append('xhtml:input').attr('type', 'text').attr('value', node.val.type);
+	var nameBox = editWindow.append('xhtml:input').attr('type', 'text').attr('value', node.val.name);
+	var dataBox = editWindow.append('xhtml:input').attr('type', 'text').attr('value', node.val.data);
+	var saveButton = editWindow.append('xhtml:input').attr('type', 'button').attr('value', 'save')
+		.on('click', function() {
+			var type = typeBox[0][0].value;
+			var name = nameBox[0][0].value;
+			var data = dataBox[0][0].value;
+			nodes.update(key, {type: type, name: name, data: data});
+			editWindow.remove();
+		});
+	var cencelButton = editWindow.append('xhtml:input').attr('type', 'button').attr('value', 'cancel')
+		.on('click', function() {
+			editWindow.remove();
+		});
+
 	d3.event.stopPropagation();
 }
 Node.prototype.remove = function(o, i) { // remove this node and all edges
@@ -52,9 +80,8 @@ Node.prototype.remove = function(o, i) { // remove this node and all edges
 	var edgesToRemove = [];
 	for(var x in edges.local) {
 		var edge = edges.local[x];
-		if(edge.val.fromNode == key || edge.val.toNode == key) {
+		if(edge.val.fromNode == key || edge.val.toNode == key)
 			edgesToRemove.push(x);
-		}
 	}
 	for(var i = 0; i < edgesToRemove.length; i++) {
 		edges.remove(edgesToRemove[i]);
@@ -83,7 +110,7 @@ Node.prototype.draw = function(rootElement, className) {
 	this.redraw(rootElement, className);
 };
 Node.prototype.redraw = function(rootElement, className) {	
-	rootElement.attr('class', className + ' ' + this.storageType + ' ' + this.val.type).attr('id', this.storageType + '_' + this.key);
+	rootElement.attr('class', className + ' ' + this.storageType + ' ' + this.val.type).attr('id', this.cssID);
 	var nameTag = rootElement.select('text.name').text(this.val.name);
 	var typeTag = rootElement.select('text.type').text(this.val.type);
 

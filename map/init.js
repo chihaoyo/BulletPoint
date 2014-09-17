@@ -133,6 +133,7 @@ var init = function() {
 	ENVI.fontSize = 13.0;
 	ENVI.letterW = Math.ceil(ENVI.fontSize*0.62);
 	ENVI.lineH = Math.ceil(ENVI.fontSize*1.25);
+	ENVI.textBoxH = Math.ceil(ENVI.fontSize*2.31);
 	
 	ENVI.canvasW = Math.ceil(ENVI.docW*0.99);
 	ENVI.canvasH = Math.ceil((ENVI.docH - 6*ENVI.fontSize)*0.95); // exclude top & bottom margin: 3em
@@ -164,8 +165,6 @@ var init = function() {
 	// connect DS
 	nodes.connect();
 	edges.connect();
-//	nodes.sync.push({type: 'article', name: 'http://p.q/r', owner: 'slave', data: JSON.stringify({comment: 'こんにちは'})})
-//	nodes.stat.push({type: 'article', name: 'http://a.b/c', owner: 'master', data: JSON.stringify({comment: '中文'})});
 
 	// make addForm functionable
 	// Weird thing: $.find does NOT work when finding within a <form>?
@@ -181,7 +180,13 @@ var init = function() {
 		var nodeName = $addForm.find('[name="nodeName"]').val();
 		var nodeData = $addForm.find('[name="nodeData"]').val();
 		var nodeStorageType = $addForm.find('select[name="nodeStorageType"]').val();
-		console.log(nodeType + ' ' + nodeName + ' ' + nodeData + ' ' + nodeStorageType);
+
+		if(nodeData == '')
+			nodeData = '{}';
+		
+		if(nodeName != '' && (nodeStorageType == 'sync' || nodeStorageType == 'stat'))
+			nodes[nodeStorageType].push({type: nodeType, name: nodeName, data: nodeData});
+
 		event.preventDefault();
 	});
 };

@@ -104,3 +104,7 @@ div#canvas svg {
 .Edge .removeIcon { opacity: 0.0; }
 .Edge .removeIcon line { stroke: #aaa; stroke-width: 1px; }
 .Edge:hover .removeIcon { opacity: 1.0; }
+
+.editWindow input[type="text"] {
+	display: block;
+}
