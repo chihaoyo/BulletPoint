@@ -101,7 +101,9 @@ Node.prototype.draw = function(rootElement, className) {
 	removeIcon.append('line').attr('x1', this.d_.removeIconSize).attr('y1', 0).attr('x2', 0).attr('y2', this.d_.removeIconSize);
 	removeIcon.on('click', this.remove);
 
-	var circle = rootElement.append('circle').attr('class', 'center clickable').attr('r', this.d_.circleSize).on('click', this.select);
+	var center = rootElement.append('g').attr('class', 'center clickable').on('click', this.select);
+	center.append('circle').attr('class', 'typeIndicator').attr('r', this.d_.circleSize);
+	center.append('circle').attr('class', 'storageTypeIndicator').attr('r', this.d_.circleSize/3.0);
 	
 	var textYStepper = new Stepper(ENVI.lineH/4, ENVI.lineH); // baseline is at around 1/4 of lineH
 	var nameTag = rootElement.append('text').attr('class', 'name').attr('x', ENVI.letterW).attr('y', textYStepper.step()).on('dblclick', this.edit);

@@ -79,17 +79,20 @@ div#canvas svg {
 .box { opacity: 0.0; }
 .clickable { cursor: pointer; }
 
-.Node			circle.center { fill: white; }
-.Node.article	circle.center { fill: white; }
-.Node.human		circle.center { fill: lime; }
-.Node.event		circle.center { fill: yellow; }
-.Node.place		circle.center { fill: magenta; }
-.Node.book		circle.center { fill: blue; }
-.Node.ideology	circle.center { fill: blue; }
-.Node.arguement	circle.center { fill: blue; }
-.Node.issue		circle.center { fill: red; }
+.Node			.typeIndicator { fill: white; }
+.Node.article	.typeIndicator { fill: white; }
+.Node.human		.typeIndicator { fill: lime; }
+.Node.event		.typeIndicator { fill: yellow; }
+.Node.place		.typeIndicator { fill: magenta; }
+.Node.book		.typeIndicator { fill: blue; }
+.Node.ideology	.typeIndicator { fill: blue; }
+.Node.arguement	.typeIndicator { fill: blue; }
+.Node.issue		.typeIndicator { fill: red; }
 
-.Node.selected	circle.center { stroke: white; stroke-width: 0.25em; }
+.Node.selected	.typeIndicator { stroke: white; stroke-width: 0.15em; }
+
+.Node.stat .storageTypeIndicator { opacity: 0.5; fill: black; }
+.Node.sync .storageTypeIndicator { opacity: 0.0; }
 
 .Node text			{ fill: white; }
 .Node text.type		{ fill: #555; display: none; }

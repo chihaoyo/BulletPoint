@@ -53,6 +53,7 @@ var CD = function(el) { // only fire events that is targeted at el (toElement) w
 };*/
 
 var PARA = {
+	debug: true,
 	userID: '@A2DCFDB5-C277-4AA1-AC53-0904120C4F69',
 	staticDSBaseURL: '//50.18.115.212/bulletpoint/api/',
 	syncedDSBaseURL: '//resplendent-fire-8362.firebaseio.com/bulletpoint/'

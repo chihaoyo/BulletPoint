@@ -137,7 +137,7 @@ NodeEdgeEngine.registerNode = function(id) { // node (id) is clicked
 			}
 			// push!
 			edges[storageType].push(dictionary);
-			this.reset();
 		}
+		this.reset();
 	}
 };
