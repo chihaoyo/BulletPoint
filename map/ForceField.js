@@ -85,7 +85,6 @@ ForceField.init = function() {
 		.on('dragend', function(o) {
 			o.dragged = false;
 		});
-	nodes.___entities.call(this.drag);
 };
 ForceField.drawAll = function() {
 	console.log('ForceField drawAll');
@@ -98,6 +97,8 @@ ForceField.drawAll = function() {
 		this.init();
 		this.flags.initialized = true;
 	}
+	nodes.___entities.call(this.drag);
+	
 	this.field.start();
 };
 

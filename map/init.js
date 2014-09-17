@@ -86,16 +86,16 @@ var rootCanvas = null;
 
 var init = function() {
 	// scope environment
-	CX.docW = $document.width();
-	CX.docH = $document.height();
+	CX.docW = $window.width();
+	CX.docH = $window.height();
 	
 	CX.fontSize = 13.0;
 	CX.letterW = Math.ceil(CX.fontSize*0.62);
 	CX.lineH = Math.ceil(CX.fontSize*1.25);
 	CX.textBoxH = Math.ceil(CX.fontSize*2.31);
 	
-	CX.canvasW = Math.ceil(CX.docW*0.99);
-	CX.canvasH = Math.ceil((CX.docH - 6*CX.fontSize)*0.95); // exclude top & bottom margin: 3em
+	CX.canvasW = CX.docW; //Math.ceil(CX.docW*0.99);
+	CX.canvasH = CX.docH; //Math.ceil((CX.docH - 6*CX.fontSize)*0.95); // exclude top & bottom margin: 3em
 	
 	// locate and set up root canvas
 	rootCanvas = d3.select('div#canvas svg');
@@ -125,7 +125,7 @@ var init = function() {
 	var $addNodeName = $addForm.find('[name="nodeName"]');
 	var $addNodeData = $addForm.find('[name="nodeData"]');
 	var $addNodeStorageType = $addForm.find('select[name="nodeStorageType"]');
-	
+
 	$addNodeType.change(function(event) {
 		var that = $(this);
 		that.siblings('.sampleNode').attr('class', 'sampleNode ' + that.val());
@@ -134,8 +134,8 @@ var init = function() {
 	var $addSubmit = $addForm.find('[name="submit"]');
 	$addSubmit.click(function(event) {
 		var nodeType = $addNodeType.val();
-		var nodeName = $addNodeName.val();
-		var nodeData = $addNodeData.val();
+		var nodeName = $addNodeName.val().trim();
+		var nodeData = $addNodeData.val().trim();
 		var nodeStorageType = $addNodeStorageType.val();
 
 		// validation

@@ -8,9 +8,11 @@
 	<link rel="stylesheet" href="main.css" />
 </head>
 <body>
+	<div id="canvas"><svg></svg></div>
 	<div class="form" id="addForm">
 		<p><span>add a(n) </span><select name="nodeType">
 			<option>human</option>
+			<option>organization</option>
 			<option>event</option>
 			<option>place</option>
 			<option>book</option>
@@ -22,7 +24,6 @@
 		<p>add an edge <span class="sampleEdge"></span> by clicking on the circle <span class="sampleNode"></span> of two nodes consecutively</p>
 		<p>double click on the name of the node to edit it</p>
 	</div>
-	<div id="canvas"><svg></svg></div>
 </body>
 <script src="js/jquery-2.1.1.min.js"></script>
 <script src="//50.18.115.212/common/lib-jquery-ext.js"></script>

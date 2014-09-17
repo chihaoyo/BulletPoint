@@ -55,6 +55,7 @@ p {
 	background: white;
 }
 .sampleNode.human	{ background: lime; }
+.sampleNode.organization { background: lime; }
 .sampleNode.event	{ background: yellow; }
 .sampleNode.place	{ background: magenta; }
 .sampleNode.book	{ background: blue; }
@@ -70,7 +71,7 @@ p {
 	background: #555;
 }
 
-div#canvas { height: 100%; margin: 0; margin: 3em 0; }
+div#canvas { height: 100%; margin: 0; }
 div#canvas svg {
 	display: block;
 	margin: 0 auto;
@@ -82,11 +83,12 @@ div#canvas svg {
 .Node			.typeIndicator { fill: white; }
 .Node.article	.typeIndicator { fill: white; }
 .Node.human		.typeIndicator { fill: lime; }
+.Node.organization .typeIndicator { fill: lime; }
 .Node.event		.typeIndicator { fill: yellow; }
 .Node.place		.typeIndicator { fill: magenta; }
 .Node.book		.typeIndicator { fill: blue; }
 .Node.ideology	.typeIndicator { fill: blue; }
-.Node.arguement	.typeIndicator { fill: blue; }
+.Node.argument	.typeIndicator { fill: blue; }
 .Node.issue		.typeIndicator { fill: red; }
 
 .Node.selected	.typeIndicator { stroke: white; stroke-width: 0.15em; }
@@ -102,7 +104,7 @@ div#canvas svg {
 
 .removeIcon { opacity: 0.0; }
 .removeIcon line { stroke: #aaa; stroke-width: 1px; }
-.removeIcon:hover line { stroke-width: 2px; }
+.removeIcon:hover line { stroke: white; stroke-width: 2px; }
 
 .Node:hover .removeIcon  { opacity: 1.0; }
 .Edge:hover .removeIcon { opacity: 1.0; }
