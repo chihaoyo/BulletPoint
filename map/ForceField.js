@@ -7,10 +7,10 @@ TK.map = function(v, p, q, s, t) {
 	return  (v - p)/(q - p)*(t - s) + s;
 };
 TK.coorXY = function(p, q) {
-	return {x: Math.ceil((p*ENVI.canvasW + ENVI.canvasW)/2.0), y: Math.ceil((q*ENVI.canvasH + ENVI.canvasH)/2.0)};
+	return {x: Math.ceil((p*CX.canvasW + CX.canvasW)/2.0), y: Math.ceil((q*CX.canvasH + CX.canvasH)/2.0)};
 };
 TK.coorPQ = function(x, y) {
-	return {p: (x - ENVI.canvasW/2.0)/ENVI.canvasW*2.0, q: (y - ENVI.canvasH/2.0)/ENVI.canvasH*2.0};
+	return {p: (x - CX.canvasW/2.0)/CX.canvasW*2.0, q: (y - CX.canvasH/2.0)/CX.canvasH*2.0};
 };
 
 // ForceField lays out nodes and link
@@ -40,7 +40,7 @@ ForceField.diagnosis = function() {
 	console.log('diagnosis start');
 
 	var edgesToRemove = [];
-	for(x in edges.local) {
+	for(var x in edges.local) {
 		var edge = edges.local[x];
 		var terminals = [edge.val.fromNode, edge.val.toNode];
 		for(var i = 0; i < terminals.length; i++) {
@@ -65,7 +65,7 @@ ForceField.init = function() {
 		.links(edges.localArray)
 		.charge(-1000)
 		.linkDistance(function(edge) { return 100; }) // linkDistance can depend on each edge
-		.size([ENVI.canvasW, ENVI.canvasH])
+		.size([CX.canvasW, CX.canvasH])
 		.on('tick', function(event) {
 			nodes.___entities.attr('transform', function(o) { return 'translate(' + [o.x, o.y].join(',') + ')'; });
 			edges.___entities.select('line')
@@ -105,6 +105,19 @@ ForceField.drawAll = function() {
 // NodeEdgeEngine handles creating Nodes and Edges in UI
 // singleton!
 var NodeEdgeEngine = {A: null, B: null};
+NodeEdgeEngine.edgeExists = function(p, q, type) {
+	for(var x in edges.local) {
+		var edge = edges.local[x];
+		var flag = false;
+		if(edge.val.type == type) {
+			if(['nondir', 'bidir'].indexOf(type) != -1)
+				flag = _.difference([edge.val.fromNode, edge.val.toNode], [p, q]).length == 0
+			else
+				flag = edge.val.fromNode == p && edge.val.toNode == q;
+		}
+		return flag;
+	}
+};
 NodeEdgeEngine.reset = function() {
 	console.log('NodeEdgeEngine: reset');
 	if(this.A != null)
@@ -136,7 +149,8 @@ NodeEdgeEngine.registerNode = function(id) { // node (id) is clicked
 				dictionary.owner = PARA.userID;
 			}
 			// push!
-			edges[storageType].push(dictionary);
+			if(!this.edgeExists(dictionary.fromNode, dictionary.toNode, dictionary.type))
+				edges[storageType].push(dictionary);
 		}
 		this.reset();
 	}

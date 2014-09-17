@@ -9,48 +9,6 @@ var compareElement = function(source, target) {
 		return $(target).filter(source).length > 0;
 	}
 };
-/*
-// ClickDispatcher
-// http://bl.ocks.org/tmcw/4067674
-var CD = function(el) { // only fire events that is targeted at el (toElement) when el is provided
-	var event = d3.dispatch('click', 'dblclick');
-	var dispatcher = function(selection) {
-		var down,
-			tolerance = 5,
-			last,
-			wait = null;
-		// euclidean distance
-		var dist = function(a, b) { return Math.sqrt(Math.pow(a[0] - b[0], 2), Math.pow(a[1] - b[1], 2)); };
-		selection.on('mousedown', function() {
-			down = d3.mouse(document.body);
-			last = +new Date();
-		});
-		selection.on('mouseup', function() {
-			if(dist(down, d3.mouse(document.body)) > tolerance) {
-				return;
-			} else {
-				if(wait) {
-					window.clearTimeout(wait);
-					wait = null;
-					//if(el === undefined || el == d3.event.toElement)
-					if(compareElement(el, d3.event.toElement))
-						event.dblclick(d3.event);
-				}
-				else {
-					wait = window.setTimeout((function(e) {
-						return function() {
-							//if(el === undefined || el == e.toElement)
-							if(compareElement(el, e.toElement))
-								event.click(e);
-							wait = null;
-						};
-					})(d3.event), 250);
-				}
-			}
-		});
-	};
-	return d3.rebind(dispatcher, event, 'on'); // copy event.on onto dispatcher (and more)
-};*/
 
 var PARA = {
 	debug: true,
@@ -119,7 +77,7 @@ handlers.child_removed = function(snapshot) {
 	}
 };
 
-var ENVI = {};
+var CX = {};
 
 var $window = $(window);
 var $document = $(document);
@@ -128,29 +86,22 @@ var rootCanvas = null;
 
 var init = function() {
 	// scope environment
-	ENVI.docW = $document.width();
-	ENVI.docH = $document.height();
+	CX.docW = $document.width();
+	CX.docH = $document.height();
 	
-	ENVI.fontSize = 13.0;
-	ENVI.letterW = Math.ceil(ENVI.fontSize*0.62);
-	ENVI.lineH = Math.ceil(ENVI.fontSize*1.25);
-	ENVI.textBoxH = Math.ceil(ENVI.fontSize*2.31);
+	CX.fontSize = 13.0;
+	CX.letterW = Math.ceil(CX.fontSize*0.62);
+	CX.lineH = Math.ceil(CX.fontSize*1.25);
+	CX.textBoxH = Math.ceil(CX.fontSize*2.31);
 	
-	ENVI.canvasW = Math.ceil(ENVI.docW*0.99);
-	ENVI.canvasH = Math.ceil((ENVI.docH - 6*ENVI.fontSize)*0.95); // exclude top & bottom margin: 3em
+	CX.canvasW = Math.ceil(CX.docW*0.99);
+	CX.canvasH = Math.ceil((CX.docH - 6*CX.fontSize)*0.95); // exclude top & bottom margin: 3em
 	
 	// locate and set up root canvas
 	rootCanvas = d3.select('div#canvas svg');
-	rootCanvas.attr('width', ENVI.canvasW).attr('height', ENVI.canvasH);
-
-	rootCanvas.on('click', function() { NodeEdgeEngine.reset(); });
-	/*
-	var rootCanvasCD = CD('svg'); //$('div#canvas svg')[0]);
-		rootCanvasCD.on('click', function(event) { NodeEdgeEngine.reset(); });
-		rootCanvasCD.on('dblclick', function(event) { NodeEdgeEngine.createNode(d3.event.x, d3.event.y); });
-	rootCanvas.call(rootCanvasCD);*/
-//	rootCanvas.on('click', function() { NodeEdgeEngine.reset(); });
-//	rootCanvas.on('dblclick', function() { NodeEdgeEngine.createNode(d3.event.x, d3.event.y); });
+	rootCanvas
+		.attr('width', CX.canvasW).attr('height', CX.canvasH)
+		.on('click', function() { NodeEdgeEngine.reset(); });
 	
 	// bind event handlers to DS's
 	nodes.once('value', handlers.value);
@@ -170,23 +121,41 @@ var init = function() {
 	// make addForm functionable
 	// Weird thing: $.find does NOT work when finding within a <form>?
 	var $addForm = $('#addForm');
-	var $addFormNodeType = $addForm.find('[name="nodeType"]');
-	$addFormNodeType.change(function(event) {
+	var $addNodeType = $addForm.find('[name="nodeType"]');
+	var $addNodeName = $addForm.find('[name="nodeName"]');
+	var $addNodeData = $addForm.find('[name="nodeData"]');
+	var $addNodeStorageType = $addForm.find('select[name="nodeStorageType"]');
+	
+	$addNodeType.change(function(event) {
 		var that = $(this);
 		that.siblings('.sampleNode').attr('class', 'sampleNode ' + that.val());
 	}).change();
-	var $addFormSubmit = $addForm.find('[name="submit"]');
-	$addFormSubmit.click(function(event) {
-		var nodeType = $addFormNodeType.val();
-		var nodeName = $addForm.find('[name="nodeName"]').val();
-		var nodeData = $addForm.find('[name="nodeData"]').val();
-		var nodeStorageType = $addForm.find('select[name="nodeStorageType"]').val();
 
-		if(nodeData == '')
-			nodeData = '{}';
+	var $addSubmit = $addForm.find('[name="submit"]');
+	$addSubmit.click(function(event) {
+		var nodeType = $addNodeType.val();
+		var nodeName = $addNodeName.val();
+		var nodeData = $addNodeData.val();
+		var nodeStorageType = $addNodeStorageType.val();
+
+		// validation
+		if(nodeName == '' || ['sync', 'stat'].indexOf(nodeStorageType) == -1)
+			return;
+
+		var nodeOwner = PARA.userID;
+//		console.log(nodeType + ' ' + nodeName + ' ' + nodeData + ' ' + nodeStorageType + ' ' + nodeOwner);
 		
-		if(nodeName != '' && (nodeStorageType == 'sync' || nodeStorageType == 'stat'))
-			nodes[nodeStorageType].push({type: nodeType, name: nodeName, data: nodeData});
+		// set data
+		var dictionary = {type: nodeType, name: nodeName, data: nodeData};
+		if(nodeData == '') nodeData = '{}';
+		if(nodeStorageType == 'stat') dictionary.owner = nodeOwner;
+
+		// push
+		nodes[nodeStorageType].push(dictionary);
+
+		// reset
+		$addNodeName.val('');
+		$addNodeData.val('');
 
 		event.preventDefault();
 	});

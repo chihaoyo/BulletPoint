@@ -6,7 +6,7 @@ var Edge = function(storageType, key, val) {
 };
 Edge.prototype.graphDimensions = function() {
 	this.d_ = {};
-	this.d_.removeIconSize = ENVI.lineH;
+	this.d_.removeIconSize = CX.lineH;
 };
 Edge.prototype.remove = function(o, i) {
 	var key = o.key;

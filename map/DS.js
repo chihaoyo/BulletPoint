@@ -53,22 +53,25 @@ var Static = function(parent, baseURL) {
 }
 Static.prototype.push = function(dictionary) {
 	if(dictionary === undefined || dictionary == null || dictionary == {} || dictionary.length <= 0) return;
-		
 	var that = this;
 	$.ajax({
 		url: that.baseURL,
 		type: 'POST',
 		data: dictionary,
 		success: function(data) {
-			console.log('Success: POST to ' + that.baseURL);
-			console.log(data);
 			data = JSON.parse(data);
-			var callback = that.___parent.on('child_added');
-			if(callback !== undefined && callback != null)
-				callback.apply(that, [new Snapshot(data)]);
+			if(data != false) {
+				console.log('Successful to POST ' + JSON.stringify(dictionary) + ' to ' + that.baseURL);
+				var callback = that.___parent.on('child_added');
+				if(callback !== undefined && callback != null)
+					callback.apply(that, [new Snapshot(data)]);
+			}
+			else {
+				console.log('Failed to POST ' + JSON.stringify(dictionary) + ' to ' + that.baseURL + ': Invalid dictionary');
+			}
 		},
 		error: function(data) {
-			console.error('Error: POST to ' + that.baseURL);
+			console.error('Failed to POST ' + JSON.stringify(dictionary) + ' to ' + that.baseURL + ': Connection error');
 			console.log(data.responseText);
 		}
 	});
@@ -167,7 +170,7 @@ DS.prototype.isReady = function(whichOne, val) {
 };
 DS.prototype.localArrayInit = function() {
 	this.localArray = [];
-	for(x in this.local) {
+	for(var x in this.local) {
 		this.localArray.push(this.local[x].simplify());
 	}
 }

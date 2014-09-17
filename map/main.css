@@ -98,14 +98,13 @@ div#canvas svg {
 .Node text.type		{ fill: #555; display: none; }
 .Node:hover text.type { display: block; }
 
-.Node .removeIcon { opacity: 0.0; }
-.Node .removeIcon line { stroke: #aaa; stroke-width: 1px; }
-.Node:hover .removeIcon  { opacity: 1.0; }
-
 .Edge line { stroke: #333 ; stroke-width: 0.5em; }
 
-.Edge .removeIcon { opacity: 0.0; }
-.Edge .removeIcon line { stroke: #aaa; stroke-width: 1px; }
+.removeIcon { opacity: 0.0; }
+.removeIcon line { stroke: #aaa; stroke-width: 1px; }
+.removeIcon:hover line { stroke-width: 2px; }
+
+.Node:hover .removeIcon  { opacity: 1.0; }
 .Edge:hover .removeIcon { opacity: 1.0; }
 
 .editWindow input[type="text"] {

@@ -19,13 +19,13 @@ var Node = function(storageType, key, val) {
 };
 Node.prototype.graphDimensions = function() {
 	this.d_ = {};
-	this.d_.circleSize = ENVI.letterW*0.75;
-	this.d_.removeIconSize = ENVI.lineH;
+	this.d_.circleSize = CX.letterW*0.75;
+	this.d_.removeIconSize = CX.lineH;
 };
 /*
 Node.prototype.toString = function() { return this.key + ': ' + this.val.name; }
-Node.prototype.getWidth = function() { return this.val.name.length*ENVI.letterW; }; // + 2*ENVI.letterW; };
-Node.prototype.getHeight = function() { return ENVI.lineH; };*/
+Node.prototype.getWidth = function() { return this.val.name.length*CX.letterW; }; // + 2*CX.letterW; };
+Node.prototype.getHeight = function() { return CX.lineH; };*/
 
 // event handler for d3
 // 'this' is SVG element that fired the event
@@ -105,9 +105,9 @@ Node.prototype.draw = function(rootElement, className) {
 	center.append('circle').attr('class', 'typeIndicator').attr('r', this.d_.circleSize);
 	center.append('circle').attr('class', 'storageTypeIndicator').attr('r', this.d_.circleSize/3.0);
 	
-	var textYStepper = new Stepper(ENVI.lineH/4, ENVI.lineH); // baseline is at around 1/4 of lineH
-	var nameTag = rootElement.append('text').attr('class', 'name').attr('x', ENVI.letterW).attr('y', textYStepper.step()).on('dblclick', this.edit);
-	var typeTag = rootElement.append('text').attr('class', 'type').attr('x', ENVI.letterW).attr('y', textYStepper.step());
+	var textYStepper = new Stepper(CX.lineH/4, CX.lineH); // baseline is at around 1/4 of lineH
+	var nameTag = rootElement.append('text').attr('class', 'name').attr('x', CX.letterW).attr('y', textYStepper.step()).on('dblclick', this.edit);
+	var typeTag = rootElement.append('text').attr('class', 'type').attr('x', CX.letterW).attr('y', textYStepper.step());
 
 	this.redraw(rootElement, className);
 };
