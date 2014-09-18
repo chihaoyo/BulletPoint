@@ -20,6 +20,9 @@ input {
 input[type="text"] {
 	width: 15em;
 }
+input[type="text"].veryShort {
+	width: 5em;
+}
 textarea {
 	outline: none;
 	border: 0;
@@ -37,8 +40,7 @@ body {
 	margin: 0;
 }
 .form {
-	padding: 0.5em 1em;
-	background: #555;
+	margin: 0.5em 1em;
 }
 p {
 	margin: 0.5em 0;
@@ -75,6 +77,7 @@ p {
 	background: #333;
 }
 
+div#controls { padding: 0.5em; background: #555; }
 div#canvas { height: 100%; margin: 0; }
 div#canvas svg {
 	display: block;

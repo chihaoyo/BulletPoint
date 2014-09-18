@@ -8,23 +8,28 @@
 	<link rel="stylesheet" href="main.css" />
 </head>
 <body>
-	<div class="form" id="addForm">
-		<p><span>add a(n) </span><select name="nodeType">
-			<option>human</option>
-			<option>organization</option>
-			<option>event</option>
-			<option>project</option>
-			<option>place</option>
-			<option>technology</option>
-			<option>book</option>
-			<option>ideology</option>
-			<option>thesis</option>
-			<option>topic</option>
-			<option>issue</option>
-		</select> node <span class="sampleNode"></span> named <input type="text" name="nodeName" placeholder="name" /> with data <input type="text" name="nodeData" placeholder="Javascript Object" /> and make it <select name="nodeStorageType"><option value="sync">public</option><option value="stat">private</option></select><input type="button" name="submit" value="go" /></p>
-		<p>add an <span class="emphasize">article</span> node <span class="sampleNode"></span> by using the Chrome plugin (under dev)</p>
-		<p>add an edge <span class="sampleEdge"></span> by clicking on the circle <span class="sampleNode"></span> of two nodes consecutively</p>
-		<p>double click on the name of the node to edit it</p>
+	<div id="controls">
+		<div class="form" id="addForm">
+			<p><span>add a(n) </span><select name="nodeType">
+				<option>human</option>
+				<option>organization</option>
+				<option>event</option>
+				<option>project</option>
+				<option>place</option>
+				<option>technology</option>
+				<option>book</option>
+				<option>ideology</option>
+				<option>thesis</option>
+				<option>topic</option>
+				<option>issue</option>
+			</select> node <span class="sampleNode"></span> named <input type="text" name="nodeName" placeholder="name" /> with data <input type="text" name="nodeData" placeholder="Javascript Object" /> and make it <select name="nodeStorageType"><option value="sync">public</option><option value="stat">private</option></select><input type="button" name="submit" value="go" /></p>
+			<p>add an <span class="emphasize">article</span> node <span class="sampleNode"></span> by using the Chrome plugin (under dev)</p>
+			<p>add an edge <span class="sampleEdge"></span> by clicking on the circle <span class="sampleNode"></span> of two nodes consecutively</p>
+			<p>double click on the name of the node to edit it</p>
+		</div>
+		<div class="form" id="uiForm">
+			<p>adjust UI parameters: charge <input type="text" name="charge" class="veryShort" /> friction <input type="text" name="friction" class="veryShort" /> <input type="button" name="submit" value="go" /></p>
+		</div>
 	</div>
 	<div id="canvas"><svg></svg></div>
 </body>

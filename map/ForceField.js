@@ -61,12 +61,16 @@ ForceField.diagnosis = function() {
 // http://bl.ocks.org/mbostock/3750558
 ForceField.init = function() {
 	console.log('ForceField.init');
+
+	var fieldCharge = -600;
+	var fieldFriction = 0.8;
+
 	this.field = d3.layout.force()
 		.nodes(nodes.localArray)
 		.links(edges.localArray)
-		.charge(-800)
-		.friction(0.9)
-		.linkDistance(function(edge) { return 150; }) // linkDistance can depend on each edge
+		.charge(fieldCharge)
+		.friction(fieldFriction)
+		.linkDistance(function(edge) { return 105; }) // linkDistance can depend on each edge
 		.size([CX.canvasW - 50, CX.canvasH - 50])
 		.on('tick', function(event) {
 			nodes.___entities.attr('transform', function(o) {
@@ -105,6 +109,9 @@ ForceField.init = function() {
 		.on('dragend', function(o) {
 			o.dragged = false;
 		});
+
+	$uiForm.find('[name="charge"]').val(fieldCharge);
+	$uiForm.find('[name="friction"]').val(fieldFriction);
 };
 ForceField.drawAll = function() {
 	console.log('ForceField.drawAll');
@@ -158,6 +165,7 @@ NodeEdgeEngine.reset = function() {
 	if(this.B != null)
 		rootCanvas.select('g.Node#' + nodes.local[this.B].cssID).classed('selected', false);
 	this.A = null;
+	this.B = null;
 };
 NodeEdgeEngine.createNode = function(x, y) {
 	console.log('NodeEdgeEngine.createNode' + x + ' ' + y);

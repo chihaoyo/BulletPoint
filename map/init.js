@@ -90,12 +90,14 @@ var CX = {};
 
 var $window = $(window);
 var $document = $(document);
-var $addForm;
+var $controls, $addForm, $uiForm;
 
 var rootCanvas = null;
 
 var init = function() {
-	$addForm = $('#addForm');
+	$controls = $('#controls');
+	$addForm = $controls.find('#addForm');
+	$uiForm = $controls.find('#uiForm');
 
 	// scope environment
 	CX.docW = $window.width();
@@ -108,7 +110,7 @@ var init = function() {
 	CX.textBoxH = Math.ceil(CX.fontSize*2.31);
 	
 	CX.canvasW = CX.docW; //Math.ceil(CX.docW*0.99);
-	CX.canvasH = CX.docH - $addForm.outerHeight(); //Math.ceil((CX.docH - 6*CX.fontSize)*0.95); // exclude top & bottom margin: 3em
+	CX.canvasH = CX.docH - $controls.outerHeight(); //Math.ceil((CX.docH - 6*CX.fontSize)*0.95); // exclude top & bottom margin: 3em
 	
 	// locate and set up root canvas
 	rootCanvas = d3.select('div#canvas svg');
@@ -170,6 +172,12 @@ var init = function() {
 		$addNodeData.val('');
 
 		event.preventDefault();
+	});
+
+	$uiForm.find('[name="submit"]').click(function(event) {
+		var charge = $uiForm.find('[name="charge"]').val();
+		var friction = $uiForm.find('[name="friction"]').val();
+		ForceField.field.charge(charge).friction(friction).start();
 	});
 };
 
