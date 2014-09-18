@@ -18,7 +18,7 @@ Edge.prototype.edit = function(o, i) {
 	NodeEdgeEngine.reset();
 
 	var key = o.key;
-	console.log('edit edge ' + key);
+	console.log('Edit Edge ' + key);
 
 	var edge = edges.local[key];
 	var w = CX.textBoxW;
@@ -52,7 +52,7 @@ Edge.prototype.edit = function(o, i) {
 };
 Edge.prototype.remove = function(o, i) {
 	var key = o.key;
-	console.log('remove Edge ' + key);
+	console.log('Remove Edge ' + key);
 
 	edges.remove(key);
 	d3.event.stopPropagation();
@@ -85,9 +85,5 @@ Edge.prototype.draw = function(rootElement, className) {
 };
 Edge.prototype.redraw = function(rootElement, className) {
 	rootElement.attr('class', className + ' ' + this.storageType + ' ' + this.val.type).attr('id', this.cssID);
-//	console.log('redraw edge');
-//	console.log(this.val.name);
-//	console.log(rootElement.select('text.name'))
-
 	rootElement.select('text.name').text(this.val.name);
 };

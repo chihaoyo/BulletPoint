@@ -37,7 +37,7 @@ ForceField.isReady = function(whichOne, val) {
 	}
 };
 ForceField.diagnosis = function() {
-	console.log('diagnosis start');
+	console.log('ForceField.diagnosis begin');
 
 	var edgesToRemove = [];
 	for(var x in edges.local) {
@@ -54,19 +54,20 @@ ForceField.diagnosis = function() {
 	for(var i = 0; i < edgesToRemove.length; i++)
 		edges.remove(edgesToRemove[i]);
 
-	console.log('diagnosis complete');
+	console.log('ForceField.diagnosis complete');
 };
 // http://bl.ocks.org/mbostock/4062045
 // http://bl.ocks.org/mbostock/1095795
 // http://bl.ocks.org/mbostock/3750558
 ForceField.init = function() {
+	console.log('ForceField.init');
 	this.field = d3.layout.force()
 		.nodes(nodes.localArray)
 		.links(edges.localArray)
-		.charge(-1000)
+		.charge(-800)
 		.friction(0.9)
-		.linkDistance(function(edge) { return 100; }) // linkDistance can depend on each edge
-		.size([CX.canvasW, CX.canvasH])
+		.linkDistance(function(edge) { return 150; }) // linkDistance can depend on each edge
+		.size([CX.canvasW - 50, CX.canvasH - 50])
 		.on('tick', function(event) {
 			nodes.___entities.attr('transform', function(o) {
 				// bounding box with canvasW and canvasH
@@ -77,7 +78,7 @@ ForceField.init = function() {
 				var pos = ForceField.constrainToCanvas(o.x, o.y, 0, 0);
 				o.x = pos.x;
 				o.y = pos.y;
-				return 'translate(' + [pos.x, pos.y].join(',') + ')'; 
+				return 'translate(' + [pos.x, pos.y].join(',') + ')';
 			});
 			edges.___entities.select('line')
 				.attr('x1', function(o) { return o.source.x; })
@@ -99,14 +100,14 @@ ForceField.init = function() {
 		.origin(function(o) { return o; })
 		.on('dragstart', function(o) {
 			o.dragged = true;
-//			o.fixed = true;
+			//o.fixed = true;
 		})
 		.on('dragend', function(o) {
 			o.dragged = false;
 		});
 };
 ForceField.drawAll = function() {
-	console.log('ForceField drawAll');
+	console.log('ForceField.drawAll');
 	this.diagnosis();
 
 	nodes.drawAll();
@@ -127,10 +128,10 @@ ForceField.constrainToCanvas = function(x, y, w, h) {
 	margin.left = 25;
 	margin.right = 25;
 
-	var mx = Math.max(margin.left, Math.min(x, CX.canvasW - w - margin.right));
-	var my = Math.max(margin.top, Math.min(y, CX.canvasH - h - margin.bottom));
+	x = Math.max(margin.left, Math.min(x, CX.canvasW - w - margin.right));
+	y = Math.max(margin.top, Math.min(y, CX.canvasH - h - margin.bottom));
 
-	return {x: mx, y: my};
+	return {x: x, y: y};
 };
 
 
@@ -151,7 +152,7 @@ NodeEdgeEngine.edgeExists = function(p, q, type) {
 	}
 };
 NodeEdgeEngine.reset = function() {
-	console.log('NodeEdgeEngine: reset');
+	console.log('NodeEdgeEngine.reset');
 	if(this.A != null)
 		rootCanvas.select('g.Node#' + nodes.local[this.A].cssID).classed('selected', false);
 	if(this.B != null)
@@ -159,12 +160,12 @@ NodeEdgeEngine.reset = function() {
 	this.A = null;
 };
 NodeEdgeEngine.createNode = function(x, y) {
-	console.log('NodeEdgeEngine: createNode');
+	console.log('NodeEdgeEngine.createNode' + x + ' ' + y);
 	// create new node at (x, y)
 	// if A is non-null then create new edge (A->new node)
 };
 NodeEdgeEngine.registerNode = function(id) { // node (id) is clicked
-	console.log('NodeEdgeEngine: registerNode ' + id);
+	console.log('NodeEdgeEngine.registerNode' + id);
 	if(this.A == null) {
 		this.A = id;
 		rootCanvas.select('g.Node#' + nodes.local[this.A].cssID).classed('selected', true);

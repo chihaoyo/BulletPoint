@@ -35,8 +35,6 @@ Node.prototype.select = function(o, i) {
 	if (d3.event.defaultPrevented) return; // distinguish drag and click
 	
 	var that = o;
-	var rootElement = rootCanvas.select('g#' + that.cssID);
-//	rootElement.classed('selected', true);
 	NodeEdgeEngine.registerNode(that.key);
 	d3.event.stopPropagation();
 };
@@ -44,7 +42,7 @@ Node.prototype.edit = function(o, i) {
 	NodeEdgeEngine.reset();
 
 	var key = o.key;
-	console.log('edit node ' + key);
+	console.log('Edit Node ' + key);
 
 	var node = nodes.local[key];
 	var w = CX.textBoxW;
@@ -78,7 +76,7 @@ Node.prototype.edit = function(o, i) {
 };
 Node.prototype.remove = function(o, i) { // remove this node and all edges
 	var key = o.key;
-	console.log('remove Node ' + key + ' and all connected edges');
+	console.log('Remove Node ' + key + ' and all connected edges');
 
 	var edgesToRemove = [];
 	for(var x in edges.local) {

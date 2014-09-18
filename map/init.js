@@ -19,7 +19,9 @@ var PARA = {
 
 var DICT = {
 	'MapNodes': {singular: 'Node', plural: 'Nodes'},
-	'MapEdges': {singular: 'Edge', plural: 'Edges'}	
+	'MapEdges': {singular: 'Edge', plural: 'Edges'},
+	'sync': {className: 'Synced'},
+	'stat': {className: 'Static'}
 };
 
 // DS's
@@ -31,13 +33,15 @@ var edges = new DS('MapEdges', Edge, true, true);
 // 'this.___parent' is a DS
 var handlers = {};
 handlers.value = function() {
-	console.log(this.___parent.id + ' ' + this.storageType + ' value');
+//	console.log(this.___parent.id + ' ' + this.storageType + ' value');
+	console.log('DS.' + DICT[this.storageType].className + '.value ' + this.___parent.id);
 	var ds = this.___parent;
 	var storageType = this.storageType;
 	ds.isReady(storageType, true);
 };
 handlers.child_added = function(snapshot) {
-	console.log(this.___parent.id + ' ' + this.storageType + ' child_added');
+//	console.log(this.___parent.id + ' ' + this.storageType + ' child_added');
+	console.log('DS.' + DICT[this.storageType].className + '.child_added ' + this.___parent.id);
 	var ds = this.___parent;
 	var storageType = this.storageType;
 	
@@ -52,7 +56,8 @@ handlers.child_added = function(snapshot) {
 	}
 };
 handlers.child_changed = function(snapshot) {
-	console.log(this.___parent.id + ' ' + this.storageType + ' child_changed');
+//	console.log(this.___parent.id + ' ' + this.storageType + ' child_changed');
+	console.log('DS.' + DICT[this.storageType].className + '.child_changed ' + this.___parent.id);
 	var ds = this.___parent;
 	var storageType = this.storageType;
 	
@@ -66,7 +71,8 @@ handlers.child_changed = function(snapshot) {
 	ds.local[key].redraw(rootCanvas.select('g.' + className + '#' + entity.cssID), className);
 };
 handlers.child_removed = function(snapshot) {
-	console.log(this.___parent.id + ' ' + this.storageType + ' child_removed');
+//	console.log(this.___parent.id + ' ' + this.storageType + ' child_removed');
+	console.log('DS.' + DICT[this.storageType].className + '.child_removed ' + this.___parent.id);
 	var ds = this.___parent;
 //	var storageType = this.storageType;
 	
@@ -84,10 +90,13 @@ var CX = {};
 
 var $window = $(window);
 var $document = $(document);
+var $addForm;
 
 var rootCanvas = null;
 
 var init = function() {
+	$addForm = $('#addForm');
+
 	// scope environment
 	CX.docW = $window.width();
 	CX.docH = $window.height();
@@ -95,11 +104,11 @@ var init = function() {
 	CX.fontSize = 11.0;
 	CX.letterW = Math.ceil(CX.fontSize*0.62);
 	CX.lineH = Math.ceil(CX.fontSize*1.25);
-	CX.textBoxW = Math.ceil(CX.fontSize*11.1);
+	CX.textBoxW = Math.ceil(CX.fontSize*16.1); // 15em + 1.1
 	CX.textBoxH = Math.ceil(CX.fontSize*2.31);
 	
 	CX.canvasW = CX.docW; //Math.ceil(CX.docW*0.99);
-	CX.canvasH = CX.docH; //Math.ceil((CX.docH - 6*CX.fontSize)*0.95); // exclude top & bottom margin: 3em
+	CX.canvasH = CX.docH - $addForm.outerHeight(); //Math.ceil((CX.docH - 6*CX.fontSize)*0.95); // exclude top & bottom margin: 3em
 	
 	// locate and set up root canvas
 	rootCanvas = d3.select('div#canvas svg');
@@ -124,7 +133,6 @@ var init = function() {
 
 	// make addForm functionable
 	// Weird thing: $.find does NOT work when finding within a <form>?
-	var $addForm = $('#addForm');
 	var $addNodeType = $addForm.find('[name="nodeType"]');
 	var $addNodeName = $addForm.find('[name="nodeName"]');
 	var $addNodeData = $addForm.find('[name="nodeData"]');

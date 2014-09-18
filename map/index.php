@@ -8,22 +8,25 @@
 	<link rel="stylesheet" href="main.css" />
 </head>
 <body>
-	<div id="canvas"><svg></svg></div>
 	<div class="form" id="addForm">
 		<p><span>add a(n) </span><select name="nodeType">
 			<option>human</option>
 			<option>organization</option>
 			<option>event</option>
+			<option>project</option>
 			<option>place</option>
+			<option>technology</option>
 			<option>book</option>
 			<option>ideology</option>
-			<option>argument</option>
+			<option>thesis</option>
+			<option>topic</option>
 			<option>issue</option>
 		</select> node <span class="sampleNode"></span> named <input type="text" name="nodeName" placeholder="name" /> with data <input type="text" name="nodeData" placeholder="Javascript Object" /> and make it <select name="nodeStorageType"><option value="sync">public</option><option value="stat">private</option></select><input type="button" name="submit" value="go" /></p>
 		<p>add an <span class="emphasize">article</span> node <span class="sampleNode"></span> by using the Chrome plugin (under dev)</p>
 		<p>add an edge <span class="sampleEdge"></span> by clicking on the circle <span class="sampleNode"></span> of two nodes consecutively</p>
 		<p>double click on the name of the node to edit it</p>
 	</div>
+	<div id="canvas"><svg></svg></div>
 </body>
 <script src="js/jquery-2.1.1.min.js"></script>
 <script src="//50.18.115.212/common/lib-jquery-ext.js"></script>

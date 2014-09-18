@@ -200,7 +200,7 @@ DS.prototype.connect = function() {
 	this.sync = this.syncedURL != null ? new Synced(this, this.syncedURL) : null
 };
 DS.prototype.drawAll = function() {
-	console.log(this.id + ' drawAll');
+	console.log('DS.drawAll ' + this.id);
 	// use enter/exit in d3 to determine which ones to draw/remove and which ones to skip // is it possible?
 	
 	var that = this;

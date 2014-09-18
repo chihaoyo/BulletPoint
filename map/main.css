@@ -4,7 +4,7 @@ html, body, p, li, input, select, option, textarea, text {
 	font-size: 11px;
 	-webkit-font-smoothing: subpixel-antialiased;
 }
-div, form, svg {
+div, svg {
 	position: relative;
 	margin: 0;
 	padding: 0;
@@ -18,7 +18,7 @@ input {
 	padding: 2px 4px;
 }
 input[type="text"] {
-	width: 10em;
+	width: 15em;
 }
 textarea {
 	outline: none;
@@ -37,10 +37,8 @@ body {
 	margin: 0;
 }
 .form {
-	position: fixed;
-	top: 0;
-	left: 0;
-	margin: 0.5em 1em;
+	padding: 0.5em 1em;
+	background: #555;
 }
 p {
 	margin: 0.5em 0;
@@ -60,10 +58,13 @@ p {
 .sampleNode.human	{ background: lime; }
 .sampleNode.organization { background: lime; }
 .sampleNode.event	{ background: yellow; }
+.sampleNode.project	{ background: yellow; }
 .sampleNode.place	{ background: magenta; }
+.sampleNode.technology	{ background: aqua; }
 .sampleNode.book	{ background: blue; }
 .sampleNode.ideology	{ background: blue; }
-.sampleNode.argument	{ background: blue; }
+.sampleNode.thesis	{ background: blue; }
+.sampleNode.topic	{ background: red; }
 .sampleNode.issue	{ background: red; }
 
 .sampleEdge {
@@ -71,7 +72,7 @@ p {
 	vertical-align: middle;
 	width: 2em;
 	height: 0.5em;
-	background: #555;
+	background: #333;
 }
 
 div#canvas { height: 100%; margin: 0; }
@@ -88,10 +89,13 @@ div#canvas svg {
 .Node.human		.typeIndicator { fill: lime; }
 .Node.organization .typeIndicator { fill: lime; }
 .Node.event		.typeIndicator { fill: yellow; }
+.Node.project	.typeIndicator { fill: yellow; }
 .Node.place		.typeIndicator { fill: magenta; }
+.Node.technology .typeIndicator { fill: aqua; }
 .Node.book		.typeIndicator { fill: blue; }
 .Node.ideology	.typeIndicator { fill: blue; }
-.Node.argument	.typeIndicator { fill: blue; }
+.Node.thesis	.typeIndicator { fill: blue; }
+.Node.topic		.typeIndicator { fill: red; }
 .Node.issue		.typeIndicator { fill: red; }
 
 .Node.selected	.typeIndicator { stroke: white; stroke-width: 0.15em; }
