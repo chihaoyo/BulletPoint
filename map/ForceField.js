@@ -130,10 +130,10 @@ ForceField.drawAll = function() {
 };
 ForceField.constrainToCanvas = function(x, y, w, h) {
 	var margin = {};
-	margin.top = 50;
-	margin.bottom = 25;
-	margin.left = 25;
-	margin.right = 25;
+	margin.top = 15;
+	margin.bottom = 15;
+	margin.left = 15;
+	margin.right = 15;
 
 	x = Math.max(margin.left, Math.min(x, CX.canvasW - w - margin.right));
 	y = Math.max(margin.top, Math.min(y, CX.canvasH - h - margin.bottom));

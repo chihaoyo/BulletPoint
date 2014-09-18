@@ -19,7 +19,7 @@ var Node = function(storageType, key, val) {
 };
 Node.prototype.graphDimensions = function() {
 	this.d_ = {};
-	this.d_.circleSize = CX.letterW*0.75;
+	this.d_.circleSize = CX.letterW*0.85;
 	this.d_.removeIconSize = CX.lineH;
 };
 /*
