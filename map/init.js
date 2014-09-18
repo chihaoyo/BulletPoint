@@ -58,9 +58,12 @@ handlers.child_changed = function(snapshot) {
 	
 	var key = snapshot.name();
 	var val = snapshot.val();
-	ds.local[key].val = val;
-	ds.localArray[ds.localArrayIndexOf(key)] = ds.local[key].simplify();
-	ds.local[key].redraw(rootCanvas.select('g#' + storageType + '_' + key), DICT[this.___parent.id].singular);
+
+	var className = DICT[this.___parent.id].singular;
+	var entity = ds.local[key];
+	entity.val = val;
+	ds.localArray[ds.localArrayIndexOf(key)] = entity.simplify();
+	ds.local[key].redraw(rootCanvas.select('g.' + className + '#' + entity.cssID), className);
 };
 handlers.child_removed = function(snapshot) {
 	console.log(this.___parent.id + ' ' + this.storageType + ' child_removed');
@@ -89,9 +92,10 @@ var init = function() {
 	CX.docW = $window.width();
 	CX.docH = $window.height();
 	
-	CX.fontSize = 13.0;
+	CX.fontSize = 11.0;
 	CX.letterW = Math.ceil(CX.fontSize*0.62);
 	CX.lineH = Math.ceil(CX.fontSize*1.25);
+	CX.textBoxW = Math.ceil(CX.fontSize*11.1);
 	CX.textBoxH = Math.ceil(CX.fontSize*2.31);
 	
 	CX.canvasW = CX.docW; //Math.ceil(CX.docW*0.99);

@@ -1,7 +1,7 @@
 html, body, p, li, input, select, option, textarea, text {
 	font-family: "Roboto", monospace;
 	font-weight: 300;
-	font-size: 13px;
+	font-size: 11px;
 	-webkit-font-smoothing: subpixel-antialiased;
 }
 div, form, svg {
@@ -16,6 +16,9 @@ input {
 	border-width: 2px;
 	border-radius: 2px;
 	padding: 2px 4px;
+}
+input[type="text"] {
+	width: 10em;
 }
 textarea {
 	outline: none;
@@ -101,6 +104,7 @@ div#canvas svg {
 .Node:hover text.type { display: block; }
 
 .Edge line { stroke: #333 ; stroke-width: 0.5em; }
+.Edge text { fill: #555; text-anchor: middle; }
 
 .removeIcon { opacity: 0.0; }
 .removeIcon line { stroke: #aaa; stroke-width: 1px; }

@@ -47,12 +47,15 @@ Node.prototype.edit = function(o, i) {
 	console.log('edit node ' + key);
 
 	var node = nodes.local[key];
+	var w = CX.textBoxW;
+	var h = CX.textBoxH*4;
+	var pos = ForceField.constrainToCanvas(o.x, o.y, w, h);
 	var editWindow = rootCanvas.classed('editing', true).append('foreignObject')
 		.attr('class', 'editWindow')
-		.attr('x', o.x)
-		.attr('y', o.y)
-		.attr('width', 320)
-		.attr('height', 640)
+		.attr('x', pos.x)
+		.attr('y', pos.y)
+		.attr('width', w)
+		.attr('height', h)
 		.on('click', function() { d3.event.stopPropagation(); });
 
 	var typeBox = editWindow.append('xhtml:input').attr('type', 'text').attr('value', node.val.type);
@@ -72,7 +75,7 @@ Node.prototype.edit = function(o, i) {
 		});
 
 	d3.event.stopPropagation();
-}
+};
 Node.prototype.remove = function(o, i) { // remove this node and all edges
 	var key = o.key;
 	console.log('remove Node ' + key + ' and all connected edges');

@@ -20,7 +20,7 @@
 			<option>argument</option>
 			<option>issue</option>
 		</select> node <span class="sampleNode"></span> named <input type="text" name="nodeName" placeholder="name" /> with data <input type="text" name="nodeData" placeholder="Javascript Object" /> and make it <select name="nodeStorageType"><option value="sync">public</option><option value="stat">private</option></select><input type="button" name="submit" value="go" /></p>
-		<p>add an <span class="emphasize">article</span> node <span class="sampleNode"></span> by using the Chrome plugin</p>
+		<p>add an <span class="emphasize">article</span> node <span class="sampleNode"></span> by using the Chrome plugin (under dev)</p>
 		<p>add an edge <span class="sampleEdge"></span> by clicking on the circle <span class="sampleNode"></span> of two nodes consecutively</p>
 		<p>double click on the name of the node to edit it</p>
 	</div>

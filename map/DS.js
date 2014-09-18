@@ -208,7 +208,9 @@ DS.prototype.drawAll = function() {
 	that.___entities = rootCanvas.selectAll('g.' + className).data(that.localArray, function(o) { return o.key + JSON.stringify(o.val); });
 	
 	// new entities
-	that.___entities.enter().insert('g', ':first-child').each(function(o, i) {
+	// prepend for Edge
+	// append for Node
+	that.___entities.enter().insert('g', (className == 'Edge' ? ':first-child' : undefined)).each(function(o, i) {
 		that.local[o.key].draw(d3.select(this), className);
 	});
 	

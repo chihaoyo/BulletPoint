@@ -64,16 +64,35 @@ ForceField.init = function() {
 		.nodes(nodes.localArray)
 		.links(edges.localArray)
 		.charge(-1000)
+		.friction(0.9)
 		.linkDistance(function(edge) { return 100; }) // linkDistance can depend on each edge
 		.size([CX.canvasW, CX.canvasH])
 		.on('tick', function(event) {
-			nodes.___entities.attr('transform', function(o) { return 'translate(' + [o.x, o.y].join(',') + ')'; });
+			nodes.___entities.attr('transform', function(o) {
+				// bounding box with canvasW and canvasH
+				// http://stackoverflow.com/questions/9573178/d3-force-directed-layout-with-bounding-box
+				// http://mbostock.github.io/d3/talk/20110921/bounding.html
+				//var x = Math.max(0, Math.min(o.x, CX.canvasW));
+				//var y = Math.max(0, Math.min(o.y, CX.canvasH));
+				var pos = ForceField.constrainToCanvas(o.x, o.y, 0, 0);
+				o.x = pos.x;
+				o.y = pos.y;
+				return 'translate(' + [pos.x, pos.y].join(',') + ')'; 
+			});
 			edges.___entities.select('line')
 				.attr('x1', function(o) { return o.source.x; })
 				.attr('y1', function(o) { return o.source.y; })
 				.attr('x2', function(o) { return o.target.x; })
 				.attr('y2', function(o) { return o.target.y; });
-			edges.___entities.select('g.label').attr('transform', function(o) { return 'translate(' + [(o.source.x + o.target.x - this.getBBox().width)/2.0, (o.source.y + o.target.y - this.getBBox().height)/2.0].join(',') + ')'; });
+			edges.___entities.select('.removeIcon').attr('transform', function(o) { return 'translate(' + [(o.source.x + o.target.x - this.getBBox().width)/2.0, (o.source.y + o.target.y - this.getBBox().height)/2.0].join(',') + ')'; });
+			edges.___entities.select('.name').attr('transform', function(o) {
+				var cx = (o.source.x + o.target.x)/2.0;
+				var cy = (o.source.y + o.target.y)/2.0;
+				var dy = o.target.y - o.source.y;
+				var dx = o.target.x - o.source.x;
+				var d = Math.atan(dy/dx)*360/Math.PI/2.0; // Math.atan gives radians and svg transform takes degrees
+				return ['translate(' + [cx, cy].join(',') + ')', 'rotate(' + d + ')', 'translate(0, -6)'].join(' ');
+			});
 		});
 	
 	this.drag = this.field.drag()
@@ -98,8 +117,20 @@ ForceField.drawAll = function() {
 		this.flags.initialized = true;
 	}
 	nodes.___entities.call(this.drag);
-	
+
 	this.field.start();
+};
+ForceField.constrainToCanvas = function(x, y, w, h) {
+	var margin = {};
+	margin.top = 50;
+	margin.bottom = 25;
+	margin.left = 25;
+	margin.right = 25;
+
+	var mx = Math.max(margin.left, Math.min(x, CX.canvasW - w - margin.right));
+	var my = Math.max(margin.top, Math.min(y, CX.canvasH - h - margin.bottom));
+
+	return {x: mx, y: my};
 };
 
 
