@@ -120,12 +120,13 @@ var getFromServer = function() {
 	// create HTTP request and get the comment information from the server, if it exists
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function() {
-    	if (xhr.readyState == 4) {
+    	if(xhr.readyState == 4) {
     		var dialog = document.getElementById('BulletPointWrapper');
-    		var jsonRecordInServer = JSON.parse(xhr.responseText);
+    		var jsonRecordInServer = JSON.parse(xhr.responseText)[0]; // GET on userID and url returns array
     		if (jsonRecordInServer) {
     			if(typeof jsonRecordInServer["comment"] !== 'undefined') {
     				//if the comment exists, show it in the context box
+    				console.log(jsonRecordInServer["comment"]);
     				var commentBox = document.getElementById('BulletPointComment');
     				commentBoxOriginalMessage = jsonRecordInServer["comment"];
 					commentBox.value = commentBoxOriginalMessage;
