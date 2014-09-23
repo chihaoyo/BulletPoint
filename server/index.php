@@ -16,7 +16,7 @@ $userIDFromCookie = (isset($_COOKIE['BulletPointUserID']) ? $_COOKIE['BulletPoin
 </head>
 <body>
 	<h1>BulletPoint</h1>
-	<p>You are <input id="BulletPointUserIDFromCookie" type="text" value="<?php echo $userIDFromCookie; ?>" style="width: 300px;" /></p>
+	<p>You are <input type="text" name="userID" value="<?php echo $userIDFromCookie; ?>" class="long" id="BulletPointHomeUserIDInputField" /><input type="button" name="submit" value="update" id="BulletPointHomeUserIDUpdate"/> (debug use only)</p>
 	<h2>Nodes</h2>
 <?php
 
@@ -53,7 +53,28 @@ foreach($data as $row) {
 
 var $window = $(window);
 
-$window.load = function() {
+var setCookie = function(name, val, daysToExpire) {
+	if(daysToExpire === undefined)
+		daysToExpire = 3650; // ten years
+	console.log('Set ' + name + ' to ' + val + ' in cookie');
+
+	var d = new Date();
+	d.setTime(d.getTime() + daysToExpire*24*3600*1000);
+	document.cookie = name + '=' + val + '; expires=' + d.toGMTString();
 };
+var userIDFormat = /^@[0-9A-F]{8}-[0-9A-F]{4}-[1-5][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/; // format is all caps and case-sensitive
+var userIDIsValid = function(id) {
+	return (id.match(userIDFormat) != null);
+};
+
+$window.load(function() {
+	var $userIDInputField = $('#BulletPointHomeUserIDInputField');
+	var $userIDUpdate = $('#BulletPointHomeUserIDUpdate');
+	$userIDUpdate.click(function(event) {
+		var val = $userIDInputField.val().trim();
+		if(val != '' && userIDIsValid(val))
+			setCookie('BulletPointUserID', val);
+	});
+});
 
 </script>

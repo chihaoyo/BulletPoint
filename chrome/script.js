@@ -1,6 +1,8 @@
-var serverAddress = 'http://50.18.115.212/bulletpoint/api/';
+var rootAddress = 'http://50.18.115.212/bulletpoint/';
+var homeAddress = rootAddress + 'server/';
+var apiAddress = rootAddress + 'api/';
 var isHome = function() {
-	return (location.href.match(serverAddress) != null);
+	return (location.href.match(homeAddress) != null);
 };
 // userIDFormat is guid format + '@' at beginning
 // http://stackoverflow.com/questions/7905929/how-to-test-valid-uuid-guid
@@ -69,7 +71,7 @@ var initUserID = function() {
 		}
 		if(isHome()) {
 			setCookie('BulletPointUserID', userID);
-			document.getElementById('BulletPointUserIDFromCookie').value = userID;
+			document.getElementById('BulletPointHomeUserIDInputField').value = userID;
 		}
 		console.log('BulletPoint: userID is ' + userID);
 	});
@@ -84,7 +86,7 @@ var postToServer = function(comment) {
 
 	// create HTTP request and get it ready
 	var xhr = new XMLHttpRequest();
-	var postURL = serverAddress + 'Nodes';
+	var postURL = apiAddress + 'Nodes';
 	xhr.open('POST', postURL, true);
 	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	xhr.onreadystatechange = function() {
@@ -134,7 +136,7 @@ var getFromServer = function() {
     		}
     	}
     }
-    var getInfoURL = serverAddress + 'Nodes/' + user_id + '/' + md5(url);
+    var getInfoURL = apiAddress + 'Nodes/' + user_id + '/' + md5(url);
     xhr.open('GET', getInfoURL, true);
 	xhr.send(null);
 };
