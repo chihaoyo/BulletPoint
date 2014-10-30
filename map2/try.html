@@ -1,0 +1,43 @@
+<div id="canvas"><svg></svg></div>
+<script src="js/d3.min.js"></script>
+<script>
+
+var n1 = {key:1};
+var n2 = {key:2};
+var positionGraphics = function() {
+	if(arguments.length == 2)
+}
+n1.positionGraphics = positionGraphics;
+n2.positionGraphics = positionGraphics;
+var nodes = [n1, n2];
+var links = [{source: n1, target: n2}];
+
+var gCanvas = d3.select('div#canvas svg');
+var gNodes = gCanvas.selectAll('g.Element.Node').data(this.nodes, function(o) { return o.key; });
+var gLinks = gCanvas.selectAll('g.Element.Link').data(this.nodes, function(o) { return o.key; });
+
+gNodes.enter().append('g').append('circle').attr('r', 5);
+gLinks.enter().append('line');
+
+gNodes.exit().remove();
+gLinks.exit().remove();
+
+var field = d3.layout.force()
+	.nodes(nodes)
+	.links(links)
+	.charge(-600)
+	.friction(0.8)
+	.linkDistance(105)
+	.size([800, 450])
+	.on('tick', function(event) {
+		gNodes.each(function(o) {
+			o.positionGraphics(o.x, o.y);
+		});
+		gLinks.each(function(o) {
+			console.log(o.source);
+			o.positionGraphics(o.source.x, o.source.y, o.target.x, o.target.y);
+		});
+	})
+	.start();
+
+</script>

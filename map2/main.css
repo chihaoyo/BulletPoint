@@ -1,0 +1,14 @@
+body {
+	margin: 0;
+}
+circle {
+	fill: black;
+	stroke-weight: 0;
+}
+line {
+	stroke: black;
+	stroke-weight: 2px;
+}
+.clickable {
+	cursor: pointer;
+}
